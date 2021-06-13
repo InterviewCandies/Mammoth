@@ -1,7 +1,8 @@
-import React, {useState} from "react"
+import React, {useContext, useState} from "react"
 import {Button, ButtonGroup, FormControl, Grid, makeStyles, MenuItem, Select} from "@material-ui/core";
 import logo from "../../assets/logo.png";
-
+import {AppContext, AppContextModel} from "../../providers/AppProvider";
+import {Link} from "react-router-dom"
 
 const useStyles = makeStyles(theme => ({
     logo: {
@@ -12,21 +13,31 @@ const useStyles = makeStyles(theme => ({
 
 function Header() {
     const classes = useStyles();
-    const [lang, setLang] = useState<string>("en");
+    const {theme, setTheme, lang, setLang} = useContext<AppContextModel>(AppContext)
 
     return <Grid container justify={"space-between"}>
         <Grid item>
             <ButtonGroup>
-                <Button>Select</Button>
-                <Button>Edit</Button>
+                <Button>
+                    <Link to={'/select'}>Select</Link>
+                </Button>
+                <Button>
+                    <Link to={'/edit'}>Edit</Link>
+                </Button>
             </ButtonGroup>
         </Grid>
         <Grid item>
-            <FormControl variant="outlined" >
-            <Select value={lang}>
-                <MenuItem value={"en"}>English</MenuItem>
-                <MenuItem value={"vn"}>Vietnamese</MenuItem>
-            </Select>
+            <FormControl variant={'outlined'}>
+                <Select value={theme} onChange={()=>setTheme()}>
+                    <MenuItem value={'light'}>Light</MenuItem>
+                    <MenuItem value={'dark'}>Dark</MenuItem>
+                </Select>
+            </FormControl>
+            <FormControl variant="outlined">
+                <Select value={lang} onChange={()=>setLang()}>
+                    <MenuItem value={"en"}>English</MenuItem>
+                    <MenuItem value={"vn"}>Vietnamese</MenuItem>
+                </Select>
             </FormControl>
             <img src={logo} className={classes.logo}/>
         </Grid>

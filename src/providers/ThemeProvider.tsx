@@ -1,17 +1,16 @@
 import React, {ReactChildren, ReactElement, useState} from "react"
 import {createMuiTheme, MuiThemeProvider, ThemeOptions} from "@material-ui/core";
 
-function ThemeProvider({children} : {children : ReactElement}) {
-    const [theme, setTheme] = useState<ThemeOptions>({
+function ThemeProvider({isDarkMode, children} : {isDarkMode: boolean, children : ReactElement}) {
+    const theme: ThemeOptions = {
         palette: {
-            type: "dark"
+            type: isDarkMode ? "dark" : "light"
         }
-    })
+    }
     const muiTheme = createMuiTheme(theme)
 
     return <MuiThemeProvider theme={muiTheme}>
         {children}
     </MuiThemeProvider>
 }
-
 export default ThemeProvider;
