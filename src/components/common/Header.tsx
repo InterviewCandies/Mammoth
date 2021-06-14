@@ -1,45 +1,58 @@
 import React, {useContext, useState} from "react"
-import {Button, ButtonGroup, FormControl, Grid, makeStyles, MenuItem, Select} from "@material-ui/core";
+import {Button, ButtonGroup, FormControl, Grid, makeStyles, MenuItem, Select, Theme} from "@material-ui/core";
 import logo from "../../assets/logo.png";
-import {AppContext, AppContextModel} from "../../providers/AppProvider";
 import {Link} from "react-router-dom"
-
-const useStyles = makeStyles(theme => ({
+import CButton from "./CButton"
+import ThemeModel, {ThemeType} from "../../types/ThemeModel";
+import useDarkMode from "../../hooks/useDarkMode";
+import {darkTheme, lightTheme} from "../../theme";
+import {dark} from "@material-ui/core/styles/createPalette";
+import CSelect from "./CSelect";
+import useLanguage from "../../hooks/useLanguage";
+type Props = {
+    theme: ThemeModel
+}
+const useStyles = makeStyles<Theme, Props>(theme => ({
     logo: {
         width: "5rem",
         height: "5rem"
+    },
+    link: {
+        textDecoration: "none",
+        color: props => props.theme.buttonText
+    },
+    right: {
+        display: "flex",
+        alightItems: "center",
+        gap: '1rem'
     }
 }))
 
 function Header() {
-    const classes = useStyles();
-    const {theme, setTheme, lang, setLang} = useContext<AppContextModel>(AppContext)
+    const [theme, toggleTheme] = useDarkMode();
+    const [lang, setLanguage] = useLanguage();
+    const classes = useStyles({theme: (theme === 'light' ? lightTheme: darkTheme)});
 
     return <Grid container justify={"space-between"}>
         <Grid item>
             <ButtonGroup>
-                <Button>
-                    <Link to={'/select'}>Select</Link>
-                </Button>
-                <Button>
-                    <Link to={'/edit'}>Edit</Link>
-                </Button>
+                <CButton>
+                    <Link to={'/select'} className={classes.link}>Select</Link>
+                </CButton>
+                <CButton>
+                    <Link to={'/edit'} className={classes.link}>Edit</Link>
+                </CButton>
             </ButtonGroup>
         </Grid>
-        <Grid item>
-            <FormControl variant={'outlined'}>
-                <Select value={theme} onChange={()=>setTheme()}>
-                    <MenuItem value={'light'}>Light</MenuItem>
-                    <MenuItem value={'dark'}>Dark</MenuItem>
-                </Select>
-            </FormControl>
-            <FormControl variant="outlined">
-                <Select value={lang} onChange={()=>setLang()}>
-                    <MenuItem value={"en"}>English</MenuItem>
-                    <MenuItem value={"vn"}>Vietnamese</MenuItem>
-                </Select>
-            </FormControl>
-            <img src={logo} className={classes.logo}/>
+        <Grid item className={classes.right}>
+            <CSelect value={theme} onChange={() => toggleTheme()}>
+                <MenuItem value={"light"}>light</MenuItem>
+                <MenuItem value={"dark"}>dark</MenuItem>
+            </CSelect>
+            <CSelect value={lang} onChange={setLanguage} >
+                <MenuItem value={"en"}>English</MenuItem>
+                <MenuItem value={"vn"}>Vietnamese</MenuItem>
+            </CSelect>
         </Grid>
     </Grid>
 }
