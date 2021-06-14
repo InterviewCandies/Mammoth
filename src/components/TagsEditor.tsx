@@ -4,12 +4,8 @@ import CButton from "./common/CButton";
 import styled from "styled-components";
 import CCheckbox from "./common/CCheckbox";
 import {useState} from "react";
-
-const Label = styled.h6`
-    color: ${({theme}) => theme.buttonText};
-    font-size: 1rem;
-    margin: 0.5rem;
-`
+import CLabel from "./common/CLabel";
+import CHeading from "./common/CHeading";
 
 function TagsEditor() {
     const [showAdd, setShowAdd] = useState<boolean>(true);
@@ -17,20 +13,20 @@ function TagsEditor() {
 
     return  <Grid container spacing={5}>
         <Grid item xs={12}>
-            <Typography variant={"h6"} style={{textTransform: "uppercase", letterSpacing:"0.15em", fontWeight: 700}}>Tags</Typography>
+            <CHeading>Tags</CHeading>
         </Grid>
-        <Grid container item xs={12}>
+        <Grid container item xs={12} spacing={2}>
             <Grid item xs={12}>
                 <Grid container item xs={12} alignItems={"center"} justify={"space-between"}>
-                    <Label>Add to all selected products</Label>
-                    <CCheckbox onChange={() => setShowAdd(show => !show)}></CCheckbox>
+                    <CLabel>Add to all selected products</CLabel>
+                    <CCheckbox checked={showAdd} onChange={() => setShowAdd(show => !show)}></CCheckbox>
                 </Grid>
             </Grid>
             <Grid item xs={12}>
                 <Collapse in={showAdd}>
-                    <Grid container spacing={3}>
+                    <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <CSelect onChange={() => {}}>
+                            <CSelect onChange={() => {}} style={{width: '100%'}}>
                                 <MenuItem>Hello</MenuItem>
                                 <MenuItem>Hello</MenuItem>
                             </CSelect>
@@ -42,18 +38,18 @@ function TagsEditor() {
                 </Collapse>
             </Grid>
         </Grid>
-        <Grid container item xs={12}>
+        <Grid container item xs={12} spacing={2}>
             <Grid item xs={12}>
                 <Grid container item xs={12} alignItems={"center"} justify={"space-between"}>
-                    <Label>Replace in all selected products</Label>
-                    <CCheckbox onChange={() => setShowReplace(show => !show)}></CCheckbox>
+                    <CLabel>Replace in all selected products</CLabel>
+                    <CCheckbox checked={showReplace} onChange={() => setShowReplace(show => !show)}></CCheckbox>
                 </Grid>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} spacing={2}>
                 <Collapse in={showReplace}>
-                    <Grid container spacing={3}>
+                    <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <CSelect onChange={() => {}}>
+                            <CSelect onChange={() => {}} style={{width: '100%'}}>
                                 <MenuItem>Hello</MenuItem>
                                 <MenuItem>Hello</MenuItem>
                             </CSelect>
@@ -66,7 +62,7 @@ function TagsEditor() {
             </Grid>
         </Grid>
         <Grid item xs={12}>
-            <Label>Selected products</Label>
+            <CLabel>Selected products</CLabel>
         </Grid>
     </Grid>
 }

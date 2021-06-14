@@ -1,7 +1,7 @@
-import React, {useContext, useState} from "react"
+import React, {useContext, useEffect, useState} from "react"
 import {Button, ButtonGroup, FormControl, Grid, makeStyles, MenuItem, Select, Theme} from "@material-ui/core";
 import logo from "../../assets/logo.png";
-import {Link} from "react-router-dom"
+import {Link, useHistory} from "react-router-dom"
 import CButton from "./CButton"
 import ThemeModel, {ThemeType} from "../../types/ThemeModel";
 import useDarkMode from "../../hooks/useDarkMode";
@@ -32,15 +32,20 @@ function Header() {
     const [theme, toggleTheme] = useDarkMode();
     const [lang, setLanguage] = useLanguage();
     const classes = useStyles({theme: (theme === 'light' ? lightTheme: darkTheme)});
-
+    const history = useHistory();
+    useEffect(()=> {
+        console.log(history.location.pathname)
+    }, [history.location.pathname])
+    const path : string = history.location.pathname;
+    console.log(path)
     return <Grid container justify={"space-between"}>
         <Grid item>
             <ButtonGroup>
-                <CButton>
-                    <Link to={'/select'} className={classes.link}>Select</Link>
+                <CButton active={path.includes('select')} onClick={()=> history.push('/select')}>
+                    Select
                 </CButton>
-                <CButton>
-                    <Link to={'/edit'} className={classes.link}>Edit</Link>
+                <CButton active={path.includes('edit')} onClick={()=> history.push('/edit/category')}>
+                    Edit
                 </CButton>
             </ButtonGroup>
         </Grid>
@@ -49,7 +54,7 @@ function Header() {
                 <MenuItem value={"light"}>light</MenuItem>
                 <MenuItem value={"dark"}>dark</MenuItem>
             </CSelect>
-            <CSelect value={lang} onChange={setLanguage} >
+            <CSelect value={lang} onChange={setLanguage}  style={{width: "120px"}}>
                 <MenuItem value={"en"}>English</MenuItem>
                 <MenuItem value={"vn"}>Vietnamese</MenuItem>
             </CSelect>

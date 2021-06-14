@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {FormControl, makeStyles, MenuItem, Select, Theme} from "@material-ui/core";
-import {ReactElement} from "react";
+import {CSSProperties, ReactElement} from "react";
 import ThemeModel from "../../types/ThemeModel";
 import useDarkMode from "../../hooks/useDarkMode";
 import {darkTheme, lightTheme} from "../../theme";
@@ -11,6 +11,7 @@ type Props = {
 
 interface SelectProps {
     value?: string,
+    style?: CSSProperties,
     onChange: (value: any) => void,
     children: ReactElement[]
 }
@@ -21,7 +22,6 @@ const useStyles = makeStyles<Theme, Props>(()=> ({
         color: props => props.theme.buttonText,
     },
     select: {
-        borderRadius: "5%",
         color: props => props.theme.buttonText,
         backgroundColor: props => props.theme.input,
         "& li": {
@@ -38,12 +38,13 @@ const useStyles = makeStyles<Theme, Props>(()=> ({
     }
 }))
 
-function CSelect({value, onChange, children} : SelectProps) {
+function CSelect({value, onChange, children, style} : SelectProps) {
     const [theme, ] = useDarkMode();
     const classes = useStyles({theme : theme === 'light' ? lightTheme : darkTheme});
 
-    return   <FormControl variant={"outlined"} size={"small"} style={{minWidth: "100px", width: "100%"}}>
+    return   <FormControl variant={"outlined"} size={"small"} style={style}>
         <Select  MenuProps={{ classes: { paper: classes.select },
+                                disableScrollLock: true,
                                 anchorOrigin: {
                                     vertical: "bottom",
                                     horizontal: "left"

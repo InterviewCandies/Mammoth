@@ -19,14 +19,16 @@ function App() {
         <>
             <GlobalStyles/>
             <Router>
-                <Layout>
                     <Switch>
-                        <Route path="/select" component={SelectMode}/>
-                        <Route path="/edit" component={EditMode}/>
-                        <Route path="/" component={EditMode} />
-                        <Redirect to="/"/>
+                        <Layout>
+                            <>
+                            <Route path="/select" component={SelectMode}/>
+                            <Route path="/edit" component={EditMode}/>
+                            <Redirect to="/select"/>
+                            </>
+                        </Layout>
+
                     </Switch>
-                </Layout>
             </Router>
         </>
     </ThemeProvider>
