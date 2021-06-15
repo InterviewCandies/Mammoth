@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled, {ThemeContext} from "styled-components";
 import {FormControl, makeStyles, MenuItem, Select, Theme} from "@material-ui/core";
-import {CSSProperties, ReactElement} from "react";
+import {CSSProperties, ReactElement, useContext} from "react";
 import ThemeModel from "../../types/ThemeModel";
 import useDarkMode from "../../hooks/useDarkMode";
 import {darkTheme, lightTheme} from "../../theme";
@@ -39,8 +39,8 @@ const useStyles = makeStyles<Theme, Props>(()=> ({
 }))
 
 function CSelect({value, onChange, children, style} : SelectProps) {
-    const [theme, ] = useDarkMode();
-    const classes = useStyles({theme : theme === 'light' ? lightTheme : darkTheme});
+    const theme = useContext(ThemeContext)
+    const classes = useStyles({theme});
 
     return   <FormControl variant={"outlined"} size={"small"} style={style}>
         <Select  MenuProps={{ classes: { paper: classes.select },

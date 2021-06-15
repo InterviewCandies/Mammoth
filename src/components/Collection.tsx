@@ -9,13 +9,14 @@ import {
     Theme, useTheme
 } from "@material-ui/core";
 import {Cancel, Delete} from "@material-ui/icons"
-import styled from "styled-components";
+import styled, {ThemeContext} from "styled-components";
 import CSelect from "./common/CSelect";
 import CButton from "./common/CButton";
 import CHeading from "./common/CHeading";
 import ThemeModel from "../types/ThemeModel";
 import useDarkMode from "../hooks/useDarkMode";
 import {darkTheme, lightTheme} from "../theme";
+import {useContext} from "react";
 
 const Text = styled.h4`
    color: ${({theme}) => theme.text };
@@ -52,8 +53,8 @@ const useStyles = makeStyles<Theme, Props>((theme)=> ({
 }))
 
 function Collection() {
-    const [theme,] = useDarkMode();
-    const classes = useStyles({theme : theme === 'light' ? lightTheme : darkTheme});
+    const theme = useContext(ThemeContext)
+    const classes = useStyles({theme});
     const muiTheme = useTheme();
 
     return <Grid container spacing={5}>

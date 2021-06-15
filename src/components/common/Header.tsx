@@ -28,8 +28,7 @@ const useStyles = makeStyles<Theme, Props>(theme => ({
     }
 }))
 
-function Header() {
-    const [theme, toggleTheme] = useDarkMode();
+function Header({theme, toggleTheme} : {theme: ThemeType, toggleTheme: ()=> void}) {
     const [lang, setLanguage] = useLanguage();
     const classes = useStyles({theme: (theme === 'light' ? lightTheme: darkTheme)});
     const history = useHistory();

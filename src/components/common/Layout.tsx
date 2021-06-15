@@ -1,10 +1,11 @@
 import React, {ReactElement, useContext} from "react"
 import Header from "./Header";
+import {ThemeType} from "../../types/ThemeModel";
 
-function Layout(props: {children: ReactElement}) {
+function Layout(props: {children: ReactElement, theme: ThemeType, toggleTheme: ()=> void}) {
 
     return <div>
-        <Header></Header>
+        <Header theme={props.theme} toggleTheme={props.toggleTheme}></Header>
         {props.children}
     </div>
 }
