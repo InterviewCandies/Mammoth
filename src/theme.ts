@@ -1,7 +1,7 @@
 import ThemeModel from "./types/ThemeModel";
 
 export const lightTheme: ThemeModel = {
-    body: '#f1f1f1',
+    body: '#f7f7f7',
     text: '#14171A',
     button: '#8b9dc3',
     input: '#dfe3ee',
@@ -10,7 +10,9 @@ export const lightTheme: ThemeModel = {
     checkBox: '',
     toggleBorder: '#fff',
     primary: '#8b9dc3',
-    gradient: 'linear-gradient(#39598A, #79D7ED)'
+    gradient: 'linear-gradient(#39598A, #79D7ED)',
+    disabled: '#9e9e9e',
+    secondary: '#f7f7f7'
 }
 
 export const darkTheme: ThemeModel = {
@@ -24,4 +26,6 @@ export const darkTheme: ThemeModel = {
     toggleBorder: '#6B8096',
     primary: '#8b9dc3',
     gradient: 'linear-gradient(#091236, #1E215D)',
+    disabled: '#9e9e9e',
+    secondary: '#9e9e9e'
 }

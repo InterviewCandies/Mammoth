@@ -40,12 +40,12 @@ const useStyles = makeStyles<Theme, Props>(()=> ({
         backgroundColor: props => props.theme.input,
         "& li": {
             "&:hover": {
-                backgroundColor: props => props.theme.button,
-                color: props => props.theme.buttonText
+                backgroundColor: props => props.theme.secondary,
+                color: props => props.theme.text
             },
             "&:focus": {
-                backgroundColor: props => props.theme.body,
-            }
+                backgroundColor: props => props.theme.button,
+                color: props => props.theme.buttonText            }
         },
     },
     icon: {

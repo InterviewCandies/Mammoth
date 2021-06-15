@@ -4,6 +4,7 @@ import styled from "styled-components";
 import CTextarea from "./common/CTextarea";
 import CButton from "./common/CButton";
 import CLabel from "./common/CLabel";
+import CHeading from "./common/CHeading";
 
 const Label = styled.h6`
     color: ${({theme}) => theme.buttonText};
@@ -28,7 +29,7 @@ function DescriptionEditor() {
 
     return <Grid container spacing={5}>
         <Grid item xs={12}>
-            <Heading>Description</Heading>
+            <CHeading>Description</CHeading>
         </Grid>
         <Grid container item xs={12} spacing={2}>
             <Grid container item xs={12} justify={"space-between"}>

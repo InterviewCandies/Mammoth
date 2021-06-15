@@ -10,7 +10,9 @@ export default interface ThemeModel {
     inputText: string,
     toggleBorder: string,
     gradient: string,
-    primary: string
+    primary: string,
+    disabled: string,
+    secondary: string
 }
 
 
