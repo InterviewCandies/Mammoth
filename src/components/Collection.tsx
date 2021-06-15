@@ -60,7 +60,7 @@ function Collection() {
     const classes = useStyles({theme});
     const muiTheme = useTheme();
 
-    return <Grid container direction={"column"} spacing={5} style={{position: 'fixed'}}>
+    return <Grid container direction={"column"} spacing={4} style={{position: 'fixed'}}>
         <Grid item xs={3}>
             <CBox>
                 <Icon style={{color: theme.primary}}>
