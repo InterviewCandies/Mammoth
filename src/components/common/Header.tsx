@@ -9,6 +9,7 @@ import {darkTheme, lightTheme} from "../../theme";
 import {dark} from "@material-ui/core/styles/createPalette";
 import CSelect from "./CSelect";
 import useLanguage from "../../hooks/useLanguage";
+import ToggleTheme from "./ToggleTheme";
 type Props = {
     theme: ThemeModel
 }
@@ -36,7 +37,7 @@ function Header({theme, toggleTheme} : {theme: ThemeType, toggleTheme: ()=> void
 
     return <Grid container justify={"space-between"}>
         <Grid item>
-            <ButtonGroup>
+            <ButtonGroup style={{position: "fixed"}}>
                 <CButton active={path.includes('select')} onClick={()=> history.push('/select')}>
                     Select
                 </CButton>
@@ -46,10 +47,7 @@ function Header({theme, toggleTheme} : {theme: ThemeType, toggleTheme: ()=> void
             </ButtonGroup>
         </Grid>
         <Grid item className={classes.right}>
-            <CSelect value={theme} onChange={() => toggleTheme()}>
-                <MenuItem value={"light"}>light</MenuItem>
-                <MenuItem value={"dark"}>dark</MenuItem>
-            </CSelect>
+            <ToggleTheme theme={theme} toggleTheme={toggleTheme}></ToggleTheme>
             <CSelect value={lang} onChange={setLanguage}  style={{width: "160px"}}>
                 <MenuItem value={"en"}>English</MenuItem>
                 <MenuItem value={"vn"}>Vietnamese</MenuItem>

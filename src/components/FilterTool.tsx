@@ -1,4 +1,4 @@
-import {ButtonGroup, Collapse, Grid, makeStyles, MenuItem, Switch} from "@material-ui/core";
+import {ButtonGroup, Collapse, Grid, Icon, makeStyles, MenuItem, Switch} from "@material-ui/core";
 import CHeading from "./common/CHeading";
 import CButton from "./common/CButton";
 import CCheckbox from "./common/CCheckbox";
@@ -9,12 +9,15 @@ import useDarkMode from "../hooks/useDarkMode";
 import {useState} from "react";
 import styled from "styled-components";
 import CSwitcher from "./common/CSwitcher";
+import {Filter, FilterList, Search, SearchOutlined, Subject} from "@material-ui/icons";
+import CBox from "./common/CBox";
+import {darkTheme, lightTheme} from "../theme";
 
 const useStyles = makeStyles((theme)=>({
     root: {
         "& > *" : {
             marginBottom: theme.spacing(5)
-        }
+        },
     },
     price: {
         "& > *" : {
@@ -38,6 +41,8 @@ function FilterTool() {
     const [theme, toggleTheme] = useDarkMode();
     const [filters, setFilters] = useState<boolean[]>([]);
     const [filterType, setFilterType] = useState<number>(0);
+    const currentMode = theme === 'light' ? lightTheme : darkTheme;
+
     const handleChange = async (index: number) => {
         await setFilters(prevState => {
             const newState = [...prevState];
@@ -47,11 +52,16 @@ function FilterTool() {
     }
     return  <div className={classes.root}>
         <Grid container justify={"space-between"}>
-        <CHeading>Filter</CHeading>
-        <ButtonGroup>
-            <CButton active={filterType === 0} onClick={() => setFilterType(0)}>Exact</CButton>
-            <CButton active={filterType === 1} onClick={() =>  setFilterType(1)}>Include</CButton>
-        </ButtonGroup>
+               <CBox>
+                   <Icon style={{color: currentMode.primary}}>
+                       <Subject/>
+                   </Icon>
+                   <CHeading>Filter</CHeading>
+               </CBox>
+                <ButtonGroup>
+                    <CButton active={filterType === 0} onClick={() => setFilterType(0)}>Exact</CButton>
+                    <CButton active={filterType === 1} onClick={() =>  setFilterType(1)}>Include</CButton>
+                </ButtonGroup>
         </Grid>
         <Grid container spacing={2}>
             <Grid container item xs={12} justify={"space-between"}>

@@ -6,7 +6,11 @@ export default interface ThemeModel {
     button: string,
     buttonText: string,
     input: string,
-    checkBox: string
+    checkBox: string,
+    inputText: string,
+    toggleBorder: string,
+    gradient: string,
+    primary: string
 }
 
 

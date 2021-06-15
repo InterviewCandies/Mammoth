@@ -24,7 +24,7 @@ function SelectMode() {
         <Grid item xs={4}>
            <Collection></Collection>
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={8} style={{zIndex: 10}}>
             <FilterTool></FilterTool>
         </Grid>
     </Grid>

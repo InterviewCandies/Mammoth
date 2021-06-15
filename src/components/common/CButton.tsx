@@ -7,7 +7,7 @@ interface Props {
 
 const CButton = styled.button<Props>`
     background-color: ${ props => props.active ? props.theme.input : props.theme.button};
-    color: ${({theme})=> theme.buttonText};
+    color: ${props => props.active ? props.theme.inputText : props.theme.buttonText};
     padding: 0.75rem 1.25rem;
     border-radius: 4px;
     outline: none;

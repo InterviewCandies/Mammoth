@@ -21,13 +21,13 @@ const CSwitch = withStyles((theme: Theme) =>
                 transform: 'translateX(35px)',
                 color: theme.palette.common.white,
                 '& + $track': {
-                    backgroundColor: '#52d869',
+                    backgroundColor: '#8b9dc3',
                     opacity: 1,
                     border: 'none',
                 },
             },
             '&$focusVisible $thumb': {
-                color: '#52d869',
+                color: '#8b9dc3',
                 border: '6px solid #fff',
             },
         },

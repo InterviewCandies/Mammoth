@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const CLabel = styled.h6`
-    color: ${({theme}) => theme.buttonText};
+    color: ${({theme}) => theme.inputText};
     font-size: 1rem;
     margin: 0;
 `

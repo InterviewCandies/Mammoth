@@ -3,6 +3,7 @@ import CSelect from "./common/CSelect";
 import styled from "styled-components";
 import CTextarea from "./common/CTextarea";
 import CButton from "./common/CButton";
+import CLabel from "./common/CLabel";
 
 const Label = styled.h6`
     color: ${({theme}) => theme.buttonText};
@@ -31,7 +32,7 @@ function DescriptionEditor() {
         </Grid>
         <Grid container item xs={12} spacing={2}>
             <Grid container item xs={12} justify={"space-between"}>
-                <Label>Summary</Label>
+                <CLabel>Summary</CLabel>
                 <CSelect onChange={()=>{}}>
                     <MenuItem>Add Before</MenuItem>
                     <MenuItem>Add After</MenuItem>
@@ -47,7 +48,7 @@ function DescriptionEditor() {
         </Grid>
         <Grid container item xs={12} spacing={2}>
             <Grid container item xs={12} justify={"space-between"}>
-                <Label>Details</Label>
+                <CLabel>Details</CLabel>
                 <CSelect onChange={()=>{}}>
                     <MenuItem>Add Before</MenuItem>
                     <MenuItem>Add After</MenuItem>
