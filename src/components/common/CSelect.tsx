@@ -45,15 +45,7 @@ function CSelect({value, onChange, children, style} : SelectProps) {
     return   <FormControl variant={"outlined"} size={"small"} style={style}>
         <Select  MenuProps={{ classes: { paper: classes.select },
                                 disableScrollLock: true,
-                                anchorOrigin: {
-                                    vertical: "bottom",
-                                    horizontal: "left"
-                                },
-                                transformOrigin: {
-                                    vertical: "top",
-                                    horizontal: "left"
-                                },
-                                getContentAnchorEl: null}}
+                               }}
                  inputProps={{
                      classes: {
                          icon: classes.icon,

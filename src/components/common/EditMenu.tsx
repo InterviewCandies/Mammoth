@@ -14,7 +14,7 @@ const useStyles = makeStyles<Theme, Props>(() => ({
     root: {
         backgroundColor: props => props.theme.input,
         color: props => props.theme.buttonText,
-        padding: "0.75rem 1rem",
+        padding: "0.75rem 1.5rem",
         textTransform: "capitalize",
         fontWeight: 600,
         "&:hover": {

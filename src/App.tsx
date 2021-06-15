@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import EditMode from "./pages/EditMode";
 import SelectMode from "./pages/SelectMode";
@@ -12,7 +12,7 @@ import {Checkbox} from "@material-ui/core";
 
 function App() {
     const [theme, toggleTheme] = useDarkMode();
-    const themeMode: ThemeModel = theme === 'light' ? lightTheme : darkTheme;
+    const themeMode: ThemeModel = theme == 'light' ? lightTheme : darkTheme;
 
     return (
     <ThemeProvider theme={themeMode}>

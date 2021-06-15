@@ -33,11 +33,8 @@ function Header() {
     const [lang, setLanguage] = useLanguage();
     const classes = useStyles({theme: (theme === 'light' ? lightTheme: darkTheme)});
     const history = useHistory();
-    useEffect(()=> {
-        console.log(history.location.pathname)
-    }, [history.location.pathname])
     const path : string = history.location.pathname;
-    console.log(path)
+
     return <Grid container justify={"space-between"}>
         <Grid item>
             <ButtonGroup>
@@ -54,7 +51,7 @@ function Header() {
                 <MenuItem value={"light"}>light</MenuItem>
                 <MenuItem value={"dark"}>dark</MenuItem>
             </CSelect>
-            <CSelect value={lang} onChange={setLanguage}  style={{width: "120px"}}>
+            <CSelect value={lang} onChange={setLanguage}  style={{width: "160px"}}>
                 <MenuItem value={"en"}>English</MenuItem>
                 <MenuItem value={"vn"}>Vietnamese</MenuItem>
             </CSelect>

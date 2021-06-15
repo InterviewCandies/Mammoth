@@ -2,7 +2,7 @@ import ThemeModel from "./types/ThemeModel";
 
 export const lightTheme: ThemeModel = {
     body: '#fff',
-    text: '',
+    text: '#000',
     button: '',
     input: '',
     buttonText: '',
