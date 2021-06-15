@@ -21,7 +21,11 @@ function App() {
             <Router>
                     <Switch>
                         <Layout theme={theme} toggleTheme={toggleTheme}>
-                          <Route></Route>
+                            <>
+                              <Route path={"/select"} component={SelectMode}></Route>
+                              <Route path={"/edit"} component={EditMode}></Route>
+                              <Redirect to={"/select"}></Redirect>
+                            </>
                         </Layout>
 
                     </Switch>

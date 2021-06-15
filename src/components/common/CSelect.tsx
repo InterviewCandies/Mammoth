@@ -1,9 +1,10 @@
 import styled, {ThemeContext} from "styled-components";
-import {FormControl, makeStyles, MenuItem, Select, Theme} from "@material-ui/core";
+import {FormControl, makeStyles, MenuItem, OutlinedInput, Select, Theme} from "@material-ui/core";
 import {CSSProperties, ReactElement, useContext} from "react";
 import ThemeModel from "../../types/ThemeModel";
 import useDarkMode from "../../hooks/useDarkMode";
 import {darkTheme, lightTheme} from "../../theme";
+import CInput from "./CInput";
 
 type Props = {
     theme: ThemeModel
@@ -16,22 +17,38 @@ interface SelectProps {
     children: ReactElement[]
 }
 
+const useOutlinedInputStyles = makeStyles(theme => ({
+    root: {
+        "& $notchedOutline": {
+            border: 'none',
+            outline: 'none',
+            borderRadius: '4px'
+        },
+    },
+    focused: {},
+    notchedOutline: {}
+}));
+
 const useStyles = makeStyles<Theme, Props>(()=> ({
     root: {
         backgroundColor:  props => props.theme.input,
         color: props => props.theme.buttonText,
+    },
+    input: {
+        boxShadow: "inset 0px 4px 4px rgba(0, 0, 0, 0.25)",
+        borderRadius: '4px'
     },
     select: {
         color: props => props.theme.buttonText,
         backgroundColor: props => props.theme.input,
         "& li": {
             "&:hover": {
-                backgroundColor: props => props.theme.button,
+                backgroundColor: props => props.theme.button
             },
             "&:focus": {
                 backgroundColor: props => props.theme.body,
             }
-        }
+        },
     },
     icon: {
         fill: props => props.theme.buttonText
@@ -41,8 +58,8 @@ const useStyles = makeStyles<Theme, Props>(()=> ({
 function CSelect({value, onChange, children, style} : SelectProps) {
     const theme = useContext(ThemeContext)
     const classes = useStyles({theme});
-
-    return   <FormControl variant={"outlined"} size={"small"} style={style}>
+    const outlinedInputClasses = useOutlinedInputStyles();
+    return   <FormControl variant={"outlined"} size={"small"} style={style} className={classes.input}>
         <Select  MenuProps={{ classes: { paper: classes.select },
                                 disableScrollLock: true,
                                }}
@@ -51,6 +68,7 @@ function CSelect({value, onChange, children, style} : SelectProps) {
                          icon: classes.icon,
                      },
                  }}
+                 input={<OutlinedInput classes={outlinedInputClasses}></OutlinedInput>}
                  className={classes.root}
                  value={value}
                  onChange={e => onChange(e?.target?.value)}
