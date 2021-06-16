@@ -10,6 +10,10 @@ import {dark} from "@material-ui/core/styles/createPalette";
 import CSelect from "./CSelect";
 import useLanguage from "../../hooks/useLanguage";
 import ToggleTheme from "./ToggleTheme";
+import {useTranslation} from "react-i18next";
+import i18n from "i18next";
+import {LanguageType} from "../../types";
+
 type Props = {
     theme: ThemeModel
 }
@@ -34,23 +38,29 @@ function Header({theme, toggleTheme} : {theme: ThemeType, toggleTheme: ()=> void
     const classes = useStyles({theme: (theme === 'light' ? lightTheme: darkTheme)});
     const history = useHistory();
     const path : string = history.location.pathname;
+    const {t} = useTranslation();
+
+    const handleChangeLanguage = (value : LanguageType) => {
+        setLanguage(value);
+        i18n.changeLanguage(value)
+    }
 
     return <Grid container justify={"space-between"}>
         <Grid item>
             <ButtonGroup style={{position: "fixed"}}>
                 <CButton active={path.includes('select')} onClick={()=> history.push('/select')}>
-                    Select
+                    {t('select')}
                 </CButton>
                 <CButton active={path.includes('edit')} onClick={()=> history.push('/edit/category')}>
-                    Edit
+                    {t('edit')}
                 </CButton>
             </ButtonGroup>
         </Grid>
         <Grid item className={classes.right}>
             <ToggleTheme theme={theme} toggleTheme={toggleTheme}></ToggleTheme>
-            <CSelect value={lang} onChange={setLanguage}  style={{width: "160px"}}>
-                <MenuItem value={"en"}>English</MenuItem>
-                <MenuItem value={"vn"}>Vietnamese</MenuItem>
+            <CSelect value={lang} onChange={handleChangeLanguage}  style={{width: "160px"}}>
+                <MenuItem value={"en"}>{t('english')}</MenuItem>
+                <MenuItem value={"vn"}>{t('vietnamese')}</MenuItem>
             </CSelect>
         </Grid>
     </Grid>

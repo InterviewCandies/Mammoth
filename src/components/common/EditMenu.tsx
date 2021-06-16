@@ -6,6 +6,7 @@ import ThemeModel, {ThemeType} from "../../types/ThemeModel";
 import useDarkMode from "../../hooks/useDarkMode";
 import {darkTheme, lightTheme} from "../../theme";
 import {ThemeContext} from "styled-components";
+import {useTranslation} from "react-i18next";
 
 type Props = {
     theme: ThemeModel,
@@ -39,6 +40,7 @@ function EditMenu() {
     const items = Object.values(EDIT_TYPES);
     const history = useHistory();
     const path = history.location.pathname;
+    const {t} = useTranslation();
 
     return <List component={"nav"}  style={{position: "fixed", minWidth: '350px'}}>
         {items.map((item : string) =>
@@ -46,7 +48,7 @@ function EditMenu() {
                        classes={{root: classes.root}}
                        style={path.includes(item) ? {backgroundColor: theme.button, color: theme.buttonText} : {}}
                        onClick={() => history.push(`/edit/${item}`)}>
-                {item}
+                {t(item)}
             </ListItem>)}
     </List>
 }

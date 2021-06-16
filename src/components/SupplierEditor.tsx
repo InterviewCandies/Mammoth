@@ -3,15 +3,18 @@ import CSelect from "./common/CSelect";
 import CButton from "./common/CButton";
 import CHeading from "./common/CHeading";
 import CLabel from "./common/CLabel";
+import {useTranslation} from "react-i18next";
 
 function SupplierEditor() {
+    const {t} = useTranslation();
+
     return  <Grid container spacing={5}>
         <Grid item xs={12}>
-           <CHeading>Supplier</CHeading>
+           <CHeading>{t('supplier')}</CHeading>
         </Grid>
         <Grid container item xs={12} spacing={2}>
             <Grid item xs={12}>
-                <CLabel>Set all selected products</CLabel>
+                <CLabel>{t('setAll')}</CLabel>
             </Grid>
             <Grid item xs={12}>
                 <CSelect onChange={() => {}} style={{width: "100%"}}>
@@ -20,11 +23,11 @@ function SupplierEditor() {
                 </CSelect>
             </Grid>
             <Grid item xs={12} style={{display: "flex",justifyContent:"flex-end"}}>
-                <CButton>Apply</CButton>
+                <CButton>{t('apply')}</CButton>
             </Grid>
         </Grid>
         <Grid item xs={12}>
-            <CLabel>Selected products</CLabel>
+            <CLabel>{t('selectedProducts')}</CLabel>
         </Grid>
     </Grid>
 }

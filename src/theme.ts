@@ -10,7 +10,7 @@ export const lightTheme: ThemeModel = {
     checkBox: '',
     toggleBorder: '#fff',
     primary: '#8b9dc3',
-    gradient: 'linear-gradient(#39598A, #79D7ED)',
+    gradient: '#dfe3ee',
     disabled: '#9e9e9e',
     secondary: '#f7f7f7'
 }
@@ -25,7 +25,7 @@ export const darkTheme: ThemeModel = {
     checkBox: '#f2f2f2',
     toggleBorder: '#6B8096',
     primary: '#8b9dc3',
-    gradient: 'linear-gradient(#091236, #1E215D)',
+    gradient: '#272121',
     disabled: '#9e9e9e',
     secondary: '#9e9e9e'
 }
