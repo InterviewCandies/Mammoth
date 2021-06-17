@@ -1,22 +1,30 @@
 import {useState} from "react";
 import {Collapse, Grid, MenuItem} from "@material-ui/core";
-import CHeading from "./common/CHeading";
-import CLabel from "./common/CLabel";
-import CCheckbox from "./common/CCheckbox";
-import CInput from "./common/CInput";
-import CSelect from "./common/CSelect";
-import CButton from "./common/CButton";
+import CHeading from "../common/CHeading";
+import CLabel from "../common/CLabel";
+import CCheckbox from "../common/CCheckbox";
+import CInput from "../common/CInput";
+import CSelect from "../common/CSelect";
+import CButton from "../common/CButton";
 import {useTranslation} from "react-i18next";
 
 function QuantityEditor() {
     const [showAction, setShowAction] = useState<number>(1);
+    const [showPerOrder, setShowPerOrder] = useState<boolean[]>([]);
     const {t} = useTranslation();
+    const handleChange = (index: number) => {
+        setShowPerOrder(prevState => {
+            const newState = {...prevState};
+            newState[index] = !newState[index];
+            return newState;
+        })
+    }
 
     return <Grid container spacing={5}>
         <Grid item xs={12}>
             <CHeading>{t('quantity')}</CHeading>
         </Grid>
-        <Grid container item xs={12} spacing={2}>
+        <Grid container item xs={12} spacing={3}>
             <Grid item xs={12}>
                 <Grid container item xs={12} alignItems={"center"} justify={"space-between"}>
                     <CLabel>{t('increasedBy')}</CLabel>
@@ -35,7 +43,7 @@ function QuantityEditor() {
                 </Collapse>
             </Grid>
         </Grid>
-        <Grid container item xs={12} spacing={2}>
+        <Grid container item xs={12} spacing={3}>
             <Grid item xs={12}>
                 <Grid container item xs={12} alignItems={"center"} justify={"space-between"}>
                     <CLabel>{t('decreasedBy')}</CLabel>
@@ -54,7 +62,7 @@ function QuantityEditor() {
                 </Collapse>
             </Grid>
         </Grid>
-        <Grid container item xs={12} spacing={2}>
+        <Grid container item xs={12} spacing={3}>
             <Grid item xs={12}>
                 <Grid container item xs={12} alignItems={"center"} justify={"space-between"}>
                     <CLabel>{t('replacedBy')}</CLabel>
@@ -72,10 +80,49 @@ function QuantityEditor() {
                     </Grid>
                 </Collapse>
             </Grid>
+        </Grid>
+        <Grid container item xs={12} spacing={3}>
             <Grid item xs={12}>
-                <CLabel>{t('selectedProducts')}</CLabel>
+                <Grid container item xs={12} alignItems={"center"} justify={"space-between"}>
+                    <CLabel>{t('minimumQuantity')}</CLabel>
+                    <CCheckbox checked={showPerOrder[0]}  onChange={() => handleChange(0)}></CCheckbox>
+                </Grid>
+            </Grid>
+            <Grid item xs={12}>
+                <Collapse in={showPerOrder[0]}>
+                    <Grid container item xs={12} alignItems={"center"}>
+                        <CInput type={"number"}></CInput>
+                        <CLabel style={{margin: '0 1rem 0 0.5rem'}}>{t('items')}</CLabel>
+                        <Grid item>
+                            <CButton>{t('apply')}</CButton>
+                        </Grid>
+                    </Grid>
+                </Collapse>
             </Grid>
         </Grid>
+        <Grid container item xs={12} spacing={3}>
+            <Grid item xs={12}>
+                <Grid container item xs={12} alignItems={"center"} justify={"space-between"}>
+                    <CLabel>{t('maximumQuantity')}</CLabel>
+                    <CCheckbox checked={showPerOrder[1]}  onChange={() => handleChange(1)}></CCheckbox>
+                </Grid>
+            </Grid>
+            <Grid item xs={12}>
+                <Collapse in={showPerOrder[1]}>
+                    <Grid container item xs={12} alignItems={"center"}>
+                        <CInput type={"number"}></CInput>
+                        <CLabel style={{margin: '0 1rem 0 0.5rem'}}>{t('items')}</CLabel>
+                        <Grid item>
+                            <CButton>{t('apply')}</CButton>
+                        </Grid>
+                    </Grid>
+                </Collapse>
+            </Grid>
+        </Grid>
+        <Grid item xs={12}>
+            <CLabel>{t('selectedProducts')}</CLabel>
+        </Grid>
+
     </Grid>
 }
 

@@ -1,10 +1,10 @@
 import {Grid, makeStyles, MenuItem} from "@material-ui/core";
-import CSelect from "./common/CSelect";
+import CSelect from "../common/CSelect";
 import styled from "styled-components";
-import CTextarea from "./common/CTextarea";
-import CButton from "./common/CButton";
-import CLabel from "./common/CLabel";
-import CHeading from "./common/CHeading";
+import CTextarea from "../common/CTextarea";
+import CButton from "../common/CButton";
+import CLabel from "../common/CLabel";
+import CHeading from "../common/CHeading";
 import {useTranslation} from "react-i18next";
 
 const Label = styled.h6`

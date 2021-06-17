@@ -11,10 +11,10 @@ type Props = {
 }
 
 interface SelectProps {
-    value?: string,
+    value?: string | string[],
     style?: CSSProperties,
     onChange: (value: any) => void,
-    children: ReactElement[],
+    children: ReactElement[] | ReactElement,
     multiple?: boolean
 }
 

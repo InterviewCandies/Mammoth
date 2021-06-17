@@ -66,8 +66,8 @@ function Collection() {
     return <Grid container direction={"column"} spacing={4} style={{position: 'fixed'}}>
         <Grid item xs={3}>
             <CBox>
-                <Icon style={{color: theme.primary}}>
-                    <PermMedia/>
+                <Icon>
+                    <PermMedia style={{color:theme.primary}}/>
                 </Icon>
                 <CHeading>{t('collection')}</CHeading>
             </CBox>

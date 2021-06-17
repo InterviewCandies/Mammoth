@@ -1,11 +1,12 @@
 import {Collapse, Grid, makeStyles, MenuItem} from "@material-ui/core";
-import CHeading from "./common/CHeading";
-import CSelect from "./common/CSelect";
-import CLabel from "./common/CLabel";
-import CButton from "./common/CButton";
-import CCheckbox from "./common/CCheckbox";
+import CHeading from "../common/CHeading";
+import CSelect from "../common/CSelect";
+import CLabel from "../common/CLabel";
+import CButton from "../common/CButton";
+import CCheckbox from "../common/CCheckbox";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
+import CTextarea from "../common/CTextarea";
 
 const useStyles = makeStyles(() => ({
     right: {
@@ -35,11 +36,29 @@ function DeliveryEditor() {
         </Grid>
         <Grid container item xs={12} spacing={2}>
             <Grid container item xs={12} justify={"space-between"} alignItems={"center"}>
-                <CLabel>{t('shippingMethod')}</CLabel>
+                <CLabel>{t('shippingInfo')}</CLabel>
                 <CCheckbox checked={show[0]} onChange={() => handleChange(0)} ></CCheckbox>
             </Grid>
             <Grid item xs={12}>
                 <Collapse in={show[0]}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                           <CTextarea></CTextarea>
+                        </Grid>
+                        <Grid item xs={12} className={classes.right} >
+                            <CButton>{t('apply')}</CButton>
+                        </Grid>
+                    </Grid>
+                </Collapse>
+            </Grid>
+        </Grid>
+        <Grid container item xs={12} spacing={2}>
+            <Grid container item xs={12} justify={"space-between"} alignItems={"center"}>
+                <CLabel>{t('shippingMethod')}</CLabel>
+                <CCheckbox checked={show[1]} onChange={() => handleChange(1)} ></CCheckbox>
+            </Grid>
+            <Grid item xs={12}>
+                <Collapse in={show[1]}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <CSelect value={shippingMethod} onChange={(value)=> setShippingMethod(value)} style={{width:"100%"}}>
@@ -64,10 +83,10 @@ function DeliveryEditor() {
         <Grid container item xs={12} spacing={2}>
             <Grid item xs={12} container justify={"space-between"}>
                 <CLabel>{t('shippingScope')}</CLabel>
-                <CCheckbox checked={show[1]} onChange={()=> handleChange(1)}></CCheckbox>
+                <CCheckbox checked={show[2]} onChange={()=> handleChange(2)}></CCheckbox>
             </Grid>
             <Grid item xs={12}>
-                <Collapse in={show[1]}>
+                <Collapse in={show[2]}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <CSelect value={shippingScope} onChange={(value) => setShippingScope(value)} style={{width:"100%"}}>
@@ -86,10 +105,10 @@ function DeliveryEditor() {
         <Grid container item xs={12} spacing={2}>
             <Grid item xs={12} container justify={"space-between"}>
                 <CLabel>{t('shippingFeeType')}</CLabel>
-                <CCheckbox checked={show[2]} onChange={()=>handleChange(2)}></CCheckbox>
+                <CCheckbox checked={show[3]} onChange={()=>handleChange(3)}></CCheckbox>
             </Grid>
             <Grid item xs={12}>
-                <Collapse in={show[2]}>
+                <Collapse in={show[3]}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <CSelect value={shippingFeeType} onChange={(value) => setShippingFeeType(value)} style={{width:"100%"}}>

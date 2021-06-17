@@ -59,5 +59,8 @@ export const TRANSLATION_VN = {
     shippingScope: "Quy mô vận chuyển",
     shippingFeeType: "Loại phí vận chuyển",
     productCondition: "Tình trạng sản phẩm",
-    material: "Chất liệu"
+    material: "Chất liệu",
+    shippingInfo: "Thông tin vận chuyển",
+    minimumQuantity: "Số lượng tối thiểu trên một đơn hàng",
+    maximumQuantity: "Số lượng tối đa trên một đơn hàng"
 }

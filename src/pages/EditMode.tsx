@@ -3,17 +3,17 @@ import {Button, ButtonGroup, Container, Grid, makeStyles, Select} from "@materia
 import Header from "../components/common/Header";
 import Layout from "../components/common/Layout";
 import EditMenu from "../components/common/EditMenu";
-import CategoryEditor from "../components/CategoryEditor";
-import TagsEditor from "../components/TagsEditor";
-import DescriptionEditor from "../components/DescriptionEditor";
-import PriceEditor from "../components/PriceEditor";
-import TaxEditor from "../components/TaxEditor";
-import QuantityEditor from "../components/QuantityEditor";
-import DiscountEditor from "../components/DiscountEditor";
-import SupplierEditor from "../components/SupplierEditor";
-import DisplayEditor from "../components/DisplayEditor";
-import DeliveryEditor from "../components/DeliveryEditor";
-import OptionsEditor from "../components/OptionsEditor";
+import CategoryEditor from "../components/editors/CategoryEditor";
+import TagsEditor from "../components/editors/TagsEditor";
+import DescriptionEditor from "../components/editors/DescriptionEditor";
+import PriceEditor from "../components/editors/PriceEditor";
+import TaxEditor from "../components/editors/TaxEditor";
+import QuantityEditor from "../components/editors/QuantityEditor";
+import DiscountEditor from "../components/editors/DiscountEditor";
+import SupplierEditor from "../components/editors/SupplierEditor";
+import DisplayEditor from "../components/editors/DisplayEditor";
+import DeliveryEditor from "../components/editors/DeliveryEditor";
+import OptionsEditor from "../components/editors/OptionsEditor";
 import {Route} from "react-router-dom";
 const useStyles = makeStyles(() => ({
     root : {

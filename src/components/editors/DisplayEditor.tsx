@@ -1,9 +1,9 @@
 import {Grid} from "@material-ui/core";
-import CHeading from "./common/CHeading";
-import CLabel from "./common/CLabel";
-import CCheckbox from "./common/CCheckbox";
+import CHeading from "../common/CHeading";
+import CLabel from "../common/CLabel";
+import CCheckbox from "../common/CCheckbox";
 import {useState} from "react";
-import CButton from "./common/CButton";
+import CButton from "../common/CButton";
 import {useTranslation} from "react-i18next";
 
 function DisplayEditor() {

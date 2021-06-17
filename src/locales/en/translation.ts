@@ -59,5 +59,8 @@ export const TRANSLATION_EN = {
     shippingScope: "Shipping scope",
     shippingFeeType: "Shipping fee type",
     productCondition: "Product condition",
-    material: "Material"
+    material: "Material",
+    shippingInfo: "Shipping info",
+    minimumQuantity: "Minimum quantity per order",
+    maximumQuantity: "Maximum quantity per order"
 }

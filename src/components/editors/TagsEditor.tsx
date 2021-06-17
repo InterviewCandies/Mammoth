@@ -1,11 +1,11 @@
 import {Collapse, Grid, MenuItem, Typography} from "@material-ui/core";
-import CSelect from "./common/CSelect";
-import CButton from "./common/CButton";
+import CSelect from "../common/CSelect";
+import CButton from "../common/CButton";
 import styled from "styled-components";
-import CCheckbox from "./common/CCheckbox";
+import CCheckbox from "../common/CCheckbox";
 import {useState} from "react";
-import CLabel from "./common/CLabel";
-import CHeading from "./common/CHeading";
+import CLabel from "../common/CLabel";
+import CHeading from "../common/CHeading";
 import {useTranslation} from "react-i18next";
 
 function TagsEditor() {

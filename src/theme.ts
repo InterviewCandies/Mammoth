@@ -19,7 +19,7 @@ export const lightTheme: ThemeModel = {
 export const darkTheme: ThemeModel = {
     body: '#363333',
     text: '#fff',
-    table: '#000',
+    table: '#272121',
     button: '#414141',
     input: '#272121',
     inputText: 'rgba(255, 255, 255, 0.5)',

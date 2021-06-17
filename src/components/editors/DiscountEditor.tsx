@@ -1,11 +1,11 @@
 import {useState} from "react";
 import {Collapse, Grid, MenuItem} from "@material-ui/core";
-import CHeading from "./common/CHeading";
-import CLabel from "./common/CLabel";
-import CCheckbox from "./common/CCheckbox";
-import CInput from "./common/CInput";
-import CSelect from "./common/CSelect";
-import CButton from "./common/CButton";
+import CHeading from "../common/CHeading";
+import CLabel from "../common/CLabel";
+import CCheckbox from "../common/CCheckbox";
+import CInput from "../common/CInput";
+import CSelect from "../common/CSelect";
+import CButton from "../common/CButton";
 import {useTranslation} from "react-i18next";
 
 function DiscountEditor() {

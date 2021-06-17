@@ -1,11 +1,11 @@
 import {Collapse, Grid, MenuItem} from "@material-ui/core";
-import CHeading from "./common/CHeading";
-import CSelect from "./common/CSelect";
-import CButton from "./common/CButton";
+import CHeading from "../common/CHeading";
+import CSelect from "../common/CSelect";
+import CButton from "../common/CButton";
 import {useState} from "react";
-import CCheckbox from "./common/CCheckbox";
-import CLabel from "./common/CLabel";
-import CInput from "./common/CInput";
+import CCheckbox from "../common/CCheckbox";
+import CLabel from "../common/CLabel";
+import CInput from "../common/CInput";
 import {useTranslation} from "react-i18next";
 
 function PriceEditor() {

@@ -1,9 +1,9 @@
 import {Grid, MenuItem} from "@material-ui/core";
-import CHeading from "./common/CHeading";
-import CLabel from "./common/CLabel";
-import CSelect from "./common/CSelect";
-import CButton from "./common/CButton";
-import CInput from "./common/CInput";
+import CHeading from "../common/CHeading";
+import CLabel from "../common/CLabel";
+import CSelect from "../common/CSelect";
+import CButton from "../common/CButton";
+import CInput from "../common/CInput";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
 
