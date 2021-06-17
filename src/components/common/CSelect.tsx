@@ -14,7 +14,8 @@ interface SelectProps {
     value?: string,
     style?: CSSProperties,
     onChange: (value: any) => void,
-    children: ReactElement[]
+    children: ReactElement[],
+    multiple?: boolean
 }
 
 const useOutlinedInputStyles = makeStyles(theme => ({
@@ -53,7 +54,7 @@ const useStyles = makeStyles<Theme, Props>(()=> ({
     }
 }))
 
-function CSelect({value, onChange, children, style} : SelectProps) {
+function CSelect({value, onChange, children, style, multiple} : SelectProps) {
     const theme = useContext(ThemeContext)
     const classes = useStyles({theme});
     const outlinedInputClasses = useOutlinedInputStyles();
@@ -70,6 +71,7 @@ function CSelect({value, onChange, children, style} : SelectProps) {
                  className={classes.root}
                  value={value}
                  onChange={e => onChange(e?.target?.value)}
+                 multiple={multiple}
         >
             {children}
         </Select>

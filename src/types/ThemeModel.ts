@@ -12,7 +12,8 @@ export default interface ThemeModel {
     gradient: string,
     primary: string,
     disabled: string,
-    secondary: string
+    secondary: string,
+    table: string
 }
 
 

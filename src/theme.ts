@@ -12,12 +12,14 @@ export const lightTheme: ThemeModel = {
     primary: '#8b9dc3',
     gradient: '#dfe3ee',
     disabled: '#9e9e9e',
-    secondary: '#f7f7f7'
+    secondary: '#f7f7f7',
+    table: '#fff',
 }
 
 export const darkTheme: ThemeModel = {
     body: '#363333',
     text: '#fff',
+    table: '#000',
     button: '#414141',
     input: '#272121',
     inputText: 'rgba(255, 255, 255, 0.5)',

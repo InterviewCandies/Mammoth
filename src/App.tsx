@@ -9,6 +9,7 @@ import {darkTheme, lightTheme} from "./theme";
 import {GlobalStyles} from "./global";
 import useDarkMode from "./hooks/useDarkMode";
 import {Checkbox} from "@material-ui/core";
+import LoadingProvider from "./provider/LoadingProvider";
 
 function App() {
     const [theme, toggleTheme] = useDarkMode();
@@ -16,6 +17,7 @@ function App() {
 
     return (
     <ThemeProvider theme={mode}>
+        <LoadingProvider>
         <>
             <GlobalStyles/>
             <Router>
@@ -31,6 +33,7 @@ function App() {
                     </Switch>
             </Router>
         </>
+        </LoadingProvider>
     </ThemeProvider>
     );
 }

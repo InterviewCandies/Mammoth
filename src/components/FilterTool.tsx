@@ -6,13 +6,16 @@ import CInput from "./common/CInput";
 import CSelect from "./common/CSelect";
 import CLabel from "./common/CLabel";
 import useDarkMode from "../hooks/useDarkMode";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import styled from "styled-components";
 import CSwitcher from "./common/CSwitcher";
 import {Filter, FilterList, Search, SearchOutlined, Subject} from "@material-ui/icons";
 import CBox from "./common/CBox";
 import {darkTheme, lightTheme} from "../theme";
 import {useTranslation} from "react-i18next";
+import DataTable from "./common/CTable";
+import CTable from "./common/CTable";
+import {LoadingContext} from "../provider/LoadingProvider";
 
 const useStyles = makeStyles((theme)=>({
     root: {
@@ -37,6 +40,50 @@ const Text = styled.h4`
    margin: 0;
 `
 
+
+const columns = [
+    {
+        name: "name",
+        label: "Name",
+        options: {
+            filter: true,
+            sort: true,
+        }
+    },
+    {
+        name: "company",
+        label: "Company",
+        options: {
+            filter: true,
+            sort: false,
+        }
+    },
+    {
+        name: "city",
+        label: "City",
+        options: {
+            filter: true,
+            sort: false,
+        }
+    },
+    {
+        name: "state",
+        label: "State",
+        options: {
+            filter: true,
+            sort: false,
+        }
+    },
+];
+
+const data = [
+    { name: "Joe James", company: "Test Corp", city: "Yonkers", state: "NY" },
+    { name: "John Walsh", company: "Test Corp", city: "Hartford", state: "CT" },
+    { name: "Bob Herm", company: "Test Corp", city: "Tampa", state: "FL" },
+    { name: "James Houston", company: "Test Corp", city: "Dallas", state: "TX" },
+];
+
+
 function FilterTool() {
     const classes = useStyles();
     const [theme, toggleTheme] = useDarkMode();
@@ -44,6 +91,7 @@ function FilterTool() {
     const [filterType, setFilterType] = useState<number>(0);
     const currentMode = theme === 'light' ? lightTheme : darkTheme;
     const {t} = useTranslation();
+    const {turnOnLoading} = useContext(LoadingContext);
 
     const handleChange = async (index: number) => {
         await setFilters(prevState => {
@@ -292,9 +340,12 @@ function FilterTool() {
         </Grid>
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <CButton style={{marginRight: "1rem", padding: "1rem 3rem"}}>{t('applyFilters')}</CButton>
+                <CButton style={{marginRight: "1rem", padding: "1rem 3rem"}} onClick={()=> turnOnLoading(true)}>{t('applyFilters')}</CButton>
                 <CButton style={{padding: "1rem 3rem"}}>{t('resetFilters')}</CButton>
             </Grid>
+        </Grid>
+        <Grid item xs={12}>
+            <CTable columns={columns} data={data} title={"Result"}></CTable>
         </Grid>
     </div>
 }
