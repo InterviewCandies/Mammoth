@@ -3,6 +3,7 @@ import {createMuiTheme, MuiThemeProvider} from "@material-ui/core";
 import ThemeModel from "../../types/ThemeModel";
 import {useContext} from "react";
 import {ThemeContext} from "styled-components";
+import ProductModel from "../../types/ProductModel";
 
 const options: any = {
     filterType: 'checkbox',
@@ -107,7 +108,7 @@ const getMuiTheme = (theme : ThemeModel) =>
         }
     });
 
-export default function CTable({columns, data, title} : {title: string, columns: MUIDataTableColumnDef[], data:  Record<string, unknown>[]}) {
+export default function CTable({columns, data, title} : {title: string, columns: MUIDataTableColumnDef[], data:  ProductModel[]}) {
     const theme = useContext((ThemeContext));
 
     return <MuiThemeProvider theme={getMuiTheme(theme)}>

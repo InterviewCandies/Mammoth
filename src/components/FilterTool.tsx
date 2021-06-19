@@ -1,11 +1,7 @@
 import {Button, ButtonGroup, Collapse, Grid, Icon, makeStyles, MenuItem, Switch, Select} from "@material-ui/core";
 import CHeading from "./common/CHeading";
 import CButton from "./common/CButton";
-import CCheckbox from "./common/CCheckbox";
-import CInput from "./common/CInput";
-import CSelect from "./common/CSelect";
-import CLabel from "./common/CLabel";
-import useDarkMode from "../hooks/useDarkMode";
+import * as _ from "lodash"
 import {useContext, useEffect, useState} from "react";
 import styled, {ThemeContext} from "styled-components";
 import CSwitcher from "./common/CSwitcher";
@@ -27,6 +23,10 @@ import DiscountFilter from "./filters/DiscountFilter";
 import ImageFilter from "./filters/ImageFilter";
 import DateFilter from "./filters/DateFilter";
 import OptionFilter from "./filters/OptionFilter";
+import productService from "../services/Product";
+import product from "../mocks/product";
+import ProductModel from "../types/ProductModel";
+import {useAppDispatch, useAppSelector} from "../hooks";
 
 const useStyles = makeStyles((theme)=>({
     root: {
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme)=>({
 
 const columns = [
     {
-        name: "name",
+        name: "productName",
         label: "Name",
         options: {
             filter: true,
@@ -47,38 +47,97 @@ const columns = [
         }
     },
     {
-        name: "company",
-        label: "Company",
+        name: "price",
+        label: "Price",
+        options: {
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "discount",
+        label: "Discount",
+        options: {
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "quantity",
+        label: "Quantity",
+        options: {
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "category",
+        label: "Category",
+        options: {
+            filter: false,
+            sort: true,
+        }
+    },
+    {
+        name: "display",
+        label: "Display",
         options: {
             filter: true,
             sort: false,
         }
     },
     {
-        name: "city",
-        label: "City",
+        name: "image",
+        label: "Image",
         options: {
             filter: true,
             sort: false,
         }
     },
     {
-        name: "state",
-        label: "State",
+        name: "uploadedDate",
+        label: "Uploaded Date",
         options: {
-            filter: true,
-            sort: false,
+            filter: false,
+            sort: true,
         }
     },
 ];
 
-const data = [
-    { name: "Joe James", company: "Test Corp", city: "Yonkers", state: "NY" },
-    { name: "John Walsh", company: "Test Corp", city: "Hartford", state: "CT" },
-    { name: "Bob Herm", company: "Test Corp", city: "Tampa", state: "FL" },
-    { name: "James Houston", company: "Test Corp", city: "Dallas", state: "TX" },
-];
 
+const filtering = (item: ProductModel, type: string, value: unknown ) =>  {
+
+    if (type == 'category' || type == 'brand' || type == 'supplier') {
+        const target = (value as ProductModel[]).map(item => item.id);
+        return _.includes(target, item[type]);
+    }
+    else if (type == 'tags') {
+        const target = (value as ProductModel[]).map(item => item.id);
+        return _.intersection(target, item[type]).length != 0;
+    }
+    else if (type == 'price' || type == 'quantity') {
+        // @ts-ignore
+        return  value.min <= item[type] && item[type] <= value.max;
+    }
+    else if (type == 'discount' || type == 'image') {
+        return Boolean(item[type]) == value;
+    }
+    else if (type == 'uploadedDate') {
+        // @ts-ignore
+        return Date.parse(value.start) <= Date.parse(item[type]) && Date.parse(item[type]) <= Date.parse(value.end);
+    }
+    else if (type == 'options') {
+        return _.intersection(item[type], value as []).length !=0;
+    }
+    return false;
+}
+
+const applyFilters = (item: ProductModel, filters: Record<string, unknown>) => {
+    for(let [key, value] of Object.entries(filters)) {
+        if (!filtering(item, key, value)) return false;
+    }
+    return true;
+}
 
 function FilterTool() {
     const classes = useStyles();
@@ -86,6 +145,25 @@ function FilterTool() {
     const theme = useContext(ThemeContext)
     const {t} = useTranslation();
     const {turnOnLoading} = useContext(LoadingContext);
+    const [products, setProducts] = useState<ProductModel[]>([]);
+    const isChecked = useAppSelector(state => state.filter.checkbox);
+    const filter = useAppSelector(state => state.filter.filter);
+    const [filteredProducts, setFilteredProducts] = useState<ProductModel[]>(products)
+
+    useEffect(() => {
+        const data = productService.fetch();
+        setProducts(data);
+    }, [])
+
+
+    const handleFilters = () => {
+        const activeFilters: Record<string, unknown> = {};
+        for(let [key, value] of Object.entries(filter)) {
+            if (isChecked[key]) activeFilters[key] = value;
+        }
+        const filteredProducts = products.filter(item => applyFilters(item, activeFilters));
+        setFilteredProducts(filteredProducts);
+    }
 
     return <div className={classes.root}>
         <Grid container justify={"space-between"}>
@@ -113,12 +191,12 @@ function FilterTool() {
         <OptionFilter/>
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <CButton style={{marginRight: "1rem", padding: "1rem 3rem"}} onClick={()=> turnOnLoading(true)}>{t('applyFilters')}</CButton>
+                <CButton style={{marginRight: "1rem", padding: "1rem 3rem"}} onClick={()=> handleFilters()}>{t('applyFilters')}</CButton>
                 <CButton style={{padding: "1rem 3rem"}}>{t('resetFilters')}</CButton>
             </Grid>
         </Grid>
         <Grid item xs={12}>
-            <CTable columns={columns} data={data} title={"Result"}></CTable>
+            <CTable columns={columns} data={filteredProducts} title={"Result"}></CTable>
         </Grid>
     </div>
 }

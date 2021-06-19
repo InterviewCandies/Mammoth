@@ -2,29 +2,33 @@ import {useTranslation} from "react-i18next";
 import {useContext, useEffect, useState} from "react";
 import {ThemeContext} from "styled-components";
 import RootStateModel from "../../types/RootStateModel";
-import categoryService from "../../services/Category";
+import tagsService from "../../services/Tag";
 import {Collapse, Grid} from "@material-ui/core";
 import CCheckbox from "../common/CCheckbox";
 import CMultipleSelect from "../common/CMultipleSelect";
 import CAccordition from "../common/CAccordition";
+import {addFilter} from "../../features/filter";
+import {useAppDispatch} from "../../hooks";
 
 function TagFilter() {
-    const {t} = useTranslation();
-    const [isShow, setShow] = useState<boolean>(false);
-    const theme = useContext(ThemeContext);
-    const [categories, setCategories] = useState<RootStateModel[]>([]);
-    const [currentCategories, setCurrentCategories] = useState<RootStateModel[]>([])
+    const [tags, setTags] = useState<RootStateModel[]>([]);
+    const [currentTags, setCurrentTags] = useState<RootStateModel[]>([]);
+    const dispatch = useAppDispatch();
 
     useEffect(()=> {
         async function fetchData() {
-            const data = await categoryService.fetch();
-            setCategories(data);
+            const data = await tagsService.fetch();
+            setTags(data);
         }
         fetchData();
     }, [])
 
-    return  categories.length ? <CAccordition title={'tags'}>
-        <CMultipleSelect setValue={setCurrentCategories} options={categories}></CMultipleSelect>
+    useEffect(() => {
+        dispatch(addFilter({key: 'tags', value: currentTags}));
+    }, [currentTags])
+
+    return  tags.length ? <CAccordition title={'tags'}>
+        <CMultipleSelect setValue={setCurrentTags} options={tags}></CMultipleSelect>
     </CAccordition> : null
 }
 

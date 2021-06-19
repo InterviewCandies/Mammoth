@@ -22,7 +22,7 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) =>
             opacity: "0.8"
         },
         paper: {
-            backgroundColor: props => props.theme.button,
+            backgroundColor: props => props.theme.paper,
             padding: "0.75rem",
             borderRadius: "4px"
         }
@@ -40,7 +40,7 @@ function LoadingProvider({children} : {children: ReactElement}) {
     return <LoadingContext.Provider value={{loading, turnOnLoading}}>
         <Backdrop className={classes.backdrop} open={loading}>
             <Paper square={true} className={classes.paper} elevation={5}>
-                <CircularProgress size={35} style={{color: theme.buttonText}}/>
+                <CircularProgress size={35} style={{color: theme.inputText}}/>
             </Paper>
         </Backdrop>
         {children}

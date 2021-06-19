@@ -14,6 +14,7 @@ export const lightTheme: ThemeModel = {
     disabled: '#9e9e9e',
     secondary: '#f7f7f7',
     table: '#fff',
+    paper: '#fff'
 }
 
 export const darkTheme: ThemeModel = {
@@ -29,5 +30,7 @@ export const darkTheme: ThemeModel = {
     primary: '#8b9dc3',
     gradient: '#272121',
     disabled: '#9e9e9e',
-    secondary: '#9e9e9e'
+    secondary: '#9e9e9e',
+    paper: '#414141',
+
 }

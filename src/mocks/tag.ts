@@ -1,6 +1,6 @@
 import RootStateModel from "../types/RootStateModel";
 
-const supplier: Record<string, RootStateModel> = {
+const tag: Record<string, RootStateModel> = {
     "0": {
         id: "0",
         name: "ABC"
@@ -11,4 +11,4 @@ const supplier: Record<string, RootStateModel> = {
     }
 }
 
-export default supplier;
+export default tag;

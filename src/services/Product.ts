@@ -1,7 +1,11 @@
+import mocks from "../mocks/product"
+import ProductModel from "../types/ProductModel";
+
 class ProductService {
-    fetch() {
-        return {}
+    fetch() : ProductModel[] {
+        return mocks;
     }
+
     update() {
 
     }

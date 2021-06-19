@@ -10,6 +10,8 @@ import {GlobalStyles} from "./global";
 import useDarkMode from "./hooks/useDarkMode";
 import {Checkbox} from "@material-ui/core";
 import LoadingProvider from "./provider/LoadingProvider";
+import {Provider} from "react-redux";
+import {store} from "./store"
 
 function App() {
     const [theme, toggleTheme] = useDarkMode();
@@ -17,23 +19,25 @@ function App() {
 
     return (
     <ThemeProvider theme={mode}>
-        <LoadingProvider>
-        <>
-            <GlobalStyles/>
-            <Router>
-                    <Switch>
-                        <Layout theme={theme} toggleTheme={toggleTheme}>
-                            <>
-                              <Route path={"/select"} component={SelectMode}></Route>
-                              <Route path={"/edit"} component={EditMode}></Route>
-                              <Redirect to={"/select"}></Redirect>
-                            </>
-                        </Layout>
+        <Provider store={store} >
+            <LoadingProvider>
+                <>
+                    <GlobalStyles/>
+                    <Router>
+                        <Switch>
+                            <Layout theme={theme} toggleTheme={toggleTheme}>
+                                <>
+                                    <Route path={"/select"} component={SelectMode}></Route>
+                                    <Route path={"/edit"} component={EditMode}></Route>
+                                    <Redirect to={"/select"}></Redirect>
+                                </>
+                            </Layout>
 
-                    </Switch>
-            </Router>
-        </>
-        </LoadingProvider>
+                        </Switch>
+                    </Router>
+                </>
+            </LoadingProvider>
+        </Provider>
     </ThemeProvider>
     );
 }

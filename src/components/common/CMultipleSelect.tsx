@@ -141,11 +141,12 @@ const useStyles = makeStyles<Theme, Props>(() => ({
 
 interface SelectProps {
     allowAdd?: boolean,
+    onAdd?: () => void,
     setValue: (value : RootStateModel[]) => void,
     options: RootStateModel[]
 }
 
-export default function CMultipleSelect({allowAdd, setValue, options} : SelectProps) {
+export default function CMultipleSelect({allowAdd, setValue, options, onAdd} : SelectProps) {
     const {
         getRootProps,
         getInputLabelProps,
@@ -188,7 +189,7 @@ export default function CMultipleSelect({allowAdd, setValue, options} : SelectPr
                                 <CheckIcon fontSize="small" />
                             </li>
                         ))}
-                        {allowAdd && <Button variant={"text"} className={classes.addButt}>
+                        {allowAdd && <Button variant={"text"} className={classes.addButt} onClick={onAdd}>
                             <AddCircle style={{marginRight: '0.5rem', color: theme.inputText}}></AddCircle>
                             Add
                         </Button>}

@@ -13,7 +13,8 @@ export default interface ThemeModel {
     primary: string,
     disabled: string,
     secondary: string,
-    table: string
+    table: string,
+    paper: string
 }
 
 
