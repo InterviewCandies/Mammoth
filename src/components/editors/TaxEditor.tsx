@@ -6,10 +6,31 @@ import CButton from "../common/CButton";
 import CInput from "../common/CInput";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
+import CTable from "../common/CTable";
+import {useAppSelector} from "../../hooks";
 
 function TaxEditor() {
     const [taxType, setTaxType] = useState<string>('A')
     const {t} = useTranslation();
+    const selectedProducts = useAppSelector(state => state.select.selection);
+    const columns = [
+        {
+            name: "id",
+            label: "ID",
+        },
+        {
+            name: "productName",
+            label: t('productName'),
+        },
+        {
+            name: "taxType",
+            label: t('taxType'),
+        },
+        {
+            name: "taxAmount",
+            label: t('taxAmount'),
+        },
+    ]
 
     return <Grid container spacing={5}>
         <Grid item xs={12}>
@@ -38,7 +59,7 @@ function TaxEditor() {
             </Grid>
         </Grid>
         <Grid item xs={12}>
-            <CLabel>{t('selectedProducts')}</CLabel>
+            <CTable title={t('selectedProducts')} columns={columns} data={selectedProducts}></CTable>
         </Grid>
     </Grid>
 }

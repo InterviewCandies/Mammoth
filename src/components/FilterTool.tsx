@@ -39,6 +39,14 @@ const useStyles = makeStyles((theme)=>({
 
 const columns = [
     {
+        name: "id",
+        label: "ID",
+        options: {
+            filter: true,
+            sort: false,
+        }
+    },
+    {
         name: "productName",
         label: "Name",
         options: {
@@ -196,7 +204,7 @@ function FilterTool() {
             </Grid>
         </Grid>
         <Grid item xs={12}>
-            <CTable columns={columns} data={filteredProducts} title={"Result"}></CTable>
+            <CTable columns={columns} data={filteredProducts} title={"Result"} selectable={true}></CTable>
         </Grid>
     </div>
 }

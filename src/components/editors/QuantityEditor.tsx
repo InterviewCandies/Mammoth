@@ -7,11 +7,37 @@ import CInput from "../common/CInput";
 import CSelect from "../common/CSelect";
 import CButton from "../common/CButton";
 import {useTranslation} from "react-i18next";
+import CTable from "../common/CTable";
+import {useAppSelector} from "../../hooks";
 
 function QuantityEditor() {
     const [showAction, setShowAction] = useState<number>(1);
     const [showPerOrder, setShowPerOrder] = useState<boolean[]>([]);
     const {t} = useTranslation();
+    const selectedProducts = useAppSelector(state => state.select.selection);
+    const columns = [
+        {
+            name: "id",
+            label: "ID",
+        },
+        {
+            name: "productName",
+            label: t('productName'),
+        },
+        {
+            name: "quantity",
+            label: t('quantity'),
+        },
+        {
+            name: "minimumQuantity",
+            label: t('minimumQuantity'),
+        },
+        {
+            name: "maximumQuantity",
+            label: t('maximumQuantity'),
+        },
+    ]
+
     const handleChange = (index: number) => {
         setShowPerOrder(prevState => {
             const newState = {...prevState};
@@ -120,7 +146,7 @@ function QuantityEditor() {
             </Grid>
         </Grid>
         <Grid item xs={12}>
-            <CLabel>{t('selectedProducts')}</CLabel>
+            <CTable title={t('selectedProducts')} columns={columns} data={selectedProducts}></CTable>
         </Grid>
 
     </Grid>

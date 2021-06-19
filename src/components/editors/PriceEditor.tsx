@@ -7,11 +7,28 @@ import CCheckbox from "../common/CCheckbox";
 import CLabel from "../common/CLabel";
 import CInput from "../common/CInput";
 import {useTranslation} from "react-i18next";
+import CTable from "../common/CTable";
+import {useAppSelector} from "../../hooks";
 
 function PriceEditor() {
     const [showAction, setShowAction] = useState<number>(1);
     const [unit, setUnit] = useState<string>('VND');
     const {t} = useTranslation();
+    const selectedProducts = useAppSelector(state => state.select.selection);
+    const columns = [
+        {
+            name: "id",
+            label: "ID",
+        },
+        {
+            name: "productName",
+            label: t('productName'),
+        },
+        {
+            name: "price",
+            label: t('price'),
+        },
+    ]
 
     return <Grid container spacing={5}>
         <Grid item xs={12}>
@@ -89,7 +106,7 @@ function PriceEditor() {
                 </Collapse>
             </Grid>
             <Grid item xs={12}>
-                <CLabel>{t('selectedProducts')}</CLabel>
+                <CTable title={t('selectedProducts')} columns={columns} data={selectedProducts}></CTable>
             </Grid>
         </Grid>
     </Grid>

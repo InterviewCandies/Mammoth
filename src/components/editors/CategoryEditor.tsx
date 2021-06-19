@@ -5,6 +5,8 @@ import CButton from "../common/CButton";
 import CHeading from "../common/CHeading";
 import CLabel from "../common/CLabel";
 import {useTranslation} from "react-i18next";
+import {useAppSelector} from "../../hooks";
+import CTable from "../common/CTable";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -20,10 +22,26 @@ const Label = styled.h6`
     font-size: 1rem;
     margin-bottom: 0.5rem;
 `
-
 function CategoryEditor() {
     const classes = useStyles();
     const {t} = useTranslation();
+    const selectedProducts = useAppSelector(state => state.select.selection);
+    const columns = [
+        {
+            name: "id",
+            label: "ID",
+        },
+        {
+            name: "productName",
+            label: t('productName'),
+        },
+        {
+            name: "category",
+            label: "Category",
+        },
+    ]
+
+
 
     return  <Grid container spacing={5} >
         <Grid item xs={12}>
@@ -44,7 +62,7 @@ function CategoryEditor() {
             </Grid>
         </Grid>
         <Grid item xs={12}>
-            <CLabel>{t('selectedProducts')}</CLabel>
+            <CTable title={t('selectedProducts')} columns={columns} data={selectedProducts}></CTable>
         </Grid>
     </Grid>
 }

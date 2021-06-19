@@ -8,7 +8,7 @@ import {
     MenuItem,
     Theme, useTheme
 } from "@material-ui/core";
-import {Cancel, Delete, PermMedia, SearchOutlined} from "@material-ui/icons"
+import {Cancel, CancelSharp, Delete, PermMedia, Remove, SearchOutlined} from "@material-ui/icons"
 import styled, {ThemeContext} from "styled-components";
 import CSelect from "./common/CSelect";
 import CButton from "./common/CButton";
@@ -19,6 +19,8 @@ import {darkTheme, lightTheme} from "../theme";
 import {useContext} from "react";
 import CBox from "./common/CBox";
 import {useTranslation} from "react-i18next";
+import {useAppDispatch, useAppSelector} from "../hooks";
+import {deselectProduct} from "../features/selection";
 
 const Text = styled.h4`
    color: ${({theme}) => theme.text };
@@ -48,7 +50,8 @@ const useStyles = makeStyles<Theme, Props>((theme)=> ({
         overflowY: "scroll"
     },
     icon: {
-        color: props => props.theme.inputText
+        color: props => props.theme.inputText,
+        fontSize: "0.75rem"
     },
     right: {
         display: "flex",
@@ -61,6 +64,8 @@ function Collection() {
     const theme = useContext(ThemeContext)
     const classes = useStyles({theme});
     const muiTheme = useTheme();
+    const selectedProducts = useAppSelector(state => state.select.selection);
+    const dispatch = useAppDispatch();
     const {t} = useTranslation()
 
     return <Grid container direction={"column"} spacing={4} style={{position: 'fixed'}}>
@@ -89,54 +94,15 @@ function Collection() {
                 <Text>{t('selectedProducts')}</Text>
             </Grid>
             <List className={classes.items}>
-                <ListItem>
-                    <ListItemText>element white dress</ListItemText>
-                    <ListItemSecondaryAction>
-                        <IconButton edge="end" aria-label="delete" className={classes.icon}>
-                            <Cancel></Cancel>
-                        </IconButton>
-                    </ListItemSecondaryAction>
-                </ListItem>
-                <ListItem>
-                    <ListItemText>element white dress</ListItemText>
-                    <ListItemSecondaryAction>
-                        <IconButton edge="end" aria-label="delete" className={classes.icon}>
-                            <Cancel></Cancel>
-                        </IconButton>
-                    </ListItemSecondaryAction>
-                </ListItem>
-                <ListItem>
-                    <ListItemText>element white dress</ListItemText>
-                    <ListItemSecondaryAction>
-                        <IconButton edge="end" aria-label="delete" className={classes.icon}>
-                            <Cancel></Cancel>
-                        </IconButton>
-                    </ListItemSecondaryAction>
-                </ListItem>
-                <ListItem>
-                    <ListItemText>element white dress</ListItemText>
-                    <ListItemSecondaryAction>
-                        <IconButton edge="end" aria-label="delete" className={classes.icon}>
-                            <Cancel></Cancel>
-                        </IconButton>
-                    </ListItemSecondaryAction>
-                </ListItem>
-                <ListItem>
-                    <ListItemText>element white dress</ListItemText>
-                    <ListItemSecondaryAction>
-                        <IconButton edge="end" aria-label="delete" className={classes.icon}>
-                            <Cancel></Cancel>
-                        </IconButton>
-                    </ListItemSecondaryAction>
-                </ListItem>
-                <ListItem>
-                    <ListItemText>element white dress</ListItemText>
-                    <ListItemSecondaryAction>
-                        <IconButton edge="end" aria-label="delete" className={classes.icon}>
-                            <Cancel></Cancel>
-                        </IconButton>
-                    </ListItemSecondaryAction>
-                </ListItem>
+                {selectedProducts.map(product =>
+                    <ListItem key={product.id}>
+                        <ListItemText>{product.productName}</ListItemText>
+                        <ListItemSecondaryAction>
+                            <IconButton edge="end" aria-label="delete" className={classes.icon} onClick={() => dispatch(deselectProduct(product.id))}>
+                                <Cancel/>
+                            </IconButton>
+                        </ListItemSecondaryAction>
+                </ListItem>)}
             </List>
         </Grid>
     </Grid>

@@ -27,7 +27,8 @@ const products: ProductModel[] = [
         shippingScope: "",
         shippingFeeType: "",
         shippingInfo: "",
-        options: ['red', 'blue']
+        options: ['red', 'blue'],
+        material: "Leather"
     }
 ]
 

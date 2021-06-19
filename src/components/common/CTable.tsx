@@ -1,13 +1,10 @@
-import MUIDataTable, {MUIDataTableColumnDef} from "mui-datatables";
+import MUIDataTable, {MUIDataTableColumnDef, MUIDataTableOptions} from "mui-datatables";
 import {createMuiTheme, MuiThemeProvider} from "@material-ui/core";
 import ThemeModel from "../../types/ThemeModel";
 import {useContext} from "react";
 import {ThemeContext} from "styled-components";
 import ProductModel from "../../types/ProductModel";
-
-const options: any = {
-    filterType: 'checkbox',
-};
+import CCustomToolbarSelect from "./CCustomToolbarSelect";
 
 const getMuiTheme = (theme : ThemeModel) =>
     createMuiTheme({
@@ -108,8 +105,13 @@ const getMuiTheme = (theme : ThemeModel) =>
         }
     });
 
-export default function CTable({columns, data, title} : {title: string, columns: MUIDataTableColumnDef[], data:  ProductModel[]}) {
+export default function CTable({columns, data, title, selectable} : {selectable?: boolean, title: string, columns: MUIDataTableColumnDef[], data:  ProductModel[]}) {
     const theme = useContext((ThemeContext));
+    const options: MUIDataTableOptions = {
+        filterType:  'checkbox',
+        selectableRows: selectable ? 'multiple' : 'none',
+        customToolbarSelect: (selectedRows) => <CCustomToolbarSelect selectedRows={selectedRows} data={data}/>
+    };
 
     return <MuiThemeProvider theme={getMuiTheme(theme)}>
         <MUIDataTable

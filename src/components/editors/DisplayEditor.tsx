@@ -5,10 +5,27 @@ import CCheckbox from "../common/CCheckbox";
 import {useState} from "react";
 import CButton from "../common/CButton";
 import {useTranslation} from "react-i18next";
+import CTable from "../common/CTable";
+import {useAppSelector} from "../../hooks";
 
 function DisplayEditor() {
     const [displayItems, setDisplayItems] = useState<boolean>(true);
     const {t} = useTranslation();
+    const selectedProducts = useAppSelector(state => state.select.selection);
+    const columns = [
+        {
+            name: "id",
+            label: "ID",
+        },
+        {
+            name: "productName",
+            label: t('productName'),
+        },
+        {
+            name: "display",
+            label: t('display'),
+        },
+    ]
 
     return <Grid container spacing={5}>
         <Grid item xs={12}>
@@ -31,7 +48,7 @@ function DisplayEditor() {
             </Grid>
         </Grid>
         <Grid item xs={12}>
-            <CLabel>{t('selectedProducts')}</CLabel>
+            <CTable title={t('selectedProducts')} columns={columns} data={selectedProducts}></CTable>
         </Grid>
     </Grid>
 }

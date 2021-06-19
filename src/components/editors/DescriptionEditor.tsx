@@ -6,6 +6,8 @@ import CButton from "../common/CButton";
 import CLabel from "../common/CLabel";
 import CHeading from "../common/CHeading";
 import {useTranslation} from "react-i18next";
+import CTable from "../common/CTable";
+import {useAppSelector} from "../../hooks";
 
 const Label = styled.h6`
     color: ${({theme}) => theme.buttonText};
@@ -28,6 +30,25 @@ const useStyles = makeStyles(() => ({
 function DescriptionEditor() {
     const classes = useStyles();
     const {t} = useTranslation();
+    const selectedProducts = useAppSelector(state => state.select.selection);
+    const columns = [
+        {
+            name: "id",
+            label: "ID",
+        },
+        {
+            name: "productName",
+            label: t('productName'),
+        },
+        {
+            label: t('summary'),
+            name: "summary",
+        },
+        {
+            label: t('details'),
+            name: "details",
+        },
+    ]
 
     return <Grid container spacing={5}>
         <Grid item xs={12}>
@@ -55,8 +76,8 @@ function DescriptionEditor() {
                 <CButton>{t('apply')}</CButton>
             </Grid>
         </Grid>
-        <Grid container item xs={12}>
-            <CLabel>{t('selectedProducts')}</CLabel>
+        <Grid item xs={12}>
+            <CTable title={t('selectedProducts')} columns={columns} data={selectedProducts}></CTable>
         </Grid>
     </Grid>
 }

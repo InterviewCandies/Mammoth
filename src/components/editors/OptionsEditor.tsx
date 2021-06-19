@@ -6,6 +6,8 @@ import CButton from "../common/CButton";
 import CInput from "../common/CInput";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
+import CTable from "../common/CTable";
+import {useAppSelector} from "../../hooks";
 
 const useStyles = makeStyles(() => ({
     right: {
@@ -19,6 +21,25 @@ function OptionsEditor() {
     const [productCondition, setProductCondition] = useState<string>("N");
     const classes = useStyles();
     const {t} = useTranslation();
+    const selectedProducts = useAppSelector(state => state.select.selection);
+    const columns = [
+        {
+            name: "id",
+            label: "ID",
+        },
+        {
+            name: "productName",
+            label: t('productName'),
+        },
+        {
+            name: "productCondition",
+            label: t('productCondition'),
+        },
+        {
+            name: "material",
+            label: t('material'),
+        },
+    ]
 
     return <Grid container spacing={5}>
         <Grid item xs={12}>
@@ -64,7 +85,7 @@ function OptionsEditor() {
             </Grid>
         </Grid>
         <Grid item xs={12}>
-            <CLabel>{t('selectedProducts')}</CLabel>
+            <CTable title={t('selectedProducts')} columns={columns} data={selectedProducts}></CTable>
         </Grid>
     </Grid>;
 }

@@ -24,7 +24,8 @@ interface ProductModel {
     shippingScope: string,
     shippingFeeType: string,
     shippingInfo: string,
-    options: string[]
+    options: string[],
+    material: string
 }
 
 export default ProductModel;

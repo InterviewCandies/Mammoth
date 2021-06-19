@@ -7,6 +7,8 @@ import CCheckbox from "../common/CCheckbox";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import CTextarea from "../common/CTextarea";
+import CTable from "../common/CTable";
+import {useAppSelector} from "../../hooks";
 
 const useStyles = makeStyles(() => ({
     right: {
@@ -15,6 +17,8 @@ const useStyles = makeStyles(() => ({
     }
 }))
 
+
+
 function DeliveryEditor() {
     const classes = useStyles();
     const [show, setShow] = useState<boolean[]>([]);
@@ -22,6 +26,34 @@ function DeliveryEditor() {
     const [shippingScope, setShippingScope] = useState<string>("A");
     const [shippingFeeType, setShippingFeeType] = useState<string>("T");
     const {t} = useTranslation();
+    const columns = [
+        {
+            name: "id",
+            label: "ID",
+        },
+        {
+            name: "productName",
+            label: t('productName'),
+        },
+        {
+            label: t('shippingInfo'),
+            name: "shippingInfo",
+        },
+        {
+            label: t('shippingMethod'),
+            name: "shippingMethod",
+        },
+        {
+            label: t('shippingScope'),
+            name: "shippingScope",
+        },
+        {
+            label: t('shippingFeeType'),
+            name: "shippingFeeType",
+        },
+    ]
+
+    const selectedProducts = useAppSelector(state => state.select.selection);
 
     const handleChange = (index: number) => {
         setShow(prevState => {
@@ -30,6 +62,7 @@ function DeliveryEditor() {
             return newState;
         })
     }
+
     return <Grid container spacing={5}>
         <Grid item xs={12}>
             <CHeading>{t('delivery')}</CHeading>
@@ -129,7 +162,7 @@ function DeliveryEditor() {
             </Grid>
         </Grid>
         <Grid item xs={12}>
-            <CLabel>{t('selectedProducts')}</CLabel>
+            <CTable title={t('selectedProducts')} columns={columns} data={selectedProducts}></CTable>
         </Grid>
     </Grid>
 }
