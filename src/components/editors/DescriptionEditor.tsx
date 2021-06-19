@@ -1,4 +1,4 @@
-import {Grid, makeStyles, MenuItem} from "@material-ui/core";
+import {Collapse, Grid, makeStyles, MenuItem} from "@material-ui/core";
 import CSelect from "../common/CSelect";
 import styled from "styled-components";
 import CTextarea from "../common/CTextarea";
@@ -7,7 +7,10 @@ import CLabel from "../common/CLabel";
 import CHeading from "../common/CHeading";
 import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
-import {useAppSelector} from "../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
+import {useState} from "react";
+import {updateProducts} from "../../features/selection";
+import CCheckbox from "../common/CCheckbox";
 
 const Label = styled.h6`
     color: ${({theme}) => theme.buttonText};
@@ -31,6 +34,11 @@ function DescriptionEditor() {
     const classes = useStyles();
     const {t} = useTranslation();
     const selectedProducts = useAppSelector(state => state.select.selection);
+    const [summary, setSummary] = useState<string>('');
+    const [details, setDetails] = useState<string>('');
+    const [checkBoxes, setCheckboxes] = useState<boolean[]>([]);
+    const dispatch = useAppDispatch();
+
     const columns = [
         {
             name: "id",
@@ -50,30 +58,62 @@ function DescriptionEditor() {
         },
     ]
 
+    const handleEditSummary = () => {
+        dispatch(updateProducts({key: "summary", value: summary}));
+        setSummary('');
+    }
+
+    const handleEditDetails = () => {
+        dispatch(updateProducts({key: "details", value: details}));
+        setDetails('');
+    }
+
+    const handleCheckbox = (index: number) => {
+        setCheckboxes(prevState => {
+            const newState = [...prevState];
+            newState[index] = !newState[index];
+            return newState;
+        })
+    }
+
     return <Grid container spacing={5}>
         <Grid item xs={12}>
             <CHeading>{t('description')}</CHeading>
         </Grid>
         <Grid container item xs={12} spacing={2}>
-            <Grid  item xs={12}>
+            <Grid container item xs={12} alignItems={"center"} justify={"space-between"}>
                 <CLabel>{t('summary')}</CLabel>
+                <CCheckbox checked={checkBoxes[0]} onChange={() => handleCheckbox(0)}/>
             </Grid>
             <Grid item xs={12}>
-               <CTextarea rows={5}></CTextarea>
-            </Grid>
-            <Grid item xs={12} className={classes.right}>
-                <CButton>{t('apply')}</CButton>
+                <Collapse in={checkBoxes[0]}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <CTextarea rows={5} value={summary} onChange={e => setSummary(e.target.value)}></CTextarea>
+                        </Grid>
+                        <Grid item xs={12} className={classes.right}>
+                            <CButton onClick={() => handleEditSummary()}>{t('apply')}</CButton>
+                        </Grid>
+                    </Grid>
+                </Collapse>
             </Grid>
         </Grid>
         <Grid container item xs={12} spacing={2}>
-            <Grid  item xs={12}>
+            <Grid container item xs={12} alignItems={"center"} justify={"space-between"}>
                 <CLabel>{t('details')}</CLabel>
+                <CCheckbox checked={checkBoxes[1]} onChange={() => handleCheckbox(1)}/>
             </Grid>
             <Grid item xs={12}>
-                <CTextarea rows={5}></CTextarea>
-            </Grid>
-            <Grid item xs={12} className={classes.right}>
-                <CButton>{t('apply')}</CButton>
+                <Collapse in={checkBoxes[1]}>
+                    <Grid container xs={12}>
+                        <Grid item xs={12}>
+                            <CTextarea rows={5} value={details} onChange={e => setDetails(e.target.value)}></CTextarea>
+                        </Grid>
+                        <Grid item xs={12} className={classes.right}>
+                            <CButton onClick={() => handleEditDetails()}>{t('apply')}</CButton>
+                        </Grid>
+                    </Grid>
+                </Collapse>
             </Grid>
         </Grid>
         <Grid item xs={12}>

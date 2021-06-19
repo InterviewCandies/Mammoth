@@ -24,7 +24,7 @@ const InputWrapper = styled('div')`
   display: flex;
   flex-wrap: wrap;
   border: none;
-  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: ${({theme}) => theme.boxShadowInside};
 
   & input {
     font-size: 14px;
@@ -159,7 +159,7 @@ export default function CMultipleSelect({allowAdd, setValue, options, onAdd} : S
         focused,
         setAnchorEl,
     } = useAutocomplete({
-        defaultValue: [options[1]],
+        defaultValue: [],
         multiple: true,
         options:  options,
         getOptionLabel: (option: RootStateModel) => option.name,

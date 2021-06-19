@@ -1,31 +1,34 @@
-import {Grid, makeStyles, MenuItem, Typography} from "@material-ui/core";
+import {Grid, ListItem, makeStyles, MenuItem, Typography} from "@material-ui/core";
 import CSelect from "../common/CSelect";
-import styled from "styled-components";
 import CButton from "../common/CButton";
 import CHeading from "../common/CHeading";
 import CLabel from "../common/CLabel";
 import {useTranslation} from "react-i18next";
-import {useAppSelector} from "../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 import CTable from "../common/CTable";
+import RootStateModel from "../../types/RootStateModel";
+import ProductModel from "../../types/ProductModel";
+import {useEffect, useState} from "react";
+import {updateProducts} from "../../features/selection";
+import {cloneWithoutFreeze} from "../../utils/cloneWithoutFreezeHelper";
 
-const useStyles = makeStyles(() => ({
-    root: {
-        paddingLeft: "4rem"
-    },
-    heading: {
-        textTransform: "uppercase", letterSpacing:"0.15em", fontWeight: 700
-    }
-}))
+function joinData(categories: RootStateModel[], products: ProductModel[]) {
+    return products.map(product => {
+        const category = categories.find(category => category.id === product.category);
+        if (category)
+            product.category = category.name;
+        return product;
+    })
+}
 
-const Label = styled.h6`
-    color: ${({theme}) => theme.buttonText};
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-`
 function CategoryEditor() {
-    const classes = useStyles();
     const {t} = useTranslation();
-    const selectedProducts = useAppSelector(state => state.select.selection);
+    const categories = useAppSelector(state => state.categories.categories);
+    let selectedProducts = useAppSelector(state => state.select.selection);
+    selectedProducts = joinData(categories, cloneWithoutFreeze<ProductModel>(selectedProducts));
+    const [nextCategory, setNextCategory] = useState<string>('');
+    const dispatch = useAppDispatch();
+
     const columns = [
         {
             name: "id",
@@ -41,7 +44,14 @@ function CategoryEditor() {
         },
     ]
 
+    useEffect(() => {
+        console.log(nextCategory)
+    }, [nextCategory])
 
+    const handleEditCategory = () => {
+        if (nextCategory)
+            dispatch(updateProducts({key:'category', value: nextCategory}))
+    }
 
     return  <Grid container spacing={5} >
         <Grid item xs={12}>
@@ -52,13 +62,12 @@ function CategoryEditor() {
                 <CLabel>{t('setAll')}</CLabel>
             </Grid>
             <Grid item xs={12}>
-                <CSelect onChange={() => {}} style={{width: "100%"}}>
-                        <MenuItem>Hello</MenuItem>
-                        <MenuItem>Hello</MenuItem>
-                    </CSelect>
+                <CSelect onChange={setNextCategory} value={nextCategory} style={{width: '100%'}}>
+                    {categories.map(category => <ListItem key={category.id} value={category.id}>{category.name}</ListItem>)}
+                </CSelect>
             </Grid>
             <Grid item xs={12} style={{display: "flex",justifyContent:"flex-end"}}>
-                <CButton>{t('apply')}</CButton>
+                <CButton onClick={() => handleEditCategory()}>{t('apply')}</CButton>
             </Grid>
         </Grid>
         <Grid item xs={12}>

@@ -8,17 +8,17 @@ import CCheckbox from "../common/CCheckbox";
 import CMultipleSelect from "../common/CMultipleSelect";
 import CAccordition from "../common/CAccordition";
 import {addFilter} from "../../features/filter";
-import {useAppDispatch} from "../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
+import {fetchTags} from "../../features/tags";
 
 function TagFilter() {
-    const [tags, setTags] = useState<RootStateModel[]>([]);
+    const tags = useAppSelector(state => state.tags.tags);
     const [currentTags, setCurrentTags] = useState<RootStateModel[]>([]);
     const dispatch = useAppDispatch();
 
     useEffect(()=> {
         async function fetchData() {
-            const data = await tagsService.fetch();
-            setTags(data);
+           await dispatch(fetchTags());
         }
         fetchData();
     }, [])

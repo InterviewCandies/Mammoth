@@ -21,10 +21,10 @@ const useStyles = makeStyles(()=>({
 function SelectMode() {
     const classes = useStyles();
     return <Grid container className={classes.root} spacing={5}>
-        <Grid item xs={4}>
+        <Grid item md={4} xs={12}>
            <Collection></Collection>
         </Grid>
-        <Grid item xs={8} style={{zIndex: 10}}>
+        <Grid item md={8} xs={12} style={{zIndex: 10}}>
             <FilterTool></FilterTool>
         </Grid>
     </Grid>

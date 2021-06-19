@@ -9,12 +9,13 @@ import RootStateModel from "../../types/RootStateModel";
 import categoryService from "../../services/Category";
 import CAccordition from "../common/CAccordition";
 import useDialog from "../../hooks/useDialog";
-import {useAppDispatch} from "../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 import {addFilter} from "../../features/filter";
+import {fetchCategories} from "../../features/categories";
 
 
 function CategoryFilter() {
-    const [categories, setCategories] = useState<RootStateModel[]>([]);
+    const categories = useAppSelector(state => state.categories.categories);
     const [currentCategories, setCurrentCategories] = useState<RootStateModel[]>([]);
     const [openDialog, closeDialog, CDialog] = useDialog();
     const [name, setName] = useState<string>("")
@@ -27,8 +28,7 @@ function CategoryFilter() {
 
     useEffect(()=> {
         async function fetchData() {
-            const data = await categoryService.fetch();
-            setCategories(data);
+           await dispatch(fetchCategories());
         }
         fetchData();
     }, [])

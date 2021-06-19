@@ -1,19 +1,6 @@
 import styled from "styled-components";
+import ThemeModel from "../../types/ThemeModel";
 
-/*const CCheckbox = styled.input.attrs({type: 'checkbox'})`
-    background-color: ${({theme}) => theme.checkBox};
-    width: 22px;
-    height: 22px;
-    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 4px;
-    border: none;
-    outline: none;
-    &:focus + &{
-      background-color: ${({theme}) => theme.checkBox};
-      color: #000
-    }
-`
-*/
 const Label = styled.label`
     input {
       display: none;
@@ -26,7 +13,7 @@ const Label = styled.label`
         position: relative;
         background-color: ${({theme}) => theme.checkBox};
         border-radius: 4px;
-        box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+        box-shadow: ${({theme}) => theme.boxShadowInside};
     }
     [type=checkbox]:checked + span:before {
         content: '\\2714';

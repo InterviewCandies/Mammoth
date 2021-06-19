@@ -8,7 +8,7 @@ const CInput = styled.input`
     border: none;
     max-height: 3rem;
     border-radius: 4px;
-    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: ${({theme}) => theme.boxShadowInside};
     color: ${({theme}) => theme.inputText};
     &::-webkit-calendar-picker-indicator {
         cursor: pointer;

@@ -14,11 +14,24 @@ const getMuiTheme = (theme : ThemeModel) =>
                     color: theme.text
                 }
             },
+            MuiSelect: {
+                icon: {
+                    color: theme.text
+                }
+            },
             MuiPaper: {
                 root: {
                     backgroundColor: theme.table,
                     color: theme.text
                 },
+            },
+            MUIDataTableSearch: {
+              searchIcon: {
+                  color: theme.text
+              },
+                searchText:{
+                  color: theme.text
+                }
             },
             MUIDataTable: {
                 root: {
@@ -59,8 +72,11 @@ const getMuiTheme = (theme : ThemeModel) =>
             MUIDataTableToolbarSelect: {
                 root: {
                     backgroundColor: theme.button,
-                    color: theme.text
+                    color: theme.buttonText
                 },
+                iconButton: {
+                    color: theme.buttonText
+                }
             },
             MuiTableSortLabel: {
                 icon: {
@@ -110,6 +126,7 @@ export default function CTable({columns, data, title, selectable} : {selectable?
     const options: MUIDataTableOptions = {
         filterType:  'checkbox',
         selectableRows: selectable ? 'multiple' : 'none',
+        elevation: 2,
         customToolbarSelect: (selectedRows) => <CCustomToolbarSelect selectedRows={selectedRows} data={data}/>
     };
 

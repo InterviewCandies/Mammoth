@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import CompareArrowsIcon from "@material-ui/icons/CompareArrows";
@@ -10,6 +10,7 @@ import {Add} from "@material-ui/icons";
 import ProductModel from "../../types/ProductModel";
 import {useAppDispatch} from "../../hooks";
 import {selectProducts} from "../../features/selection";
+import {ThemeContext} from "styled-components";
 
 const defaultToolbarSelectStyles = {
     iconButton: {
@@ -21,17 +22,17 @@ const defaultToolbarSelectStyles = {
 
 function  CCustomToolbarSelect({selectedRows, data} :  {selectedRows: any, data: ProductModel[]}) {
     const dispatch = useAppDispatch();
+    const theme = useContext(ThemeContext);
 
     const handleSelect = () => {
         const products = selectedRows.data.map((item: {dataIndex: number}) => data[item.dataIndex]);
-        console.log(products)
         dispatch(selectProducts(products))
     };
 
     return <div>
             <Tooltip title={"Add to selection"}>
                 <IconButton onClick={handleSelect}>
-                   <Add></Add>
+                   <Add style={{color: theme.buttonText}}></Add>
                 </IconButton>
             </Tooltip>
         </div>

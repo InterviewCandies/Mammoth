@@ -25,10 +25,10 @@ function EditMode () {
 
     return <div className={classes.root}>
             <Grid container>
-                <Grid item md={3}>
+                <Grid item md={3} xs={12}>
                     <EditMenu></EditMenu>
                 </Grid>
-                <Grid item md={9} style={{paddingLeft: "4rem"}}>
+                <Grid item md={9} style={{paddingLeft: "4rem"}} xs={12}>
                     <Route path={'/edit/category'} component={CategoryEditor}></Route>
                     <Route path={'/edit/tags'} component={TagsEditor}></Route>
                     <Route path={'/edit/description'} component={DescriptionEditor}></Route>

@@ -11,20 +11,19 @@ type Props = {
 }
 
 interface SelectProps {
-    value?: string | string[],
+    value?: string | string[] | null,
     style?: CSSProperties,
     onChange: (value: any) => void,
     children: ReactElement[] | ReactElement,
     multiple?: boolean
 }
 
-const useOutlinedInputStyles = makeStyles(theme => ({
+const useOutlinedInputStyles = makeStyles<Theme, Props>(theme => ({
     root: {
         "& $notchedOutline": {
             border: 'none',
             outline: 'none',
             borderRadius: '4px',
-            boxShadow: "inset 0px 4px 4px rgba(0, 0, 0, 0.25)",
         },
     },
     focused: {},
@@ -35,6 +34,7 @@ const useStyles = makeStyles<Theme, Props>(()=> ({
     root: {
         backgroundColor:  props => props.theme.input,
         color: props => props.theme.inputText,
+        boxShadow: props => props.theme.boxShadowInside,
     },
     select: {
         color: props => props.theme.inputText,
@@ -46,7 +46,8 @@ const useStyles = makeStyles<Theme, Props>(()=> ({
             },
             "&:focus": {
                 backgroundColor: props => props.theme.button,
-                color: props => props.theme.buttonText            }
+                color: props => props.theme.buttonText
+            }
         },
     },
     icon: {
@@ -57,7 +58,7 @@ const useStyles = makeStyles<Theme, Props>(()=> ({
 function CSelect({value, onChange, children, style, multiple} : SelectProps) {
     const theme = useContext(ThemeContext)
     const classes = useStyles({theme});
-    const outlinedInputClasses = useOutlinedInputStyles();
+    const outlinedInputClasses = useOutlinedInputStyles({theme});
     return   <FormControl variant={"outlined"} size={"small"} style={style}>
         <Select  MenuProps={{ classes: { paper: classes.select },
                                 disableScrollLock: true,

@@ -8,12 +8,15 @@ import CSelect from "../common/CSelect";
 import CButton from "../common/CButton";
 import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
-import {useAppSelector} from "../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
+import {decreaseDiscount, increaseDiscount, updateProducts} from "../../features/selection";
 
 function DiscountEditor() {
     const [showAction, setShowAction] = useState<number>(1);
-    const [unit, setUnit] = useState<string>("VND")
+    const [unit, setUnit] = useState<string>("VND");
+    const [nextDiscount, setNextDiscount] = useState<number>(0);
     const {t} = useTranslation();
+    const dispatch = useAppDispatch();
     const selectedProducts = useAppSelector(state => state.select.selection);
     const columns = [
         {
@@ -30,6 +33,20 @@ function DiscountEditor() {
         },
     ]
 
+    const handleIncreaseDiscount = () => {
+        dispatch(increaseDiscount({type: unit, value: nextDiscount}));
+        setNextDiscount(0);
+    }
+
+    const handleDecreaseDiscount = () => {
+        dispatch(decreaseDiscount({type: unit, value: nextDiscount}));
+        setNextDiscount(0);
+    }
+
+    const handleReplaceDiscount = () => {
+        dispatch(updateProducts({key: 'discount', value: nextDiscount}));
+        setNextDiscount(0);
+    }
 
     return <Grid container spacing={5}>
         <Grid item xs={12}>
@@ -45,7 +62,7 @@ function DiscountEditor() {
             <Grid item xs={12}>
                 <Collapse in={showAction === 1}>
                     <Grid container item xs={12} alignItems={"center"}>
-                        <CInput type={"number"}></CInput>
+                        <CInput type={"number"} value={nextDiscount} onChange={e => setNextDiscount(Number(e.target.value))}></CInput>
                         <Grid item style={{margin: '0.5rem'}}>
                             <CSelect value={unit} onChange={(value) => setUnit(value)} style={{minWidth: "80px"}}>
                                 <MenuItem value={"%"}>%</MenuItem>
@@ -53,7 +70,7 @@ function DiscountEditor() {
                             </CSelect>
                         </Grid>
                         <Grid item>
-                            <CButton>{t('apply')}</CButton>
+                            <CButton onClick={() => handleIncreaseDiscount()}>{t('apply')}</CButton>
                         </Grid>
                     </Grid>
                 </Collapse>
@@ -69,7 +86,7 @@ function DiscountEditor() {
             <Grid item xs={12}>
                 <Collapse in={showAction === 2}>
                     <Grid container item xs={12} alignItems={"center"}>
-                        <CInput type={"number"}></CInput>
+                        <CInput type={"number"} onChange={e => setNextDiscount(Number(e.target.value))} value={nextDiscount}></CInput>
                         <Grid item style={{margin: '0.5rem'}}>
                             <CSelect value={unit} onChange={(value) => setUnit(value)} style={{minWidth: "80px"}}>
                                 <MenuItem value={"%"}>%</MenuItem>
@@ -77,7 +94,7 @@ function DiscountEditor() {
                             </CSelect>
                         </Grid>
                         <Grid item>
-                            <CButton>{t('apply')}</CButton>
+                            <CButton onClick={() => handleDecreaseDiscount()}>{t('apply')}</CButton>
                         </Grid>
                     </Grid>
                 </Collapse>
@@ -93,15 +110,14 @@ function DiscountEditor() {
             <Grid item xs={12}>
                 <Collapse in={showAction === 3}>
                     <Grid container item xs={12} alignItems={"center"}>
-                        <CInput type={"number"}></CInput>
+                        <CInput type={"number"} value={nextDiscount} onChange={(e => setNextDiscount(Number(e.target.value)))}></CInput>
                         <Grid item style={{margin: '0.5rem'}}>
                             <CSelect value={unit} onChange={(value) => setUnit(value)} style={{minWidth: "80px"}}>
-                                <MenuItem value={"%"}>%</MenuItem>
                                 <MenuItem value={"VND"}>VND</MenuItem>
                             </CSelect>
                         </Grid>
                         <Grid item>
-                            <CButton>{t('apply')}</CButton>
+                            <CButton onClick={() => handleReplaceDiscount()}>{t('apply')}</CButton>
                         </Grid>
                     </Grid>
                 </Collapse>

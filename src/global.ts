@@ -11,4 +11,19 @@ export const GlobalStyles = createGlobalStyle`
       transition: all 0.25s linear;
       padding: 3rem;
     }
+    
+    *::-webkit-scrollbar {
+      width: 0.75em;
+      border-radius: 10px;
+    }
+
+    *::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+
+    *::-webkit-scrollbar-thumb {
+      background-color: ${({theme}) => theme.button};
+      border-radius: 10px;
+    }
 `
+

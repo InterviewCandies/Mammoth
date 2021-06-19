@@ -8,7 +8,7 @@ const CTextarea = styled.textarea`
     width: 100%;
     border-radius: 4px;
     padding: 1rem 1rem;
-    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: ${({theme}) => theme.boxShadowInside};
 
 ;
 `

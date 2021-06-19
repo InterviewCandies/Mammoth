@@ -8,7 +8,8 @@ import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import CTextarea from "../common/CTextarea";
 import CTable from "../common/CTable";
-import {useAppSelector} from "../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
+import {updateProducts} from "../../features/selection";
 
 const useStyles = makeStyles(() => ({
     right: {
@@ -26,6 +27,8 @@ function DeliveryEditor() {
     const [shippingScope, setShippingScope] = useState<string>("A");
     const [shippingFeeType, setShippingFeeType] = useState<string>("T");
     const {t} = useTranslation();
+    const dispatch = useAppDispatch();
+    const [shippingInfo, setShippingInfo] = useState<string>('');
     const columns = [
         {
             name: "id",
@@ -63,6 +66,22 @@ function DeliveryEditor() {
         })
     }
 
+    const handleEditShippingInfo = () => {
+        dispatch(updateProducts({key: 'shippingInfo', value: shippingInfo}));
+    }
+
+    const handleEditShippingMethod = () => {
+        dispatch(updateProducts({key: 'shippingMethod', value: shippingMethod}));
+    }
+
+    const handleEditShippingScope = () => {
+        dispatch(updateProducts({key: 'shippingScope', value: shippingScope}));
+    }
+
+    const handleEditShippingFeeType = () => {
+        dispatch(updateProducts({key: 'shippingFeeType', value: shippingFeeType}));
+    }
+
     return <Grid container spacing={5}>
         <Grid item xs={12}>
             <CHeading>{t('delivery')}</CHeading>
@@ -76,10 +95,10 @@ function DeliveryEditor() {
                 <Collapse in={show[0]}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                           <CTextarea></CTextarea>
+                           <CTextarea value={shippingInfo} onChange={e => setShippingInfo(e.target.value)}></CTextarea>
                         </Grid>
                         <Grid item xs={12} className={classes.right} >
-                            <CButton>{t('apply')}</CButton>
+                            <CButton onClick={() => handleEditShippingInfo()}>{t('apply')}</CButton>
                         </Grid>
                     </Grid>
                 </Collapse>
@@ -95,19 +114,19 @@ function DeliveryEditor() {
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <CSelect value={shippingMethod} onChange={(value)=> setShippingMethod(value)} style={{width:"100%"}}>
-                                <MenuItem value={"01"}>Regular delivery</MenuItem>
-                                <MenuItem value={"02"}>Fast service (document only)</MenuItem>
-                                <MenuItem value={"03"}>Regular mail (document only)</MenuItem>
-                                <MenuItem value={"04"}>Delivery in person</MenuItem>
-                                <MenuItem value={"05"}>Delivery in person with bike or truck (within several hours)</MenuItem>
-                                <MenuItem value={"06"}>Other</MenuItem>
-                                <MenuItem value={"07"}>Cargo delivery</MenuItem>
-                                <MenuItem value={"08"}>Pickup at a store</MenuItem>
-                                <MenuItem value={"09"}>Delivery does not necessary</MenuItem>
+                                <MenuItem value={"01"}>01: Regular delivery</MenuItem>
+                                <MenuItem value={"02"}>02: Fast service (document only)</MenuItem>
+                                <MenuItem value={"03"}>03: Regular mail (document only)</MenuItem>
+                                <MenuItem value={"04"}>04: Delivery in person</MenuItem>
+                                <MenuItem value={"05"}>05: Delivery in person with bike or truck (within several hours)</MenuItem>
+                                <MenuItem value={"06"}>06: Other</MenuItem>
+                                <MenuItem value={"07"}>07: Cargo delivery</MenuItem>
+                                <MenuItem value={"08"}>08: Pickup at a store</MenuItem>
+                                <MenuItem value={"09"}>09: Delivery does not necessary</MenuItem>
                             </CSelect>
                         </Grid>
                         <Grid item xs={12} className={classes.right} >
-                            <CButton>{t('apply')}</CButton>
+                            <CButton onClick={() => handleEditShippingMethod()}>{t('apply')}</CButton>
                         </Grid>
                     </Grid>
                 </Collapse>
@@ -123,13 +142,13 @@ function DeliveryEditor() {
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <CSelect value={shippingScope} onChange={(value) => setShippingScope(value)} style={{width:"100%"}}>
-                                <MenuItem value={"A"}>Domestic only</MenuItem>
-                                <MenuItem value={"B"}>Export only</MenuItem>
-                                <MenuItem value={"C"}>Can deliver both inland and overseas</MenuItem>
+                                <MenuItem value={"A"}>A: Domestic only</MenuItem>
+                                <MenuItem value={"B"}>B: Export only</MenuItem>
+                                <MenuItem value={"C"}>C: Can deliver both inland and overseas</MenuItem>
                             </CSelect>
                         </Grid>
                         <Grid item xs={12} className={classes.right} >
-                            <CButton>{t('apply')}</CButton>
+                            <CButton onClick={() => handleEditShippingScope()}>{t('apply')}</CButton>
                         </Grid>
                     </Grid>
                 </Collapse>
@@ -145,17 +164,17 @@ function DeliveryEditor() {
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <CSelect value={shippingFeeType} onChange={(value) => setShippingFeeType(value)} style={{width:"100%"}}>
-                                <MenuItem value={"T"}>Free shipping</MenuItem>
-                                <MenuItem value={"R"}>Fixed rate</MenuItem>
-                                <MenuItem value={"M"}>Charge according to purchase amount</MenuItem>
-                                <MenuItem value={"D"}>Use different shipping charges per different purchase amount</MenuItem>
-                                <MenuItem value={"W"}>Use different shipping charges by product weight</MenuItem>
-                                <MenuItem value={"C"}>Use different shipping charges by quantity</MenuItem>
-                                <MenuItem value={"N"}>Use different shipping charges per different quantity</MenuItem>
+                                <MenuItem value={"T"}>T: Free shipping</MenuItem>
+                                <MenuItem value={"R"}>R: Fixed rate</MenuItem>
+                                <MenuItem value={"M"}>M: Charge according to purchase amount</MenuItem>
+                                <MenuItem value={"D"}>D: Use different shipping charges per different purchase amount</MenuItem>
+                                <MenuItem value={"W"}>W: Use different shipping charges by product weight</MenuItem>
+                                <MenuItem value={"C"}>C: Use different shipping charges by quantity</MenuItem>
+                                <MenuItem value={"N"}>N: Use different shipping charges per different quantity</MenuItem>
                             </CSelect>
                         </Grid>
                         <Grid item xs={12} className={classes.right} >
-                            <CButton>{t('apply')}</CButton>
+                            <CButton onClick={() => handleEditShippingFeeType()}>{t('apply')}</CButton>
                         </Grid>
                     </Grid>
                 </Collapse>

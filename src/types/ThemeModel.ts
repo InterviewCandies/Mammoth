@@ -14,7 +14,9 @@ export default interface ThemeModel {
     disabled: string,
     secondary: string,
     table: string,
-    paper: string
+    paper: string,
+    boxShadowInside: string,
+    boxShadowOutside: string
 }
 
 

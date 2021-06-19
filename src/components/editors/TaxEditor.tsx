@@ -7,12 +7,15 @@ import CInput from "../common/CInput";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
-import {useAppSelector} from "../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
+import {updateProducts} from "../../features/selection";
 
 function TaxEditor() {
-    const [taxType, setTaxType] = useState<string>('A')
+    const [taxType, setTaxType] = useState<string>('A');
+    const [taxAmount, setTaxAmount] = useState<number>(0);
     const {t} = useTranslation();
     const selectedProducts = useAppSelector(state => state.select.selection);
+    const dispatch = useAppDispatch();
     const columns = [
         {
             name: "id",
@@ -32,6 +35,14 @@ function TaxEditor() {
         },
     ]
 
+    const handleEditTaxType = () => {
+        dispatch(updateProducts({key: 'taxType', value: taxType}));
+    }
+
+    const handleEditTaxAmount = () => {
+        dispatch(updateProducts({key: 'taxAmount', value: taxAmount}));
+    }
+
     return <Grid container spacing={5}>
         <Grid item xs={12}>
             <CHeading>{t('tax')}</CHeading>
@@ -42,11 +53,11 @@ function TaxEditor() {
             </Grid>
             <Grid item xs={12}>
                 <CSelect value={taxType} onChange={(value) => setTaxType(value)} style={{minWidth: '500px'}}>
-                    <MenuItem value={"A"}>Taxable goods</MenuItem>
-                    <MenuItem value={"B"}>Duty-free goods</MenuItem>
-                    <MenuItem value={"C"}>Small good</MenuItem>
+                    <MenuItem value={"A"}>A: Taxable goods</MenuItem>
+                    <MenuItem value={"B"}>B: Duty-free goods</MenuItem>
+                    <MenuItem value={"C"}>C: Small good</MenuItem>
                 </CSelect>
-                <CButton style={{marginLeft: "0.5rem"}}>{t('apply')}</CButton>
+                <CButton style={{marginLeft: "0.5rem"}} onClick={() => handleEditTaxType()}>{t('apply')}</CButton>
             </Grid>
         </Grid>
         <Grid container item xs={12} spacing={2}>
@@ -54,8 +65,12 @@ function TaxEditor() {
                 <CLabel>{t('taxAmount')}</CLabel>
             </Grid>
             <Grid item xs={12}>
-                <CInput type={"number"} style={{minWidth: '500px'}}></CInput>
-                <CButton style={{marginLeft: "0.5rem"}}>{t('apply')}</CButton>
+                <CInput type={"number"}
+                        style={{minWidth: '500px'}}
+                        value={taxAmount}
+                        onChange={e => setTaxAmount(Number(e.target.value))}>
+                </CInput>
+                <CButton style={{marginLeft: "0.5rem"}} onClick={() => handleEditTaxAmount()}>{t('apply')}</CButton>
             </Grid>
         </Grid>
         <Grid item xs={12}>

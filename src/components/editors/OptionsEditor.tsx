@@ -7,7 +7,8 @@ import CInput from "../common/CInput";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
-import {useAppSelector} from "../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
+import {updateProducts} from "../../features/selection";
 
 const useStyles = makeStyles(() => ({
     right: {
@@ -17,10 +18,11 @@ const useStyles = makeStyles(() => ({
 }))
 
 function OptionsEditor() {
-    const [materialAction, setMaterialAction] = useState<string>("add");
     const [productCondition, setProductCondition] = useState<string>("N");
+    const [material, setMaterial] = useState<string>('');
     const classes = useStyles();
     const {t} = useTranslation();
+    const dispatch = useAppDispatch();
     const selectedProducts = useAppSelector(state => state.select.selection);
     const columns = [
         {
@@ -40,6 +42,14 @@ function OptionsEditor() {
             label: t('material'),
         },
     ]
+
+    const handleEditProductCondition = () => {
+        dispatch(updateProducts({key: 'productCondition', value: productCondition}));
+    }
+
+    const handleEditMaterial = () => {
+        dispatch(updateProducts({key: 'material', value: material}));
+    }
 
     return <Grid container spacing={5}>
         <Grid item xs={12}>
@@ -62,7 +72,7 @@ function OptionsEditor() {
                 </Grid>
             </Grid>
             <Grid item xs={12} className={classes.right}>
-                <CButton>{t('apply')}</CButton>
+                <CButton onClick={() => handleEditProductCondition()}>{t('apply')}</CButton>
             </Grid>
         </Grid>
         <Grid container item xs={12} spacing={2}>
@@ -70,18 +80,12 @@ function OptionsEditor() {
                 <CLabel>{t('material')}</CLabel>
             </Grid>
             <Grid container item xs={12} >
-                <Grid item xs={2}>
-                    <CSelect value={materialAction} onChange={(value) => setMaterialAction(value)} style={{width: '150px'}}>
-                        <MenuItem value={"replace"}>{t('replace')}</MenuItem>
-                        <MenuItem value={"add"}>{t('add')}</MenuItem>
-                    </CSelect>
-                </Grid>
-                <Grid item xs={10}>
-                    <CInput style={{width: "100%"}}></CInput>
+                <Grid item xs={12}>
+                    <CInput style={{width: "100%"}} value={material} onChange={e => setMaterial(e.target.value)}></CInput>
                 </Grid>
             </Grid>
             <Grid item xs={12} className={classes.right}>
-                <CButton>{t('apply')}</CButton>
+                <CButton onClick={() => handleEditMaterial()}>{t('apply')}</CButton>
             </Grid>
         </Grid>
         <Grid item xs={12}>

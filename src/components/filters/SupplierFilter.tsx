@@ -5,18 +5,19 @@ import RootStateModel from "../../types/RootStateModel";
 import CMultipleSelect from "../common/CMultipleSelect";
 import CAccordition from "../common/CAccordition";
 import supplierService from "../../services/Supplier";
-import {useAppDispatch} from "../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
 import {addFilter} from "../../features/filter";
+import {fetchSuppliers} from "../../features/suppliers";
 
 function SupplierFilter() {
-    const [suppliers, setSuppliers] = useState<RootStateModel[]>([]);
     const [currentSuppliers, setCurrentSuppliers] = useState<RootStateModel[]>([]);
+    const suppliers = useAppSelector(state => state.suppliers.suppliers);
     const dispatch = useAppDispatch();
 
     useEffect(()=> {
         async function fetchData() {
             const data = await supplierService.fetch();
-            setSuppliers(data);
+            dispatch(fetchSuppliers());
         }
         fetchData();
     }, [])

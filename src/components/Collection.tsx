@@ -43,11 +43,12 @@ const useStyles = makeStyles<Theme, Props>((theme)=> ({
         padding: "0.5rem",
         textTransform: "capitalize",
         fontWeight: 600,
+        boxShadow: props => props.theme.boxShadowInside,
         "&:focus": {
             backgroundColor: props => props.theme.button,
         },
         maxHeight:'220px',
-        overflowY: "scroll"
+        overflowY: "auto"
     },
     icon: {
         color: props => props.theme.inputText,
@@ -80,9 +81,9 @@ function Collection() {
         <Grid item xs={3} className={classes.collection}>
             <Grid item xs={12}><Text>{t('chooseFrom')}</Text></Grid>
             <Grid item xs={12}>
-                <CSelect onChange={()=>{}} style={{width: "100%"}}>
-                    <MenuItem>A</MenuItem>
-                    <MenuItem>B</MenuItem>
+                <CSelect onChange={() => {}}  style={{width: '100%'}}>
+                    <MenuItem/>
+                    <MenuItem/>
                 </CSelect>
             </Grid>
             <Grid item xs={12} className={classes.right}>

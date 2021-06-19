@@ -8,13 +8,18 @@ import CSelect from "../common/CSelect";
 import CButton from "../common/CButton";
 import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
-import {useAppSelector} from "../../hooks";
+import {useAppDispatch, useAppSelector} from "../../hooks";
+import {decreaseQuantity, increaseQuantity, updateProducts} from "../../features/selection";
 
 function QuantityEditor() {
     const [showAction, setShowAction] = useState<number>(1);
     const [showPerOrder, setShowPerOrder] = useState<boolean[]>([]);
+    const [minimumQuantity, setMinimumQuantity] = useState<number>(0);
+    const [maximumQuantity, setMaxQuantity] = useState<number>(0);
+    const [quantity, setQuantity] = useState<number>(0);
     const {t} = useTranslation();
     const selectedProducts = useAppSelector(state => state.select.selection);
+    const dispatch = useAppDispatch();
     const columns = [
         {
             name: "id",
@@ -46,6 +51,28 @@ function QuantityEditor() {
         })
     }
 
+    const handleEditMinimumQuantity = () => {
+        dispatch(updateProducts({key: 'minimumQuantity', value: minimumQuantity}));
+    }
+
+    const handleEditMaximumQuantity = () => {
+        dispatch(updateProducts({key: 'maximumQuantity', value: maximumQuantity}));
+    }
+
+    const handleIncreaseQuantity = () => {
+        dispatch(increaseQuantity(quantity));
+        setQuantity(0);
+    }
+
+    const handleDecreaseQuantity = () => {
+        dispatch(decreaseQuantity(quantity));
+        setQuantity(0);
+    }
+
+    const handleReplaceQuantity = () => {
+        dispatch(updateProducts({key: 'quantity', value: quantity}));
+    }
+
     return <Grid container spacing={5}>
         <Grid item xs={12}>
             <CHeading>{t('quantity')}</CHeading>
@@ -60,10 +87,10 @@ function QuantityEditor() {
             <Grid item xs={12}>
                 <Collapse in={showAction === 1}>
                     <Grid container item xs={12} alignItems={"center"}>
-                        <CInput type={"number"}></CInput>
+                        <CInput type={"number"} value={quantity} onChange={e => setQuantity(Number(e.target.value))}></CInput>
                         <CLabel style={{margin: '0 1rem 0 0.5rem'}}>{t('items')}</CLabel>
                         <Grid item>
-                            <CButton>{t('apply')}</CButton>
+                            <CButton onClick={() => handleIncreaseQuantity()}>{t('apply')}</CButton>
                         </Grid>
                     </Grid>
                 </Collapse>
@@ -79,10 +106,10 @@ function QuantityEditor() {
             <Grid item xs={12}>
                 <Collapse in={showAction === 2}>
                     <Grid container item xs={12} alignItems={"center"}>
-                        <CInput type={"number"}></CInput>
+                        <CInput type={"number"} value={quantity} onChange={e => setQuantity(Number(e.target.value))}></CInput>
                         <CLabel style={{margin: '0 1rem 0 0.5rem'}}>{t('items')}</CLabel>
                         <Grid item>
-                            <CButton>{t('apply')}</CButton>
+                            <CButton onClick={() => handleDecreaseQuantity()}>{t('apply')}</CButton>
                         </Grid>
                     </Grid>
                 </Collapse>
@@ -98,10 +125,10 @@ function QuantityEditor() {
             <Grid item xs={12}>
                 <Collapse in={showAction === 3}>
                     <Grid container item xs={12} alignItems={"center"}>
-                        <CInput type={"number"}></CInput>
+                        <CInput type={"number"} value={quantity} onChange={e => setQuantity(Number(e.target.value))}></CInput>
                         <CLabel style={{margin: '0 1rem 0 0.5rem'}}>{t('items')}</CLabel>
                         <Grid item>
-                            <CButton>{t('apply')}</CButton>
+                            <CButton onClick={() => handleReplaceQuantity()}>{t('apply')}</CButton>
                         </Grid>
                     </Grid>
                 </Collapse>
@@ -117,10 +144,10 @@ function QuantityEditor() {
             <Grid item xs={12}>
                 <Collapse in={showPerOrder[0]}>
                     <Grid container item xs={12} alignItems={"center"}>
-                        <CInput type={"number"}></CInput>
+                        <CInput type={"number"} value={minimumQuantity} onChange={e => setMinimumQuantity(Number(e.target.value))}></CInput>
                         <CLabel style={{margin: '0 1rem 0 0.5rem'}}>{t('items')}</CLabel>
                         <Grid item>
-                            <CButton>{t('apply')}</CButton>
+                            <CButton onClick={() => handleEditMinimumQuantity()}>{t('apply')}</CButton>
                         </Grid>
                     </Grid>
                 </Collapse>
@@ -136,10 +163,10 @@ function QuantityEditor() {
             <Grid item xs={12}>
                 <Collapse in={showPerOrder[1]}>
                     <Grid container item xs={12} alignItems={"center"}>
-                        <CInput type={"number"}></CInput>
+                        <CInput type={"number"} value={maximumQuantity} onChange={e => setMaxQuantity(Number(e.target.value))}></CInput>
                         <CLabel style={{margin: '0 1rem 0 0.5rem'}}>{t('items')}</CLabel>
                         <Grid item>
-                            <CButton>{t('apply')}</CButton>
+                            <CButton onClick={() => handleEditMaximumQuantity()}>{t('apply')}</CButton>
                         </Grid>
                     </Grid>
                 </Collapse>
