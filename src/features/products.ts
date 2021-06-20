@@ -22,7 +22,7 @@ const products = createSlice({
         fetchProducts(state) {
             state.products = productService.fetch();
         },
-        selectProducts(state, action: PayloadAction<string>) {
+        selectProducts(state, action: PayloadAction<string[]>) {
             state.selection = state.selection.concat(action.payload);
         },
         deselectProduct(state, action: PayloadAction<string>) {

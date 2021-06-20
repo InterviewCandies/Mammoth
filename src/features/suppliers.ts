@@ -18,6 +18,7 @@ const suppliers = createSlice({
             state.suppliers = supplierService.fetch();
         },
         createSupplier(state, action: PayloadAction<RootStateModel>) {
+            supplierService.create(action.payload);
             state.suppliers.push(action.payload);
         }
     }

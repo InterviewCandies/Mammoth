@@ -16,13 +16,17 @@ import CHeading from "./common/CHeading";
 import ThemeModel from "../types/ThemeModel";
 import useDarkMode from "../hooks/useDarkMode";
 import {darkTheme, lightTheme} from "../theme";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import CBox from "./common/CBox";
 import {useTranslation} from "react-i18next";
 import {useAppDispatch, useAppSelector} from "../hooks";
-import {deselectProduct} from "../features/products";
+import {deselectProduct, selectProducts} from "../features/products";
 import CLabel from "./common/CLabel";
 import product from "../mocks/product";
+import {createCollection, fetchCollection} from "../features/collection";
+import {useModal} from "mui-modal-provider";
+import CInputDialog from "./common/CInputDialog";
+import {v4 as uuid} from "uuid";
 
 const Text = styled.h4`
    color: ${({theme}) => theme.text };
@@ -69,7 +73,33 @@ function Collection() {
     const muiTheme = useTheme();
     const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const dispatch = useAppDispatch();
-    const {t} = useTranslation()
+    const {t} = useTranslation();
+    const [selectedCollection, setSelectedCollection] = useState<string>('');
+    const collection = useAppSelector(state => state.collection.collection);
+    const {showModal} = useModal();
+    const selectedProductIds = useAppSelector(state => state.products.selection);
+
+    useEffect(() => {
+        dispatch(fetchCollection())
+    }, []);
+
+    const handleSelectCollection = (value: string) => {
+        setSelectedCollection(value);
+        dispatch(selectProducts(collection.find(item => item.id == value)?.products || []));
+    }
+
+    const handleAddCollection = () => {
+        const modal = showModal(CInputDialog, {
+            label: 'Please enter a valid collection name',
+            onOK: (value: string) => {
+                dispatch(createCollection({id: uuid(), name: value, products: [...selectedProductIds]}));
+                modal.hide();
+            },
+            onCancel: () => {
+                modal.hide();
+            }
+        })
+    }
 
     return <Grid container direction={"column"} spacing={4} style={{position: 'fixed'}}>
         <Grid item xs={3}>
@@ -83,13 +113,12 @@ function Collection() {
         <Grid item xs={3} className={classes.collection}>
             <Grid item xs={12}><Text>{t('chooseFrom')}</Text></Grid>
             <Grid item xs={12}>
-                <CSelect onChange={() => {}}  style={{width: '100%'}}>
-                    <MenuItem/>
-                    <MenuItem/>
+                <CSelect onChange={handleSelectCollection} value={selectedCollection} style={{width: '100%'}}>
+                    {collection.map(item => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)}
                 </CSelect>
             </Grid>
             <Grid item xs={12} className={classes.right}>
-                <CButton>{t('add')}</CButton>
+                <CButton onClick={handleAddCollection}>{t('add')}</CButton>
             </Grid>
         </Grid>
         <Grid item xs={3}>

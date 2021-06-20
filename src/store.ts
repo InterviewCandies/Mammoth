@@ -4,6 +4,7 @@ import selectionSlice from "./features/products";
 import categoriesSlice from "./features/categories";
 import tagsSlice from "./features/tags";
 import suppliersSlice from "./features/suppliers";
+import collectionSlice from "./features/collection";
 
 export const store = configureStore({
     reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
         categories: categoriesSlice,
         tags: tagsSlice,
         suppliers: suppliersSlice,
+        collection: collectionSlice
     }
 })
 

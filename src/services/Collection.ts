@@ -1,9 +1,13 @@
+import mocks from "../mocks/collection";
+import CollectionModel from "../types/CollectionModel";
+
 class CollectionService {
     fetch() {
-
+        return mocks;
     }
-    create() {
-
+    create(newCollection: CollectionModel) {
+      //  mocks.push({...newCollection});
+        return true
     }
 }
 

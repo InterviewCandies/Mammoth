@@ -18,6 +18,7 @@ const categories = createSlice({
             state.categories = categoryService.fetch();
         },
         createCategory(state, action: PayloadAction<RootStateModel>) {
+            categoryService.create(action.payload);
             state.categories.push(action.payload);
         }
     }

@@ -18,6 +18,7 @@ const tags = createSlice({
             state.tags = tagService.fetch();
         },
         createTag(state, action: PayloadAction<RootStateModel>) {
+            tagService.create(action.payload);
             state.tags.push(action.payload);
         }
     }
