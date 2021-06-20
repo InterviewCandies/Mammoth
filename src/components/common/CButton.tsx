@@ -18,7 +18,10 @@ const CButton = styled.button<Props>`
     letter-spacing: 1.25px;
     &:hover {
       opacity: 0.75;
-    }
+    },
+  "&svg" : {
+    color: ${({theme}) => theme.buttonText} !important;
+  }
 }
 `
 

@@ -1,11 +1,22 @@
-import {Button, ButtonGroup, Collapse, Grid, Icon, makeStyles, MenuItem, Switch, Select} from "@material-ui/core";
+import {
+    Button,
+    ButtonGroup,
+    Collapse,
+    Grid,
+    Icon,
+    makeStyles,
+    MenuItem,
+    Switch,
+    Select,
+    Tooltip
+} from "@material-ui/core";
 import CHeading from "./common/CHeading";
 import CButton from "./common/CButton";
 import * as _ from "lodash"
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useReducer, useState} from "react";
 import styled, {ThemeContext} from "styled-components";
 import CSwitcher from "./common/CSwitcher";
-import {Filter, FilterList, Search, SearchOutlined, Subject} from "@material-ui/icons";
+import {Filter, FilterList, InvertColors, Lens, Opacity, Search, SearchOutlined, Subject} from "@material-ui/icons";
 import CBox from "./common/CBox";
 import {darkTheme, lightTheme} from "../theme";
 import {useTranslation} from "react-i18next";
@@ -28,6 +39,7 @@ import product from "../mocks/product";
 import ProductModel from "../types/ProductModel";
 import {useAppDispatch, useAppSelector} from "../hooks";
 import {fetchProducts} from "../features/products";
+import RootStateModel from "../types/RootStateModel";
 
 const useStyles = makeStyles((theme)=>({
     root: {
@@ -37,91 +49,16 @@ const useStyles = makeStyles((theme)=>({
     }
 }))
 
-
-const columns = [
-    {
-        name: "id",
-        label: "ID",
-        options: {
-            filter: true,
-            sort: false,
-        }
-    },
-    {
-        name: "productName",
-        label: "Name",
-        options: {
-            filter: true,
-            sort: true,
-        }
-    },
-    {
-        name: "price",
-        label: "Price",
-        options: {
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "discount",
-        label: "Discount",
-        options: {
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "quantity",
-        label: "Quantity",
-        options: {
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "category",
-        label: "Category",
-        options: {
-            filter: false,
-            sort: true,
-        }
-    },
-    {
-        name: "display",
-        label: "Display",
-        options: {
-            filter: true,
-            sort: false,
-        }
-    },
-    {
-        name: "image",
-        label: "Image",
-        options: {
-            filter: true,
-            sort: false,
-        }
-    },
-    {
-        name: "uploadedDate",
-        label: "Uploaded Date",
-        options: {
-            filter: false,
-            sort: true,
-        }
-    },
-];
-
-
 const filtering = (item: ProductModel, type: string, value: unknown ) =>  {
-
-    if (type == 'category' || type == 'brand' || type == 'supplier') {
-        const target = (value as ProductModel[]).map(item => item.id);
+    if (type == 'productName') {
+        return item['productName'].toLocaleLowerCase().includes((value as string).toLocaleString());
+    }
+    else if (type == 'category' || type == 'brand' || type == 'supplier') {
+        const target = (value as RootStateModel[]).map(item => item.id);
         return _.includes(target, item[type]);
     }
     else if (type == 'tags') {
-        const target = (value as ProductModel[]).map(item => item.id);
+        const target = (value as RootStateModel[]).map(item => item.id);
         return _.intersection(target, item[type]).length != 0;
     }
     else if (type == 'price' || type == 'quantity') {
@@ -141,11 +78,15 @@ const filtering = (item: ProductModel, type: string, value: unknown ) =>  {
     return false;
 }
 
-const applyFilters = (item: ProductModel, filters: Record<string, unknown>) => {
+const applyFilters = (item: ProductModel, filters: Record<string, unknown>, filterType: number = 0) => {
     for(let [key, value] of Object.entries(filters)) {
-        if (!filtering(item, key, value)) return false;
+        if (!filtering(item, key, value)) {
+            if (filterType === 1) return false;
+        }
+        else if (filterType === 0) return true;
     }
-    return true;
+
+    return filterType === 1;
 }
 
 function FilterTool() {
@@ -158,6 +99,75 @@ function FilterTool() {
     const isChecked = useAppSelector(state => state.filter.checkbox);
     const filter = useAppSelector(state => state.filter.filter);
     const [filteredProducts, setFilteredProducts] = useState<ProductModel[]>(products);
+    const forceUpdate = useReducer(() => ({}), {})[1] as () => void;
+    const columns = [
+        {
+            name: "id",
+            label: "ID",
+            options: {
+                filter: true,
+                sort: false,
+            }
+        },
+        {
+            name: "productName",
+            label: t("productName"),
+            options: {
+                filter: true,
+                sort: true,
+            }
+        },
+        {
+            name: "price",
+            label: t("price"),
+            options: {
+                filter: false,
+                sort: true,
+            }
+        },
+        {
+            name: "discount",
+            label: t("discount"),
+            options: {
+                filter: false,
+                sort: true,
+            }
+        },
+        {
+            name: "quantity",
+            label: t('quantity'),
+            options: {
+                filter: false,
+                sort: true,
+            }
+        },
+        {
+            name: "display",
+            label: t("display"),
+            options: {
+                filter: true,
+                sort: false,
+            }
+        },
+        {
+            name: "image",
+            label: t('image'),
+            options: {
+                filter: true,
+                sort: false,
+            }
+        },
+        {
+            name: "uploadedDate",
+            label: t("uploadedDate"),
+            options: {
+                filter: false,
+                sort: true,
+            }
+        },
+    ];
+
+
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -173,7 +183,7 @@ function FilterTool() {
         for(let [key, value] of Object.entries(filter)) {
             if (isChecked[key]) activeFilters[key] = value;
         }
-        const filteredProducts = products.filter(item => applyFilters(item, activeFilters));
+        const filteredProducts = products.filter(item => applyFilters(item, activeFilters, filterType));
         setFilteredProducts(filteredProducts);
     }
 
@@ -185,9 +195,13 @@ function FilterTool() {
                    </Icon>
                    <CHeading>{t('filters')}</CHeading>
                </CBox>
-                <ButtonGroup>
-                    <CButton active={filterType === 0} onClick={() => setFilterType(0)}>{t('exact')}</CButton>
-                    <CButton active={filterType === 1} onClick={() =>  setFilterType(1)}>{t('include')}</CButton>
+                <ButtonGroup size={"small"}>
+                    <Tooltip title={t("include") as string}>
+                        <CButton active={filterType === 0} onClick={() =>  setFilterType(0)} style={{padding:'0.5rem 1rem'}}><Opacity/></CButton>
+                    </Tooltip>
+                    <Tooltip title={t('exact') as string}>
+                        <CButton active={filterType === 1} onClick={() => setFilterType(1)}  style={{padding:'0.5rem 1rem'}}><Lens/></CButton>
+                    </Tooltip>
                 </ButtonGroup>
         </Grid>
         <NameFilter/>
@@ -204,11 +218,11 @@ function FilterTool() {
         <Grid container spacing={2}>
             <Grid item xs={12}>
                 <CButton style={{marginRight: "1rem", padding: "1rem 3rem"}} onClick={()=> handleFilters()}>{t('applyFilters')}</CButton>
-                <CButton style={{padding: "1rem 3rem"}}>{t('resetFilters')}</CButton>
+                <CButton style={{padding: "1rem 3rem"}} onClick={forceUpdate}>{t('resetFilters')}</CButton>
             </Grid>
         </Grid>
         <Grid item xs={12}>
-            <CTable columns={columns} data={filteredProducts} title={"Result"} selectable={true}></CTable>
+            <CTable columns={columns} data={filteredProducts} title={t('result')} selectable={true}></CTable>
         </Grid>
     </div>
 }

@@ -72,6 +72,8 @@ export const TRANSLATION_VN = {
     addTag: "Vui lòng nhập tên tên nhãn",
     updated: "Đã cập nhật!",
     added: "Đã thêm!",
+    result: "Kết quả",
     failedByEmptyCategory: "Thất bại! Vui lòng chọn ít nhất một thể loại",
     failedByEmptySupplier: "Thất bại! Vui lòng chọn ít nhất một nhà cung cấp",
+    failedByEmptyProducts: "Vui lòng chọn ít nhất một sản phẩm để chỉnh sửa"
 }

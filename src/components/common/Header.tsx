@@ -13,6 +13,10 @@ import ToggleTheme from "./ToggleTheme";
 import {useTranslation} from "react-i18next";
 import i18n from "i18next";
 import {LanguageType} from "../../types";
+import {useAppSelector} from "../../hooks";
+import {stat} from "fs";
+import {useModal} from "mui-modal-provider";
+import CMessageDialog from "./CMessageDialog";
 
 type Props = {
     theme: ThemeModel
@@ -39,10 +43,25 @@ function Header({theme, toggleTheme} : {theme: ThemeType, toggleTheme: ()=> void
     const history = useHistory();
     const path : string = history.location.pathname;
     const {t} = useTranslation();
+    const {showModal} = useModal();
+    const selectedProducts = useAppSelector(state => state.products.selection);
 
     const handleChangeLanguage = (value : LanguageType) => {
         setLanguage(value);
         i18n.changeLanguage(value)
+    }
+
+    const handleClickEdit = () => {
+        if (selectedProducts.length)
+            history.push('/edit/category');
+        else {
+            const modal = showModal(CMessageDialog, {
+                message: t('failedByEmptyProducts'),
+                onOK: () => {
+                    modal.hide();
+                }
+            })
+        }
     }
 
     return <Grid container justify={"space-between"}>
@@ -51,7 +70,7 @@ function Header({theme, toggleTheme} : {theme: ThemeType, toggleTheme: ()=> void
                 <CButton active={path.includes('select')} onClick={()=> history.push('/select')}>
                     {t('select')}
                 </CButton>
-                <CButton active={path.includes('edit')} onClick={()=> history.push('/edit/category')}>
+                <CButton active={path.includes('edit')} onClick={handleClickEdit}>
                     {t('edit')}
                 </CButton>
             </ButtonGroup>

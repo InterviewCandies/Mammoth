@@ -9,9 +9,9 @@ import CCustomToolbarSelect from "./CCustomToolbarSelect";
 const getMuiTheme = (theme : ThemeModel) =>
     createMuiTheme({
         overrides: {
-            MuiSvgIcon: {
+            MuiIconButton: {
                 root: {
-                    color: theme.text
+                    color: `${theme.text} !important`
                 }
             },
             MuiSelect: {

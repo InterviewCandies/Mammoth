@@ -5,8 +5,8 @@ export const TRANSLATION_EN = {
     english: "English",
     collection: "Collection",
     filters: "Filters",
-    exact: "Exact",
-    include: "Include",
+    exact: "All",
+    include: "Partial",
     chooseFrom: "Choose from",
     productName: "Product name",
     category: "Category",
@@ -69,6 +69,8 @@ export const TRANSLATION_EN = {
     addTag: "Please add a valid tag name",
     added: "Added!",
     updated: "Updated!",
+    result: "Result",
     failedByEmptyCategory: "Failed! Please choose at least one category",
     failedByEmptySupplier: "Failed! Please choose at least one supplier",
+    failedByEmptyProducts: "Please choose at least one products to edit"
 }
