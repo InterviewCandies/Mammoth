@@ -16,7 +16,9 @@ export default interface ThemeModel {
     table: string,
     paper: string,
     boxShadowInside: string,
-    boxShadowOutside: string
+    boxShadowOutside: string,
+    success: string,
+    error: string,
 }
 
 

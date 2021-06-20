@@ -21,6 +21,7 @@ import CBox from "./common/CBox";
 import {useTranslation} from "react-i18next";
 import {useAppDispatch, useAppSelector} from "../hooks";
 import {deselectProduct} from "../features/selection";
+import CLabel from "./common/CLabel";
 
 const Text = styled.h4`
    color: ${({theme}) => theme.text };
@@ -94,17 +95,20 @@ function Collection() {
             <Grid item xs={12} style={{marginBottom: muiTheme.spacing(3)}}>
                 <Text>{t('selectedProducts')}</Text>
             </Grid>
-            <List className={classes.items}>
-                {selectedProducts.map(product =>
-                    <ListItem key={product.id}>
-                        <ListItemText>{product.productName}</ListItemText>
-                        <ListItemSecondaryAction>
-                            <IconButton edge="end" aria-label="delete" className={classes.icon} onClick={() => dispatch(deselectProduct(product.id))}>
-                                <Cancel/>
-                            </IconButton>
-                        </ListItemSecondaryAction>
-                </ListItem>)}
-            </List>
+            {
+               selectedProducts.length ? <List className={classes.items}>
+                    {selectedProducts.map(product =>
+                        <ListItem key={product.id}>
+                            <ListItemText>{product.productName}</ListItemText>
+                            <ListItemSecondaryAction>
+                                <IconButton edge="end" aria-label="delete" className={classes.icon}
+                                            onClick={() => dispatch(deselectProduct(product.id))}>
+                                    <Cancel/>
+                                </IconButton>
+                            </ListItemSecondaryAction>
+                        </ListItem>)}
+                </List> : null
+            }
         </Grid>
     </Grid>
 }

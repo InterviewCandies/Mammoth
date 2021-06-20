@@ -27,6 +27,7 @@ import productService from "../services/Product";
 import product from "../mocks/product";
 import ProductModel from "../types/ProductModel";
 import {useAppDispatch, useAppSelector} from "../hooks";
+import {fetchProducts} from "../features/products";
 
 const useStyles = makeStyles((theme)=>({
     root: {
@@ -153,14 +154,17 @@ function FilterTool() {
     const theme = useContext(ThemeContext)
     const {t} = useTranslation();
     const {turnOnLoading} = useContext(LoadingContext);
-    const [products, setProducts] = useState<ProductModel[]>([]);
+    const products = useAppSelector(state => state.products.products);
     const isChecked = useAppSelector(state => state.filter.checkbox);
     const filter = useAppSelector(state => state.filter.filter);
-    const [filteredProducts, setFilteredProducts] = useState<ProductModel[]>(products)
+    const [filteredProducts, setFilteredProducts] = useState<ProductModel[]>(products);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        const data = productService.fetch();
-        setProducts(data);
+        async function fetchData() {
+            await dispatch(fetchProducts());
+        }
+        fetchData();
     }, [])
 
 

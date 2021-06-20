@@ -15,6 +15,8 @@ export const lightTheme: ThemeModel = {
     secondary: '#f7f7f7',
     table: '#fff',
     paper: '#fff',
+    success: '#6FCF97',
+    error: '#EB5757',
     boxShadowInside: 'rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset',
     boxShadowOutside: 'rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;'
 }
@@ -34,6 +36,8 @@ export const darkTheme: ThemeModel = {
     disabled: '#9e9e9e',
     secondary: '#9e9e9e',
     paper: '#414141',
+    success: '#6FCF97',
+    error: '#EB5757',
     boxShadowInside: 'inset 0px 4px 4px rgba(0, 0, 0, 0.25)',
     boxShadowOutside: '4px 4px 20px rgba(0, 0, 0, 0.25)'
 }

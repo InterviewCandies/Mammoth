@@ -3,7 +3,8 @@ import filterSlice from "./features/filter";
 import selectionSlice from "./features/selection";
 import categoriesSlice from "./features/categories";
 import tagsSlice from "./features/tags";
-import supplierSlice from "./features/suppliers";
+import suppliersSlice from "./features/suppliers";
+import productsSlice from "./features/products";
 
 export const store = configureStore({
     reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
         select: selectionSlice,
         categories: categoriesSlice,
         tags: tagsSlice,
-        suppliers: supplierSlice
+        suppliers: suppliersSlice,
+        products: productsSlice
     }
 })
 

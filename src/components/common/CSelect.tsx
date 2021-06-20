@@ -1,10 +1,11 @@
 import styled, {ThemeContext} from "styled-components";
-import {FormControl, makeStyles, MenuItem, OutlinedInput, Select, Theme} from "@material-ui/core";
-import {CSSProperties, ReactElement, useContext} from "react";
+import {Button, FormControl, ListItem, makeStyles, MenuItem, OutlinedInput, Select, Theme} from "@material-ui/core";
+import React, {CSSProperties, ReactElement, useContext} from "react";
 import ThemeModel from "../../types/ThemeModel";
 import useDarkMode from "../../hooks/useDarkMode";
 import {darkTheme, lightTheme} from "../../theme";
 import CInput from "./CInput";
+import {AddCircle} from "@material-ui/icons";
 
 type Props = {
     theme: ThemeModel
@@ -15,7 +16,9 @@ interface SelectProps {
     style?: CSSProperties,
     onChange: (value: any) => void,
     children: ReactElement[] | ReactElement,
-    multiple?: boolean
+    multiple?: boolean,
+    allowAdd?: boolean,
+    onAdd?: () => void;
 }
 
 const useOutlinedInputStyles = makeStyles<Theme, Props>(theme => ({
@@ -52,10 +55,16 @@ const useStyles = makeStyles<Theme, Props>(()=> ({
     },
     icon: {
         fill: props => props.theme.inputText
+    },
+    addButt: {
+        width: "100%",
+        color: props => props.theme.inputText,
+        textTransform: "none",
+        padding: "1rem"
     }
 }))
 
-function CSelect({value, onChange, children, style, multiple} : SelectProps) {
+function CSelect({value, onChange, children, style, multiple, allowAdd, onAdd} : SelectProps) {
     const theme = useContext(ThemeContext)
     const classes = useStyles({theme});
     const outlinedInputClasses = useOutlinedInputStyles({theme});
@@ -75,6 +84,10 @@ function CSelect({value, onChange, children, style, multiple} : SelectProps) {
                  multiple={multiple}
         >
             {children}
+            {allowAdd && <Button variant={"text"} className={classes.addButt} onClick={onAdd}>
+                <AddCircle style={{marginRight: '0.5rem', color: theme.inputText}}></AddCircle>
+                Add
+            </Button>}
         </Select>
     </FormControl>
 }

@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import RootStateModel from "../types/RootStateModel";
 import categoryService from "../services/Category"
 
@@ -16,9 +16,12 @@ const categories = createSlice({
     reducers: {
         fetchCategories(state) {
             state.categories = categoryService.fetch();
+        },
+        createCategory(state, action: PayloadAction<RootStateModel>) {
+            state.categories.push(action.payload);
         }
     }
 })
 
-export const {fetchCategories} = categories.actions;
+export const { fetchCategories, createCategory } = categories.actions;
 export default categories.reducer;
