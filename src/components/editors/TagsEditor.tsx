@@ -11,9 +11,14 @@ import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import CMultipleSelect from "../common/CMultipleSelect";
 import RootStateModel from "../../types/RootStateModel";
-import {addTags, updateProducts} from "../../features/selection";
+import {addTags, updateProducts} from "../../features/products";
 import ProductModel from "../../types/ProductModel";
 import {cloneWithoutFreeze} from "../../utils/cloneWithoutFreezeHelper";
+import {useModal} from "mui-modal-provider";
+import CInputDialog from "../common/CInputDialog";
+import {v4 as uuid} from "uuid"
+import {createTag} from "../../features/tags";
+import {useSnackbar} from "notistack";
 
 function joinData(tags: RootStateModel[], products: ProductModel[]) {
   return products.map(product => {
@@ -34,9 +39,11 @@ function TagsEditor() {
     const [nextTags, setNextTags] = useState<RootStateModel[]>([]);
     const {t} = useTranslation();
     const tags = useAppSelector(state => state.tags.tags);
-    let selectedProducts = useAppSelector(state => state.select.selection);
+    let selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     selectedProducts = joinData(tags, cloneWithoutFreeze<ProductModel>(selectedProducts));
     const dispatch = useAppDispatch();
+    const { showModal } = useModal();
+    const { enqueueSnackbar } = useSnackbar();
 
     const columns = [
         {
@@ -61,6 +68,20 @@ function TagsEditor() {
         dispatch(updateProducts({key: 'tags', value: nextTags.map(tag => tag.id)}));
     }
 
+    const handleAddTag = () => {
+        const modal = showModal(CInputDialog, {
+            label: 'Please enter a valid tag name',
+            onOK: (value: string) => {
+                dispatch(createTag({id: uuid(), name: value}));
+                modal.hide();
+                enqueueSnackbar('New tag has been added', { variant: 'success'});
+            },
+            onCancel: () => {
+                modal.hide();
+            }
+        })
+    }
+
 
     return  <Grid container spacing={5}>
         <Grid item xs={12}>
@@ -77,7 +98,7 @@ function TagsEditor() {
                 <Collapse in={show === 1}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                          <CMultipleSelect setValue={setNextTags} options={tags}/>
+                          <CMultipleSelect setValue={setNextTags} options={tags} allowAdd={true} onAdd={handleAddTag}/>
                         </Grid>
                         <Grid item xs={12} style={{display: "flex",justifyContent:"flex-end"}}>
                             <CButton onClick={() => handleAddTags()}>{t('apply')}</CButton>
@@ -97,7 +118,7 @@ function TagsEditor() {
                 <Collapse in={show === 2}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <CMultipleSelect setValue={setNextTags} options={tags}/>
+                            <CMultipleSelect setValue={setNextTags} options={tags} allowAdd onAdd={handleAddTag}/>
                         </Grid>
                         <Grid item xs={12} style={{display: "flex",justifyContent:"flex-end"}}>
                             <CButton onClick={() => handleReplaceTags()}>{t('apply')}</CButton>

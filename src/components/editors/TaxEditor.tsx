@@ -8,13 +8,13 @@ import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {updateProducts} from "../../features/selection";
+import {updateProducts} from "../../features/products";
 
 function TaxEditor() {
     const [taxType, setTaxType] = useState<string>('A');
     const [taxAmount, setTaxAmount] = useState<number>(0);
     const {t} = useTranslation();
-    const selectedProducts = useAppSelector(state => state.select.selection);
+    const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const dispatch = useAppDispatch();
     const columns = [
         {

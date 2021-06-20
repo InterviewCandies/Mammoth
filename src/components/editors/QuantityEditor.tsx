@@ -9,7 +9,7 @@ import CButton from "../common/CButton";
 import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {decreaseQuantity, increaseQuantity, updateProducts} from "../../features/selection";
+import {decreaseQuantity, increaseQuantity, updateProducts} from "../../features/products";
 
 function QuantityEditor() {
     const [showAction, setShowAction] = useState<number>(1);
@@ -18,7 +18,7 @@ function QuantityEditor() {
     const [maximumQuantity, setMaxQuantity] = useState<number>(0);
     const [quantity, setQuantity] = useState<number>(0);
     const {t} = useTranslation();
-    const selectedProducts = useAppSelector(state => state.select.selection);
+    const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const dispatch = useAppDispatch();
     const columns = [
         {

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import RootStateModel from "../types/RootStateModel";
 import tagService from "../services/Tag";
 
@@ -16,9 +16,12 @@ const tags = createSlice({
     reducers: {
         fetchTags(state) {
             state.tags = tagService.fetch();
+        },
+        createTag(state, action: PayloadAction<RootStateModel>) {
+            state.tags.push(action.payload);
         }
     }
 });
 
-export const { fetchTags } = tags.actions;
+export const { fetchTags, createTag } = tags.actions;
 export default tags.reducer;

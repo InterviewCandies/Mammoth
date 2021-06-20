@@ -9,7 +9,7 @@ import CButton from "../common/CButton";
 import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {decreaseDiscount, increaseDiscount, updateProducts} from "../../features/selection";
+import {decreaseDiscount, increaseDiscount, updateProducts} from "../../features/products";
 
 function DiscountEditor() {
     const [showAction, setShowAction] = useState<number>(1);
@@ -17,7 +17,7 @@ function DiscountEditor() {
     const [nextDiscount, setNextDiscount] = useState<number>(0);
     const {t} = useTranslation();
     const dispatch = useAppDispatch();
-    const selectedProducts = useAppSelector(state => state.select.selection);
+    const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const columns = [
         {
             name: "id",

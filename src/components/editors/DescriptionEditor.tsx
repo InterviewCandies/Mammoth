@@ -9,7 +9,7 @@ import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {useState} from "react";
-import {updateProducts} from "../../features/selection";
+import {updateProducts} from "../../features/products";
 import CCheckbox from "../common/CCheckbox";
 
 const Label = styled.h6`
@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
 function DescriptionEditor() {
     const classes = useStyles();
     const {t} = useTranslation();
-    const selectedProducts = useAppSelector(state => state.select.selection);
+    const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const [summary, setSummary] = useState<string>('');
     const [details, setDetails] = useState<string>('');
     const [checkBoxes, setCheckboxes] = useState<boolean[]>([]);

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import RootStateModel from "../types/RootStateModel";
 import supplierService from "../services/Supplier";
 
@@ -16,9 +16,12 @@ const suppliers = createSlice({
     reducers: {
         fetchSuppliers(state) {
             state.suppliers = supplierService.fetch();
+        },
+        createSupplier(state, action: PayloadAction<RootStateModel>) {
+            state.suppliers.push(action.payload);
         }
     }
 });
 
-export const { fetchSuppliers } = suppliers.actions;
+export const { fetchSuppliers, createSupplier } = suppliers.actions;
 export default suppliers.reducer;

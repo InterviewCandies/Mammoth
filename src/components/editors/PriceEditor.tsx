@@ -9,13 +9,13 @@ import CInput from "../common/CInput";
 import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {decreasePrice, increasePrice, updateProducts} from "../../features/selection";
+import {decreasePrice, increasePrice, updateProducts} from "../../features/products";
 
 function PriceEditor() {
     const [showAction, setShowAction] = useState<number>(1);
     const [unit, setUnit] = useState<string>('VND');
     const {t} = useTranslation();
-    const selectedProducts = useAppSelector(state => state.select.selection);
+    const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const [nextPrice, setNextPrice] = useState<number>(0);
     const dispatch = useAppDispatch();
     const columns = [

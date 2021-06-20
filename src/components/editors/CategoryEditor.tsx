@@ -9,7 +9,7 @@ import CTable from "../common/CTable";
 import RootStateModel from "../../types/RootStateModel";
 import ProductModel from "../../types/ProductModel";
 import {useEffect, useState} from "react";
-import {updateProducts} from "../../features/selection";
+import {updateProducts} from "../../features/products";
 import {cloneWithoutFreeze} from "../../utils/cloneWithoutFreezeHelper";
 import {useModal} from "mui-modal-provider";
 import CInputDialog from "../common/CInputDialog";
@@ -31,7 +31,7 @@ function joinData(categories: RootStateModel[], products: ProductModel[]) {
 function CategoryEditor() {
     const {t} = useTranslation();
     const categories = useAppSelector(state => state.categories.categories);
-    let selectedProducts = useAppSelector(state => state.select.selection);
+    let selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     selectedProducts = joinData(categories, cloneWithoutFreeze<ProductModel>(selectedProducts));
     const [nextCategory, setNextCategory] = useState<string>('');
     const {showModal} = useModal();

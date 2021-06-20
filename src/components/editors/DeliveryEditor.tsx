@@ -9,7 +9,7 @@ import {useTranslation} from "react-i18next";
 import CTextarea from "../common/CTextarea";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {updateProducts} from "../../features/selection";
+import {updateProducts} from "../../features/products";
 
 const useStyles = makeStyles(() => ({
     right: {
@@ -55,8 +55,7 @@ function DeliveryEditor() {
             name: "shippingFeeType",
         },
     ]
-
-    const selectedProducts = useAppSelector(state => state.select.selection);
+    const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
 
     const handleChange = (index: number) => {
         setShow(prevState => {

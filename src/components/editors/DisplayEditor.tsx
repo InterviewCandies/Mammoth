@@ -7,13 +7,13 @@ import CButton from "../common/CButton";
 import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {updateProducts} from "../../features/selection";
+import {updateProducts} from "../../features/products";
 
 function DisplayEditor() {
     const [displayItems, setDisplayItems] = useState<boolean>(true);
     const {t} = useTranslation();
     const dispatch = useAppDispatch();
-    const selectedProducts = useAppSelector(state => state.select.selection);
+    const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const columns = [
         {
             name: "id",

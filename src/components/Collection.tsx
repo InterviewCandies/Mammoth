@@ -20,8 +20,9 @@ import {useContext} from "react";
 import CBox from "./common/CBox";
 import {useTranslation} from "react-i18next";
 import {useAppDispatch, useAppSelector} from "../hooks";
-import {deselectProduct} from "../features/selection";
+import {deselectProduct} from "../features/products";
 import CLabel from "./common/CLabel";
+import product from "../mocks/product";
 
 const Text = styled.h4`
    color: ${({theme}) => theme.text };
@@ -66,7 +67,7 @@ function Collection() {
     const theme = useContext(ThemeContext)
     const classes = useStyles({theme});
     const muiTheme = useTheme();
-    const selectedProducts = useAppSelector(state => state.select.selection);
+    const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const dispatch = useAppDispatch();
     const {t} = useTranslation()
 

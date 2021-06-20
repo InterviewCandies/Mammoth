@@ -1,19 +1,17 @@
 import {configureStore} from "@reduxjs/toolkit";
 import filterSlice from "./features/filter";
-import selectionSlice from "./features/selection";
+import selectionSlice from "./features/products";
 import categoriesSlice from "./features/categories";
 import tagsSlice from "./features/tags";
 import suppliersSlice from "./features/suppliers";
-import productsSlice from "./features/products";
 
 export const store = configureStore({
     reducer: {
         filter: filterSlice,
-        select: selectionSlice,
+        products: selectionSlice,
         categories: categoriesSlice,
         tags: tagsSlice,
         suppliers: suppliersSlice,
-        products: productsSlice
     }
 })
 

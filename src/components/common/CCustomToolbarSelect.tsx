@@ -9,8 +9,9 @@ import {DisplayData, MUIDataTableToolbarSelect} from "mui-datatables";
 import {Add} from "@material-ui/icons";
 import ProductModel from "../../types/ProductModel";
 import {useAppDispatch} from "../../hooks";
-import {selectProducts} from "../../features/selection";
+import {selectProducts} from "../../features/products";
 import {ThemeContext} from "styled-components";
+import product from "../../mocks/product";
 
 const defaultToolbarSelectStyles = {
     iconButton: {
@@ -26,7 +27,7 @@ function  CCustomToolbarSelect({selectedRows, data} :  {selectedRows: any, data:
 
     const handleSelect = () => {
         const products = selectedRows.data.map((item: {dataIndex: number}) => data[item.dataIndex]);
-        dispatch(selectProducts(products))
+        dispatch(selectProducts(products.map((product: ProductModel) => product.id)))
     };
 
     return <div>

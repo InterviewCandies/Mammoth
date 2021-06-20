@@ -7,11 +7,15 @@ import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {useState} from "react";
-import {updateProducts} from "../../features/selection";
+import {updateProducts} from "../../features/products";
 import RootStateModel from "../../types/RootStateModel";
 import ProductModel from "../../types/ProductModel";
 import {cloneWithoutFreeze} from "../../utils/cloneWithoutFreezeHelper";
-import categories from "../../features/categories";
+import {useModal} from "mui-modal-provider";
+import {useSnackbar} from "notistack";
+import CInputDialog from "../common/CInputDialog";
+import {createSupplier} from "../../features/suppliers";
+import {v4 as uuid} from "uuid";
 
 function joinData(suppliers: RootStateModel[], products: ProductModel[]) {
     return products.map(product => {
@@ -27,8 +31,10 @@ function SupplierEditor() {
     const suppliers = useAppSelector(state => state.suppliers.suppliers);
     const [nextSupplier, setNextSupplier] = useState<string>('');
     const dispatch = useAppDispatch();
-    let selectedProducts = useAppSelector(state => state.select.selection);
+    let selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     selectedProducts = joinData(suppliers, cloneWithoutFreeze<ProductModel>(selectedProducts));
+    const { showModal } = useModal();
+    const { enqueueSnackbar } = useSnackbar();
     const columns = [
         {
             name: "id",
@@ -49,6 +55,20 @@ function SupplierEditor() {
             dispatch(updateProducts({key: 'supplier', value: nextSupplier}));
     }
 
+    const handleAddSupplier = () => {
+        const modal = showModal(CInputDialog, {
+            label: 'Please enter a valid supplier name',
+            onOK: (value: string) => {
+                dispatch(createSupplier({id: uuid(), name: value}));
+                modal.hide();
+                enqueueSnackbar('New supplier has been added', {variant: 'success'});
+            },
+            onCancel: () => {
+                modal.hide();
+            }
+        })
+    }
+
     return  <Grid container spacing={5}>
         <Grid item xs={12}>
            <CHeading>{t('supplier')}</CHeading>
@@ -58,7 +78,7 @@ function SupplierEditor() {
                 <CLabel>{t('setAll')}</CLabel>
             </Grid>
             <Grid item xs={12}>
-                <CSelect value={nextSupplier} onChange={setNextSupplier} style={{width: "100%"}}>
+                <CSelect value={nextSupplier} onChange={setNextSupplier} style={{width: "100%"}} allowAdd onAdd={handleAddSupplier}>
                     {suppliers.map(supplier => <MenuItem value={supplier.id} key={supplier.id}>{supplier.name}</MenuItem>)}
                 </CSelect>
             </Grid>
