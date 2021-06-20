@@ -5,6 +5,7 @@ import {ThemeContext} from "styled-components";
 import CLabel from "./CLabel";
 import CInput from "./CInput";
 import CButton from "./CButton";
+import {useTranslation} from "react-i18next";
 
 interface Props {
     theme: ThemeModel
@@ -33,6 +34,7 @@ const CInputDalog: React.FC<ModalProps> = (props) => {
     const theme = useContext(ThemeContext);
     const classes = useStyles({theme});
     const [value, setValue] = useState<string>('');
+    const {t} = useTranslation();
 
     return <Dialog {...props}>
         <DialogContent className={classes.root}>
@@ -44,8 +46,10 @@ const CInputDalog: React.FC<ModalProps> = (props) => {
                     </Grid>
 
                     <Grid container item xs={12} justify={"flex-end"}>
-                        <CButton style={{marginRight:'0.75rem'}} onClick={e  => { e.preventDefault(); props.onOK(value); }}>OK</CButton>
-                        <CButton onClick={e  => { e.preventDefault(); props.onCancel(); }}>Cancel</CButton>
+                        <CButton style={{marginRight:'0.75rem'}} onClick={e  => { e.preventDefault(); props.onOK(value); }}>
+                            {t('ok')}
+                        </CButton>
+                        <CButton onClick={e  => { e.preventDefault(); props.onCancel(); }}>{t('cancel')}</CButton>
                     </Grid>
                 </Grid>
             </form>

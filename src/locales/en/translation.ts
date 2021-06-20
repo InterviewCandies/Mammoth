@@ -61,5 +61,14 @@ export const TRANSLATION_EN = {
     material: "Material",
     shippingInfo: "Shipping info",
     minimumQuantity: "Minimum quantity per order",
-    maximumQuantity: "Maximum quantity per order"
+    maximumQuantity: "Maximum quantity per order",
+    cancel: "Cancel",
+    ok: "OK",
+    addCategory: "Please add a valid category name",
+    addSupplier: "Please add a valid supplier name",
+    addTag: "Please add a valid tag name",
+    added: "Added!",
+    updated: "Updated!",
+    failedByEmptyCategory: "Failed! Please choose at least one category",
+    failedByEmptySupplier: "Failed! Please choose at least one supplier",
 }

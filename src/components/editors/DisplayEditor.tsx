@@ -8,11 +8,13 @@ import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {updateProducts} from "../../features/products";
+import {useSnackbar} from "notistack";
 
 function DisplayEditor() {
     const [displayItems, setDisplayItems] = useState<boolean>(true);
     const {t} = useTranslation();
     const dispatch = useAppDispatch();
+    const {enqueueSnackbar} = useSnackbar();
     const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const columns = [
         {
@@ -31,6 +33,7 @@ function DisplayEditor() {
 
     const handleEditDisplay = () => {
         dispatch(updateProducts({key: 'display', value: displayItems ? 'T' : 'F'}));
+        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     return <Grid container spacing={5}>
@@ -43,11 +46,11 @@ function DisplayEditor() {
             </Grid>
             <Grid container item xs={12} alignItems={"center"}>
                 <CCheckbox checked={displayItems === true} onChange={()=> setDisplayItems(true)}></CCheckbox>
-                <CLabel style={{marginLeft: "0.75rem"}}>T : {t('true')}</CLabel>
+                <CLabel style={{marginLeft: "0.75rem"}}>{t('true')} (T)</CLabel>
             </Grid>
             <Grid container item xs={12} alignItems={"center"}>
                 <CCheckbox checked={displayItems === false} onChange={()=> setDisplayItems(false)}></CCheckbox>
-                <CLabel style={{marginLeft: "0.75rem"}}>F : {t('false')}</CLabel>
+                <CLabel style={{marginLeft: "0.75rem"}}>{t('false')} (F)</CLabel>
             </Grid>
             <Grid item xs={12}>
                 <CButton onClick={() => handleEditDisplay()}>{t('apply')}</CButton>

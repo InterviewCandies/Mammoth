@@ -117,27 +117,33 @@ function Collection() {
                     {collection.map(item => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)}
                 </CSelect>
             </Grid>
-            <Grid item xs={12} className={classes.right}>
-                <CButton onClick={handleAddCollection}>{t('add')}</CButton>
-            </Grid>
         </Grid>
         <Grid item xs={3}>
             <Grid item xs={12} style={{marginBottom: muiTheme.spacing(3)}}>
                 <Text>{t('selectedProducts')}</Text>
             </Grid>
             {
-               selectedProducts.length ? <List className={classes.items}>
-                    {selectedProducts.map(product =>
-                        <ListItem key={product.id}>
-                            <ListItemText>{product.productName}</ListItemText>
-                            <ListItemSecondaryAction>
-                                <IconButton edge="end" aria-label="delete" className={classes.icon}
-                                            onClick={() => dispatch(deselectProduct(product.id))}>
-                                    <Cancel/>
-                                </IconButton>
-                            </ListItemSecondaryAction>
-                        </ListItem>)}
-                </List> : null
+
+               selectedProducts.length ?
+                   <Grid container spacing={2}>
+                       <Grid item xs={12}>
+                           <List className={classes.items}>
+                               {selectedProducts.map(product =>
+                                   <ListItem key={product.id}>
+                                       <ListItemText>{product.productName}</ListItemText>
+                                       <ListItemSecondaryAction>
+                                           <IconButton edge="end" aria-label="delete" className={classes.icon}
+                                                       onClick={() => dispatch(deselectProduct(product.id))}>
+                                               <Cancel/>
+                                           </IconButton>
+                                       </ListItemSecondaryAction>
+                                   </ListItem>)}
+                           </List>
+                       </Grid>
+                        <Grid item xs={12} className={classes.right}>
+                            <CButton onClick={handleAddCollection}>{t('add')}</CButton>
+                        </Grid>
+               </Grid> : null
             }
         </Grid>
     </Grid>

@@ -51,17 +51,20 @@ function SupplierEditor() {
     ]
 
     const handleEditSupplier = () => {
-        if (nextSupplier)
+        if (nextSupplier) {
             dispatch(updateProducts({key: 'supplier', value: nextSupplier}));
+            enqueueSnackbar(t('update'), {variant: 'success'});
+        }
+        else enqueueSnackbar(t('failedByEmptySupplier'), {variant: 'error'});
     }
 
     const handleAddSupplier = () => {
         const modal = showModal(CInputDialog, {
-            label: 'Please enter a valid supplier name',
+            label: t('addSupplier'),
             onOK: (value: string) => {
                 dispatch(createSupplier({id: uuid(), name: value}));
                 modal.hide();
-                enqueueSnackbar('New supplier has been added', {variant: 'success'});
+                enqueueSnackbar(t('added'), {variant: 'success'});
             },
             onCancel: () => {
                 modal.hide();

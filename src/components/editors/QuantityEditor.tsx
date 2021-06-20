@@ -10,6 +10,7 @@ import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {decreaseQuantity, increaseQuantity, updateProducts} from "../../features/products";
+import {useSnackbar} from "notistack";
 
 function QuantityEditor() {
     const [showAction, setShowAction] = useState<number>(1);
@@ -18,6 +19,7 @@ function QuantityEditor() {
     const [maximumQuantity, setMaxQuantity] = useState<number>(0);
     const [quantity, setQuantity] = useState<number>(0);
     const {t} = useTranslation();
+    const {enqueueSnackbar} = useSnackbar();
     const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const dispatch = useAppDispatch();
     const columns = [
@@ -53,24 +55,29 @@ function QuantityEditor() {
 
     const handleEditMinimumQuantity = () => {
         dispatch(updateProducts({key: 'minimumQuantity', value: minimumQuantity}));
+        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleEditMaximumQuantity = () => {
         dispatch(updateProducts({key: 'maximumQuantity', value: maximumQuantity}));
+        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleIncreaseQuantity = () => {
         dispatch(increaseQuantity(quantity));
         setQuantity(0);
+        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleDecreaseQuantity = () => {
         dispatch(decreaseQuantity(quantity));
         setQuantity(0);
+        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleReplaceQuantity = () => {
         dispatch(updateProducts({key: 'quantity', value: quantity}));
+        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     return <Grid container spacing={5}>

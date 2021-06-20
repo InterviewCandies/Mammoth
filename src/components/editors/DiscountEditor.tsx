@@ -10,6 +10,7 @@ import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {decreaseDiscount, increaseDiscount, updateProducts} from "../../features/products";
+import {useSnackbar} from "notistack";
 
 function DiscountEditor() {
     const [showAction, setShowAction] = useState<number>(1);
@@ -17,6 +18,7 @@ function DiscountEditor() {
     const [nextDiscount, setNextDiscount] = useState<number>(0);
     const {t} = useTranslation();
     const dispatch = useAppDispatch();
+    const {enqueueSnackbar} = useSnackbar();
     const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const columns = [
         {
@@ -36,16 +38,19 @@ function DiscountEditor() {
     const handleIncreaseDiscount = () => {
         dispatch(increaseDiscount({type: unit, value: nextDiscount}));
         setNextDiscount(0);
+        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleDecreaseDiscount = () => {
         dispatch(decreaseDiscount({type: unit, value: nextDiscount}));
         setNextDiscount(0);
+        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleReplaceDiscount = () => {
         dispatch(updateProducts({key: 'discount', value: nextDiscount}));
         setNextDiscount(0);
+        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     return <Grid container spacing={5}>

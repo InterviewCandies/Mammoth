@@ -62,19 +62,21 @@ function TagsEditor() {
 
     const handleAddTags = () => {
         dispatch(addTags(nextTags.map(tag => tag.id)));
+        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleReplaceTags = () => {
         dispatch(updateProducts({key: 'tags', value: nextTags.map(tag => tag.id)}));
+        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleAddTag = () => {
         const modal = showModal(CInputDialog, {
-            label: 'Please enter a valid tag name',
+            label: t('addTag'),
             onOK: (value: string) => {
                 dispatch(createTag({id: uuid(), name: value}));
                 modal.hide();
-                enqueueSnackbar('New tag has been added', { variant: 'success'});
+                enqueueSnackbar(t('added'), { variant: 'success'});
             },
             onCancel: () => {
                 modal.hide();

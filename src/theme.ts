@@ -18,7 +18,7 @@ export const lightTheme: ThemeModel = {
     success: '#6FCF97',
     error: '#EB5757',
     boxShadowInside: 'rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset',
-    boxShadowOutside: 'rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;'
+    boxShadowOutside: 'rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;'
 }
 
 export const darkTheme: ThemeModel = {

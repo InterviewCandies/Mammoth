@@ -6,6 +6,7 @@ import useDarkMode from "../../hooks/useDarkMode";
 import {darkTheme, lightTheme} from "../../theme";
 import CInput from "./CInput";
 import {AddCircle} from "@material-ui/icons";
+import {useTranslation} from "react-i18next";
 
 type Props = {
     theme: ThemeModel
@@ -67,7 +68,9 @@ const useStyles = makeStyles<Theme, Props>(()=> ({
 function CSelect({value, onChange, children, style, multiple, allowAdd, onAdd} : SelectProps) {
     const theme = useContext(ThemeContext)
     const classes = useStyles({theme});
+    const {t} = useTranslation();
     const outlinedInputClasses = useOutlinedInputStyles({theme});
+
     return   <FormControl variant={"outlined"} size={"small"} style={style}>
         <Select  MenuProps={{ classes: { paper: classes.select },
                                 disableScrollLock: true,
@@ -86,7 +89,7 @@ function CSelect({value, onChange, children, style, multiple, allowAdd, onAdd} :
             {children}
             {allowAdd && <Button variant={"text"} className={classes.addButt} onClick={onAdd}>
                 <AddCircle style={{marginRight: '0.5rem', color: theme.inputText}}></AddCircle>
-                Add
+                {t('add')}
             </Button>}
         </Select>
     </FormControl>

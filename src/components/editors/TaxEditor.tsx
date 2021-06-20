@@ -9,11 +9,13 @@ import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {updateProducts} from "../../features/products";
+import {useSnackbar} from "notistack";
 
 function TaxEditor() {
     const [taxType, setTaxType] = useState<string>('A');
     const [taxAmount, setTaxAmount] = useState<number>(0);
     const {t} = useTranslation();
+    const {enqueueSnackbar} = useSnackbar();
     const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const dispatch = useAppDispatch();
     const columns = [
@@ -37,10 +39,12 @@ function TaxEditor() {
 
     const handleEditTaxType = () => {
         dispatch(updateProducts({key: 'taxType', value: taxType}));
+        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleEditTaxAmount = () => {
         dispatch(updateProducts({key: 'taxAmount', value: taxAmount}));
+        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     return <Grid container spacing={5}>

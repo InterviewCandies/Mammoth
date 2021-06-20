@@ -10,6 +10,7 @@ import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {decreasePrice, increasePrice, updateProducts} from "../../features/products";
+import {useSnackbar} from "notistack";
 
 function PriceEditor() {
     const [showAction, setShowAction] = useState<number>(1);
@@ -18,6 +19,7 @@ function PriceEditor() {
     const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const [nextPrice, setNextPrice] = useState<number>(0);
     const dispatch = useAppDispatch();
+    const {enqueueSnackbar} = useSnackbar();
     const columns = [
         {
             name: "id",
@@ -36,16 +38,19 @@ function PriceEditor() {
     const handleReplacePrice = () => {
         dispatch(updateProducts({key: 'price', value: nextPrice}));
         setNextPrice(0);
+        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleIncreasePrice = () => {
         dispatch(increasePrice({type: unit, value: nextPrice}));
         setNextPrice(0);
+        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleDecreasePrice = () => {
         dispatch(decreasePrice({type: unit, value: nextPrice}));
         setNextPrice(0);
+        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     return <Grid container spacing={5}>

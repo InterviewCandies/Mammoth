@@ -9,6 +9,7 @@ import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {updateProducts} from "../../features/products";
+import {useSnackbar} from "notistack";
 
 const useStyles = makeStyles(() => ({
     right: {
@@ -23,6 +24,7 @@ function OptionsEditor() {
     const classes = useStyles();
     const {t} = useTranslation();
     const dispatch = useAppDispatch();
+    const {enqueueSnackbar} = useSnackbar();
     const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const columns = [
         {
@@ -45,10 +47,12 @@ function OptionsEditor() {
 
     const handleEditProductCondition = () => {
         dispatch(updateProducts({key: 'productCondition', value: productCondition}));
+        enqueueSnackbar(t('updated'), {variant: "success"});
     }
 
     const handleEditMaterial = () => {
         dispatch(updateProducts({key: 'material', value: material}));
+        enqueueSnackbar(t('updated'), {variant: "success"});
     }
 
     return <Grid container spacing={5}>

@@ -49,17 +49,16 @@ function CategoryEditor() {
         },
         {
             name: "category",
-            label: "Category",
+            label: t('category'),
         },
     ];
 
     const handleAddCategory = () => {
-
         const modal = showModal(CInputDialog, {
-            label: 'Please enter a valid category name',
+            label: t('addCategory'),
             onOK: (value : string) => {
                 dispatch(createCategory({id: uuid(), name: value}));
-                enqueueSnackbar("New category has been added", {variant: "success"});
+                enqueueSnackbar(t('added'), {variant: "success"});
                 modal.hide();
             },
             onCancel: () => { modal.hide() },
@@ -68,8 +67,8 @@ function CategoryEditor() {
     }
 
     const handleEditCategory = () => {
-        if (nextCategory)
-            dispatch(updateProducts({key:'category', value: nextCategory}))
+        dispatch(updateProducts({key: 'category', value: nextCategory}));
+        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     return  <Grid container spacing={5} >

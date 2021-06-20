@@ -1,4 +1,5 @@
 import {createStyles, Switch, SwitchClassKey, SwitchProps, Theme, withStyles} from "@material-ui/core";
+import ThemeModel from "../../types/ThemeModel";
 
 interface Styles extends Partial<Record<SwitchClassKey, string>> {
     focusVisible?: string;
@@ -7,6 +8,7 @@ interface Styles extends Partial<Record<SwitchClassKey, string>> {
 interface Props extends SwitchProps {
     classes: Styles;
 }
+
 const CSwitch = withStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -24,6 +26,7 @@ const CSwitch = withStyles((theme: Theme) =>
                     backgroundColor: '#8b9dc3',
                     opacity: 1,
                     border: 'none',
+                    boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.25)'
                 },
             },
             '&$focusVisible $thumb': {
@@ -39,6 +42,7 @@ const CSwitch = withStyles((theme: Theme) =>
             borderRadius: 26 / 2,
             border: `1px solid ${theme.palette.grey[400]}`,
             backgroundColor: theme.palette.grey[300],
+            boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.25)',
             opacity: 1,
             transition: theme.transitions.create(['background-color', 'border']),
         },

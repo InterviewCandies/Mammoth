@@ -11,6 +11,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 import {useState} from "react";
 import {updateProducts} from "../../features/products";
 import CCheckbox from "../common/CCheckbox";
+import {useSnackbar} from "notistack";
 
 const Label = styled.h6`
     color: ${({theme}) => theme.buttonText};
@@ -36,6 +37,7 @@ function DescriptionEditor() {
     const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const [summary, setSummary] = useState<string>('');
     const [details, setDetails] = useState<string>('');
+    const {enqueueSnackbar} = useSnackbar();
     const [checkBoxes, setCheckboxes] = useState<boolean[]>([]);
     const dispatch = useAppDispatch();
 
@@ -61,11 +63,13 @@ function DescriptionEditor() {
     const handleEditSummary = () => {
         dispatch(updateProducts({key: "summary", value: summary}));
         setSummary('');
+        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleEditDetails = () => {
         dispatch(updateProducts({key: "details", value: details}));
         setDetails('');
+        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleCheckbox = (index: number) => {

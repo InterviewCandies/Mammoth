@@ -10,6 +10,7 @@ import CTextarea from "../common/CTextarea";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {updateProducts} from "../../features/products";
+import {useSnackbar} from "notistack";
 
 const useStyles = makeStyles(() => ({
     right: {
@@ -29,6 +30,7 @@ function DeliveryEditor() {
     const {t} = useTranslation();
     const dispatch = useAppDispatch();
     const [shippingInfo, setShippingInfo] = useState<string>('');
+    const {enqueueSnackbar} = useSnackbar();
     const columns = [
         {
             name: "id",
@@ -66,19 +68,26 @@ function DeliveryEditor() {
     }
 
     const handleEditShippingInfo = () => {
-        dispatch(updateProducts({key: 'shippingInfo', value: shippingInfo}));
+        if (shippingInfo) {
+            dispatch(updateProducts({key: 'shippingInfo', value: shippingInfo}));
+            enqueueSnackbar(t('updated'), {variant: "success"});
+        }
+        else  enqueueSnackbar(t('updated'), {variant: "success"});
     }
 
     const handleEditShippingMethod = () => {
         dispatch(updateProducts({key: 'shippingMethod', value: shippingMethod}));
+        enqueueSnackbar(t('updated'), {variant: "success"});
     }
 
     const handleEditShippingScope = () => {
         dispatch(updateProducts({key: 'shippingScope', value: shippingScope}));
+        enqueueSnackbar(t('updated'), {variant: "success"});
     }
 
     const handleEditShippingFeeType = () => {
         dispatch(updateProducts({key: 'shippingFeeType', value: shippingFeeType}));
+        enqueueSnackbar(t('updated'), {variant: "success"});
     }
 
     return <Grid container spacing={5}>
