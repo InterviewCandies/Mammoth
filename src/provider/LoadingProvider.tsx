@@ -2,6 +2,7 @@ import {createContext, ReactElement, useContext, useState} from "react";
 import {Backdrop, CircularProgress, createStyles, makeStyles, Paper, Theme} from "@material-ui/core";
 import {ThemeContext} from "styled-components";
 import ThemeModel from "../types/ThemeModel";
+import {throws} from "assert";
 
 interface ContextType {
     loading: boolean,
@@ -36,7 +37,6 @@ function LoadingProvider({children} : {children: ReactElement}) {
     const turnOnLoading = (value : boolean) => {
         setLoading(value);
     }
-
     return <LoadingContext.Provider value={{loading, turnOnLoading}}>
         <Backdrop className={classes.backdrop} open={loading}>
             <Paper square={true} className={classes.paper} elevation={5}>

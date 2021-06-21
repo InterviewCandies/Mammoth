@@ -4,7 +4,7 @@ import {ThemeType} from "../../types/ThemeModel";
 
 function Layout(props: {children: ReactElement, theme: ThemeType, toggleTheme: ()=> void}) {
 
-    return <div>
+    return <div style={{margin: '3rem'}}>
         <Header theme={props.theme} toggleTheme={props.toggleTheme}></Header>
         {props.children}
     </div>

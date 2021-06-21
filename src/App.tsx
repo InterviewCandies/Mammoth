@@ -4,7 +4,7 @@ import EditMode from "./pages/EditMode";
 import SelectMode from "./pages/SelectMode";
 import Layout from "./components/common/Layout";
 import {ThemeContext, ThemeProvider} from "styled-components";
-import ThemeModel from "./types/ThemeModel";
+import ThemeModel, {ThemeType} from "./types/ThemeModel";
 import {darkTheme, lightTheme} from "./theme";
 import {GlobalStyles} from "./global";
 import useDarkMode from "./hooks/useDarkMode";
@@ -14,6 +14,9 @@ import {Provider} from "react-redux";
 import {store} from "./store"
 import {SnackbarProvider} from "notistack"
 import {makeStyles, Theme} from "@material-ui/core";
+import Page404 from "./pages/Page404";
+import {ErrorBoundary} from "react-error-boundary";
+import ErrorPage from "./pages/ErrorPage";
 
 interface Props {
     theme: ThemeModel
@@ -34,7 +37,17 @@ const useStyles = makeStyles<Theme, Props>(() => ({
             color: props => props.theme.error,
         }
     }
-}))
+}));
+
+function Main({theme, toggleTheme}: {theme: ThemeType, toggleTheme: () => void}) {
+    return  <Layout theme={theme} toggleTheme={toggleTheme}>
+        <Switch>
+            <Route path={"/select"} component={SelectMode}></Route>
+            <Route path={"/edit"} component={EditMode}></Route>
+            <Redirect to={"/404"}></Redirect>
+        </Switch>
+    </Layout>
+}
 
 function App() {
     const [theme, toggleTheme] = useDarkMode();
@@ -42,32 +55,28 @@ function App() {
     const classes = useStyles({theme: mode});
 
     return (
-    <ThemeProvider theme={mode}>
-        <SnackbarProvider maxSnack={3} classes={{ variantSuccess: classes.success, variantError: classes.error }}>
-            <ModalProvider>
-                <Provider store={store} >
-                    <LoadingProvider>
-                        <>
-                            <GlobalStyles/>
-                            <Router>
-                                <Switch>
-                                    <Layout theme={theme} toggleTheme={toggleTheme}>
-                                        <>
-                                            <Route path={"/select"} component={SelectMode}></Route>
-                                            <Route path={"/edit"} component={EditMode}></Route>
-                                            <Redirect to={"/select"}></Redirect>
-                                        </>
-                                    </Layout>
+        <ThemeProvider theme={mode}>
+            <SnackbarProvider maxSnack={3} classes={{variantSuccess: classes.success, variantError: classes.error}}>
+               <ErrorBoundary FallbackComponent={ErrorPage}>
+                   <ModalProvider>
+                    <Provider store={store}>
+                        <LoadingProvider>
+                            <>
+                                <GlobalStyles/>
+                                <Router>
+                                    <Switch>
+                                        <Route path={"/404"} component={Page404}></Route>
+                                        <Route render={(props) => <Main theme={theme} toggleTheme={toggleTheme} {...props} />}/>
+                                    </Switch>
+                                </Router>
+                            </>
+                        </LoadingProvider>
+                    </Provider>
+                </ModalProvider>
+               </ErrorBoundary>
+            </SnackbarProvider>
 
-                                </Switch>
-                            </Router>
-                        </>
-                    </LoadingProvider>
-                </Provider>
-            </ModalProvider>
-        </SnackbarProvider>
-
-    </ThemeProvider>
+        </ThemeProvider>
     );
 }
 

@@ -9,8 +9,6 @@ export const GlobalStyles = createGlobalStyle`
       font-family: 'Roboto', sans-serif;
       background-color: ${({theme}) => theme.body};
       color: ${({theme})=> theme.text};
-      transition: all 0.25s linear;
-      padding: 3rem;
     }
     
     *::-webkit-scrollbar {
