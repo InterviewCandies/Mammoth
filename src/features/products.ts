@@ -25,6 +25,9 @@ const products = createSlice({
         selectProducts(state, action: PayloadAction<string[]>) {
             state.selection = state.selection.concat(action.payload);
         },
+        replaceSelectedProducts(state, action: PayloadAction<string[]>) {
+            state.selection = action.payload;
+        },
         deselectProduct(state, action: PayloadAction<string>) {
             state.selection = state.selection.filter(id => id != action.payload);
         },
@@ -122,5 +125,5 @@ const products = createSlice({
     }
 });
 
-export const {fetchProducts, selectProducts, deselectProduct, updateProducts, addTags, increaseQuantity, decreaseQuantity, increasePrice, decreasePrice, increaseDiscount,decreaseDiscount} = products.actions;
+export const {fetchProducts, replaceSelectedProducts, selectProducts, deselectProduct, updateProducts, addTags, increaseQuantity, decreaseQuantity, increasePrice, decreasePrice, increaseDiscount,decreaseDiscount} = products.actions;
 export default products.reducer;

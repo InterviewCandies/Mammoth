@@ -102,14 +102,6 @@ function FilterTool() {
     const forceUpdate = useReducer(() => ({}), {})[1] as () => void;
     const columns = [
         {
-            name: "id",
-            label: "ID",
-            options: {
-                filter: true,
-                sort: false,
-            }
-        },
-        {
             name: "productName",
             label: t("productName"),
             options: {

@@ -37,10 +37,6 @@ function SupplierEditor() {
     const { enqueueSnackbar } = useSnackbar();
     const columns = [
         {
-            name: "id",
-            label: "ID",
-        },
-        {
             name: "productName",
             label: t('productName'),
         },

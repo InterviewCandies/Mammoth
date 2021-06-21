@@ -28,10 +28,6 @@ function OptionsEditor() {
     const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const columns = [
         {
-            name: "id",
-            label: "ID",
-        },
-        {
             name: "productName",
             label: t('productName'),
         },

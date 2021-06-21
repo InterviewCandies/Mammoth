@@ -1,6 +1,6 @@
 import mock from "../mocks/category"
 import RootStateModel from "../types/RootStateModel";
-
+import * as _ from "lodash"
 class CategoryService {
     fetch() {
         return Object.values(mock);

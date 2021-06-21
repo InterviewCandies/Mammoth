@@ -40,10 +40,6 @@ function CategoryEditor() {
 
     const columns = [
         {
-            name: "id",
-            label: "ID",
-        },
-        {
             name: "productName",
             label: t('productName'),
         },

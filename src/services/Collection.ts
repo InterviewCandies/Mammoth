@@ -3,10 +3,10 @@ import CollectionModel from "../types/CollectionModel";
 
 class CollectionService {
     fetch() {
-        return mocks;
+        return Object.values(mocks);
     }
     create(newCollection: CollectionModel) {
-      //  mocks.push({...newCollection});
+        mocks[newCollection.id] = newCollection;
         return true
     }
 }

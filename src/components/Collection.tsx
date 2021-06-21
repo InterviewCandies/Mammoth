@@ -20,7 +20,7 @@ import {useContext, useEffect, useState} from "react";
 import CBox from "./common/CBox";
 import {useTranslation} from "react-i18next";
 import {useAppDispatch, useAppSelector} from "../hooks";
-import {deselectProduct, selectProducts} from "../features/products";
+import {deselectProduct, replaceSelectedProducts, selectProducts} from "../features/products";
 import CLabel from "./common/CLabel";
 import product from "../mocks/product";
 import {createCollection, fetchCollection} from "../features/collection";
@@ -41,20 +41,25 @@ const useStyles = makeStyles<Theme, Props>((theme)=> ({
     collection: {
         "& > *" : {
             marginBottom: theme.spacing(3)
+
         },
     },
     items: {
-        backgroundColor: props => props.theme.input,
+        backgroundColor: props => props.theme.body,
         color: props => props.theme.inputText,
-        padding: "0.5rem",
         textTransform: "capitalize",
+        marginTop: 0,
         fontWeight: 600,
-        boxShadow: props => props.theme.boxShadowInside,
         "&:focus": {
             backgroundColor: props => props.theme.button,
         },
         maxHeight:'220px',
-        overflowY: "auto"
+        overflowY: "auto",
+        "& > *" : {
+            boxShadow: props => props.theme.boxShadowInside,
+            margin: '0.5rem',
+            backgroundColor: props => props.theme.input,
+        }
     },
     icon: {
         color: props => props.theme.inputText,
@@ -85,7 +90,7 @@ function Collection() {
 
     const handleSelectCollection = (value: string) => {
         setSelectedCollection(value);
-        dispatch(selectProducts(collection.find(item => item.id == value)?.products || []));
+        dispatch(replaceSelectedProducts(collection.find(item => item.id == value)?.products || []));
     }
 
     const handleAddCollection = () => {
@@ -93,6 +98,10 @@ function Collection() {
             label: 'Please enter a valid collection name',
             onOK: (value: string) => {
                 dispatch(createCollection({id: uuid(), name: value, products: [...selectedProductIds]}));
+                setSelectedCollection(() => {
+                    console.log(value);
+                    return value}
+                );
                 modal.hide();
             },
             onCancel: () => {

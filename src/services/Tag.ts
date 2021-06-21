@@ -5,8 +5,8 @@ class TagService {
     fetch() {
         return Object.values(mock);
     }
-    create(newTags: RootStateModel) {
-        mock[newTags.id] = newTags;
+    create(newTag: RootStateModel) {
+        mock[newTag.id] = newTag;
         return true;
     }
 }
