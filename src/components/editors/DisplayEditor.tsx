@@ -7,14 +7,15 @@ import CButton from "../common/CButton";
 import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {updateProducts} from "../../features/products";
 import {useSnackbar} from "notistack";
+import useUpdateProducts from "../../hooks/useUpdateProducts";
 
 function DisplayEditor() {
     const [displayItems, setDisplayItems] = useState<boolean>(true);
     const {t} = useTranslation();
     const dispatch = useAppDispatch();
     const {enqueueSnackbar} = useSnackbar();
+    const {updateProducts} = useUpdateProducts();
     const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const columns = [
         {
@@ -28,7 +29,7 @@ function DisplayEditor() {
     ]
 
     const handleEditDisplay = () => {
-        dispatch(updateProducts({key: 'display', value: displayItems ? 'T' : 'F'}));
+        updateProducts(selectedProducts, "display", () =>  displayItems ? 'T' : 'F')
         enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 

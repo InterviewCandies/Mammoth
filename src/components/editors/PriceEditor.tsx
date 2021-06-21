@@ -9,8 +9,8 @@ import CInput from "../common/CInput";
 import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {decreasePrice, increasePrice, updateProducts} from "../../features/products";
 import {useSnackbar} from "notistack";
+import useUpdateProducts from "../../hooks/useUpdateProducts";
 
 function PriceEditor() {
     const [showAction, setShowAction] = useState<number>(1);
@@ -20,6 +20,7 @@ function PriceEditor() {
     const [nextPrice, setNextPrice] = useState<number>(0);
     const dispatch = useAppDispatch();
     const {enqueueSnackbar} = useSnackbar();
+    const {updateProducts} = useUpdateProducts();
     const columns = [
         {
             name: "productName",
@@ -31,20 +32,24 @@ function PriceEditor() {
         },
     ]
 
-    const handleReplacePrice = () => {
-        dispatch(updateProducts({key: 'price', value: nextPrice}));
-        setNextPrice(0);
-        enqueueSnackbar(t('updated'), {variant: 'success'});
-    }
-
     const handleIncreasePrice = () => {
-        dispatch(increasePrice({type: unit, value: nextPrice}));
+        if (unit === '%')
+            updateProducts(selectedProducts, 'price', (value) => Number(value) + Math.floor(Number(value) *  nextPrice / 100))
+        else updateProducts(selectedProducts, 'price', (value) => Number(value) + nextPrice)
         setNextPrice(0);
         enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleDecreasePrice = () => {
-        dispatch(decreasePrice({type: unit, value: nextPrice}));
+        if (unit === '%')
+            updateProducts(selectedProducts, 'price', (value) =>  Math.max(0, Number(value) - Math.floor(Number(value) * nextPrice / 100)))
+        else  updateProducts(selectedProducts, 'price', (value) =>  Math.max(0, Number(value) - nextPrice))
+        setNextPrice(0);
+        enqueueSnackbar(t('updated'), {variant: 'success'});
+    }
+
+    const handleReplacePrice = () => {
+        updateProducts(selectedProducts, 'price', () =>  nextPrice)
         setNextPrice(0);
         enqueueSnackbar(t('updated'), {variant: 'success'});
     }

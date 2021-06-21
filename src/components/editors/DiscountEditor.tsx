@@ -9,8 +9,8 @@ import CButton from "../common/CButton";
 import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {decreaseDiscount, increaseDiscount, updateProducts} from "../../features/products";
 import {useSnackbar} from "notistack";
+import useUpdateProducts from "../../hooks/useUpdateProducts";
 
 function DiscountEditor() {
     const [showAction, setShowAction] = useState<number>(1);
@@ -19,6 +19,7 @@ function DiscountEditor() {
     const {t} = useTranslation();
     const dispatch = useAppDispatch();
     const {enqueueSnackbar} = useSnackbar();
+    const {updateProducts} = useUpdateProducts();
     const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const columns = [
         {
@@ -32,19 +33,23 @@ function DiscountEditor() {
     ]
 
     const handleIncreaseDiscount = () => {
-        dispatch(increaseDiscount({type: unit, value: nextDiscount}));
+        if (unit === '%')
+            updateProducts(selectedProducts, 'discount', (value) => Number(value) + Math.floor(Number(value) *  nextDiscount / 100))
+        else updateProducts(selectedProducts, 'discount', (value) => Number(value) + nextDiscount)
         setNextDiscount(0);
         enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleDecreaseDiscount = () => {
-        dispatch(decreaseDiscount({type: unit, value: nextDiscount}));
+        if (unit === '%')
+            updateProducts(selectedProducts, 'discount', (value) =>  Math.max(0, Number(value) - Math.floor(Number(value) * nextDiscount / 100)))
+        else  updateProducts(selectedProducts, 'discount', (value) =>  Math.max(0, Number(value) - nextDiscount))
         setNextDiscount(0);
         enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleReplaceDiscount = () => {
-        dispatch(updateProducts({key: 'discount', value: nextDiscount}));
+        updateProducts(selectedProducts, 'discount', () => nextDiscount);
         setNextDiscount(0);
         enqueueSnackbar(t('updated'), {variant: 'success'});
     }

@@ -7,7 +7,6 @@ import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {useState} from "react";
-import {updateProducts} from "../../features/products";
 import RootStateModel from "../../types/RootStateModel";
 import ProductModel from "../../types/ProductModel";
 import {cloneWithoutFreeze} from "../../utils/cloneWithoutFreezeHelper";
@@ -16,6 +15,7 @@ import {useSnackbar} from "notistack";
 import CInputDialog from "../common/CInputDialog";
 import {createSupplier} from "../../features/suppliers";
 import {v4 as uuid} from "uuid";
+import useUpdateProducts from "../../hooks/useUpdateProducts";
 
 function joinData(suppliers: RootStateModel[], products: ProductModel[]) {
     return products.map(product => {
@@ -32,9 +32,9 @@ function SupplierEditor() {
     const [nextSupplier, setNextSupplier] = useState<string>('');
     const dispatch = useAppDispatch();
     let selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
-    selectedProducts = joinData(suppliers, cloneWithoutFreeze<ProductModel>(selectedProducts));
-    const { showModal } = useModal();
-    const { enqueueSnackbar } = useSnackbar();
+    const {showModal} = useModal();
+    const {enqueueSnackbar} = useSnackbar();
+    const {updateProducts} = useUpdateProducts();
     const columns = [
         {
             name: "productName",
@@ -48,7 +48,7 @@ function SupplierEditor() {
 
     const handleEditSupplier = () => {
         if (nextSupplier) {
-            dispatch(updateProducts({key: 'supplier', value: nextSupplier}));
+            updateProducts(selectedProducts, 'supplier', () => nextSupplier);
             enqueueSnackbar(t('update'), {variant: 'success'});
         }
         else enqueueSnackbar(t('failedByEmptySupplier'), {variant: 'error'});
@@ -58,7 +58,9 @@ function SupplierEditor() {
         const modal = showModal(CInputDialog, {
             label: t('addSupplier'),
             onOK: (value: string) => {
-                dispatch(createSupplier({id: uuid(), name: value}));
+                const newSupplier = {id: uuid(), name: value};
+                dispatch(createSupplier(newSupplier));
+                setNextSupplier(newSupplier.id);
                 modal.hide();
                 enqueueSnackbar(t('added'), {variant: 'success'});
             },
@@ -86,7 +88,7 @@ function SupplierEditor() {
             </Grid>
         </Grid>
         <Grid item xs={12}>
-            <CTable title={t('selectedProducts')} columns={columns} data={selectedProducts}></CTable>
+            <CTable title={t('selectedProducts')} columns={columns} data={joinData(suppliers, cloneWithoutFreeze<ProductModel>(selectedProducts))}></CTable>
         </Grid>
     </Grid>
 }

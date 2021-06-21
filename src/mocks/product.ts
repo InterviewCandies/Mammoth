@@ -1,7 +1,7 @@
 import ProductModel from "../types/ProductModel";
 
-const products: ProductModel[] = [
-    {
+const products: Record<string, ProductModel> = {
+    "60d01cff1b985f214b6d8c99": {
         "id": "60d01cff1b985f214b6d8c99",
         "image": "enim.png",
         "summary": "Cupidatat do tempor deserunt labore dolore nisi.",
@@ -34,7 +34,7 @@ const products: ProductModel[] = [
             "pink"
         ]
     },
-    {
+    "60d01cffd8f631bfe10b0725": {
         "id": "60d01cffd8f631bfe10b0725",
         "image": "et.png",
         "summary": "Fugiat enim fugiat ex ipsum ut sunt sint anim laboris nostrud incididunt esse fugiat.",
@@ -67,7 +67,7 @@ const products: ProductModel[] = [
             "red"
         ]
     },
-    {
+    "60d01cffb4d94b1e8e078c34": {
         "id": "60d01cffb4d94b1e8e078c34",
         "image": "laborum.png",
         "summary": "Aliquip magna ut id dolore incididunt amet ad cupidatat.",
@@ -101,7 +101,7 @@ const products: ProductModel[] = [
             "purple"
         ]
     },
-    {
+    "60d01cffb4ab0fe2f192e069": {
         "id": "60d01cffb4ab0fe2f192e069",
         "image": "aliqua.png",
         "summary": "Nulla dolor non cupidatat pariatur sunt id elit elit excepteur.",
@@ -136,7 +136,7 @@ const products: ProductModel[] = [
             "yellow"
         ]
     },
-    {
+    "60d01cff04240200c9a7600a": {
         "id": "60d01cff04240200c9a7600a",
         "image": "velit.png",
         "summary": "Do amet ea irure minim quis veniam officia eu ea.",
@@ -171,7 +171,7 @@ const products: ProductModel[] = [
             "white"
         ]
     },
-    {
+    "60d01cff8cce9e29c99389a4": {
         "id": "60d01cff8cce9e29c99389a4",
         "image": "id.png",
         "summary": "Veniam veniam voluptate pariatur fugiat tempor.",
@@ -206,7 +206,7 @@ const products: ProductModel[] = [
             "blue"
         ]
     },
-    {
+    "60d01cffffa294be792a9d6d": {
         "id": "60d01cffffa294be792a9d6d",
         "image": "magna.png",
         "summary": "Elit reprehenderit elit proident voluptate.",
@@ -237,7 +237,7 @@ const products: ProductModel[] = [
             "pink"
         ]
     },
-    {
+    "60d01cffc97f92c4173587ff": {
         "id": "60d01cffc97f92c4173587ff",
         "image": "est.png",
         "summary": "Ut eu sint officia incididunt exercitation magna adipisicing adipisicing ut ipsum Lorem sit et ut.",
@@ -270,7 +270,7 @@ const products: ProductModel[] = [
             "blue"
         ]
     },
-    {
+    "60d01cff9b84db22c7820040": {
         "id": "60d01cff9b84db22c7820040",
         "image": "id.png",
         "summary": "Incididunt laboris non incididunt nostrud eiusmod exercitation laboris tempor nostrud commodo nulla officia commodo.",
@@ -301,7 +301,7 @@ const products: ProductModel[] = [
             "white"
         ]
     },
-    {
+    "60d01cffc432396593116dd3": {
         "id": "60d01cffc432396593116dd3",
         "image": "cillum.png",
         "summary": "Est mollit magna veniam ex.",
@@ -335,7 +335,7 @@ const products: ProductModel[] = [
             "black"
         ]
     },
-    {
+    "60d01cff0c72dde1a759d192": {
         "id": "60d01cff0c72dde1a759d192",
         "image": "sunt.png",
         "summary": "Esse tempor aliqua tempor in non deserunt officia aliquip Lorem ullamco Lorem.",
@@ -366,7 +366,7 @@ const products: ProductModel[] = [
             "red"
         ]
     },
-    {
+    "60d01cff9f0238eda40ba96a": {
         "id": "60d01cff9f0238eda40ba96a",
         "image": "pariatur.png",
         "summary": "Qui adipisicing laborum Lorem nostrud mollit mollit esse voluptate nostrud commodo cupidatat aute ea.",
@@ -398,7 +398,7 @@ const products: ProductModel[] = [
             "purple"
         ]
     },
-    {
+    "60d01cff02731cc54904e88a": {
         "id": "60d01cff02731cc54904e88a",
         "image": "pariatur.png",
         "summary": "Esse eu irure consectetur pariatur in dolore esse labore culpa pariatur.",
@@ -431,7 +431,7 @@ const products: ProductModel[] = [
             "purple"
         ]
     },
-    {
+    "60d01cff9efb872ca919b582": {
         "id": "60d01cff9efb872ca919b582",
         "image": "laborum.png",
         "summary": "Irure velit dolore proident enim ipsum amet ex officia fugiat nulla.",
@@ -463,7 +463,7 @@ const products: ProductModel[] = [
             "purple"
         ]
     },
-    {
+    "60d01cff6bbf0ea3a66eda70": {
         "id": "60d01cff6bbf0ea3a66eda70",
         "image": "nisi.png",
         "summary": "Qui ipsum culpa ea quis mollit proident cupidatat do velit deserunt ex sunt adipisicing consequat.",
@@ -498,7 +498,7 @@ const products: ProductModel[] = [
             "green"
         ]
     },
-    {
+    "60d01cff30e47ba590e40f61": {
         "id": "60d01cff30e47ba590e40f61",
         "image": "culpa.png",
         "summary": "Nulla quis nisi esse minim cillum aliquip ex anim sint culpa dolore.",
@@ -532,7 +532,7 @@ const products: ProductModel[] = [
             "pink"
         ]
     },
-    {
+    "60d01cfffe4552d1002fa472": {
         "id": "60d01cfffe4552d1002fa472",
         "image": "ipsum.png",
         "summary": "Labore ullamco occaecat dolor deserunt.",
@@ -564,7 +564,7 @@ const products: ProductModel[] = [
             "red"
         ]
     },
-    {
+    "60d01cfff2cdef3489a3d7b8": {
         "id": "60d01cfff2cdef3489a3d7b8",
         "image": "aliquip.png",
         "summary": "Commodo tempor incididunt do ipsum reprehenderit qui fugiat adipisicing et eu aute ut deserunt aliqua.",
@@ -598,7 +598,7 @@ const products: ProductModel[] = [
             "purple"
         ]
     },
-    {
+    "60d01cff12c1ac4c17e6c789": {
         "id": "60d01cff12c1ac4c17e6c789",
         "image": "eiusmod.png",
         "summary": "Enim cupidatat incididunt occaecat veniam do sit ex pariatur proident deserunt amet.",
@@ -629,7 +629,7 @@ const products: ProductModel[] = [
             "black"
         ]
     },
-    {
+    "60d01cffa1ade94e4bd37a8f": {
         "id": "60d01cffa1ade94e4bd37a8f",
         "image": "culpa.png",
         "summary": "Aliqua pariatur Lorem pariatur elit laborum mollit excepteur do tempor consequat mollit adipisicing qui cupidatat.",
@@ -663,6 +663,6 @@ const products: ProductModel[] = [
             "pink"
         ]
     }
-]
+}
 
 export default products;

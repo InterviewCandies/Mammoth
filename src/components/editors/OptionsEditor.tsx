@@ -8,8 +8,8 @@ import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {updateProducts} from "../../features/products";
 import {useSnackbar} from "notistack";
+import useUpdateProducts from "../../hooks/useUpdateProducts";
 
 const useStyles = makeStyles(() => ({
     right: {
@@ -25,6 +25,7 @@ function OptionsEditor() {
     const {t} = useTranslation();
     const dispatch = useAppDispatch();
     const {enqueueSnackbar} = useSnackbar();
+    const {updateProducts} = useUpdateProducts();
     const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const columns = [
         {
@@ -42,13 +43,14 @@ function OptionsEditor() {
     ]
 
     const handleEditProductCondition = () => {
-        dispatch(updateProducts({key: 'productCondition', value: productCondition}));
+        updateProducts(selectedProducts, 'productCondition', () => productCondition)
         enqueueSnackbar(t('updated'), {variant: "success"});
     }
 
     const handleEditMaterial = () => {
-        dispatch(updateProducts({key: 'material', value: material}));
+        updateProducts(selectedProducts, 'material', () => material)
         enqueueSnackbar(t('updated'), {variant: "success"});
+        setMaterial('');
     }
 
     return <Grid container spacing={5}>

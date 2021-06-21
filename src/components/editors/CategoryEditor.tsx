@@ -9,7 +9,7 @@ import CTable from "../common/CTable";
 import RootStateModel from "../../types/RootStateModel";
 import ProductModel from "../../types/ProductModel";
 import {useEffect, useState} from "react";
-import {updateProducts} from "../../features/products";
+import {updateSelectedProducts} from "../../features/products";
 import {cloneWithoutFreeze} from "../../utils/cloneWithoutFreezeHelper";
 import {useModal} from "mui-modal-provider";
 import CInputDialog from "../common/CInputDialog";
@@ -17,6 +17,8 @@ import CInput from "../common/CInput";
 import {createCategory} from "../../features/categories";
 import { v4 as uuid } from 'uuid';
 import {useSnackbar} from "notistack";
+import productService from "../../services/Product";
+import useUpdateProducts from "../../hooks/useUpdateProducts";
 
 
 function joinData(categories: RootStateModel[], products: ProductModel[]) {
@@ -32,11 +34,12 @@ function CategoryEditor() {
     const {t} = useTranslation();
     const categories = useAppSelector(state => state.categories.categories);
     let selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
-    selectedProducts = joinData(categories, cloneWithoutFreeze<ProductModel>(selectedProducts));
     const [nextCategory, setNextCategory] = useState<string>('');
     const {showModal} = useModal();
     const dispatch = useAppDispatch();
     const {enqueueSnackbar} = useSnackbar();
+    const  {updateProducts} = useUpdateProducts();
+
 
     const columns = [
         {
@@ -53,7 +56,9 @@ function CategoryEditor() {
         const modal = showModal(CInputDialog, {
             label: t('addCategory'),
             onOK: (value : string) => {
-                dispatch(createCategory({id: uuid(), name: value}));
+                const newCategory = {id: uuid(), name: value};
+                dispatch(createCategory(newCategory));
+                setNextCategory(newCategory.id);
                 enqueueSnackbar(t('added'), {variant: "success"});
                 modal.hide();
             },
@@ -63,7 +68,7 @@ function CategoryEditor() {
     }
 
     const handleEditCategory = () => {
-        dispatch(updateProducts({key: 'category', value: nextCategory}));
+        updateProducts(selectedProducts, 'category', () => { return nextCategory})
         enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
@@ -85,7 +90,7 @@ function CategoryEditor() {
             </Grid>
         </Grid>
         <Grid item xs={12}>
-            <CTable title={t('selectedProducts')} columns={columns} data={selectedProducts}></CTable>
+            <CTable title={t('selectedProducts')} columns={columns} data={joinData(categories, cloneWithoutFreeze<ProductModel>(selectedProducts))}></CTable>
         </Grid>
     </Grid>
 }

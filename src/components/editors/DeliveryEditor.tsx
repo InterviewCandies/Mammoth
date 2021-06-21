@@ -9,8 +9,8 @@ import {useTranslation} from "react-i18next";
 import CTextarea from "../common/CTextarea";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {updateProducts} from "../../features/products";
 import {useSnackbar} from "notistack";
+import useUpdateProducts from "../../hooks/useUpdateProducts";
 
 const useStyles = makeStyles(() => ({
     right: {
@@ -31,6 +31,7 @@ function DeliveryEditor() {
     const dispatch = useAppDispatch();
     const [shippingInfo, setShippingInfo] = useState<string>('');
     const {enqueueSnackbar} = useSnackbar();
+    const {updateProducts} = useUpdateProducts();
     const columns = [
         {
             name: "productName",
@@ -65,24 +66,24 @@ function DeliveryEditor() {
 
     const handleEditShippingInfo = () => {
         if (shippingInfo) {
-            dispatch(updateProducts({key: 'shippingInfo', value: shippingInfo}));
+            updateProducts(selectedProducts, 'shippingInfo', () => shippingInfo);
             enqueueSnackbar(t('updated'), {variant: "success"});
         }
         else  enqueueSnackbar(t('updated'), {variant: "success"});
     }
 
     const handleEditShippingMethod = () => {
-        dispatch(updateProducts({key: 'shippingMethod', value: shippingMethod}));
+        updateProducts(selectedProducts, 'shippingMethod', () => shippingMethod);
         enqueueSnackbar(t('updated'), {variant: "success"});
     }
 
     const handleEditShippingScope = () => {
-        dispatch(updateProducts({key: 'shippingScope', value: shippingScope}));
+        updateProducts(selectedProducts, 'shippingScope', () => shippingScope);
         enqueueSnackbar(t('updated'), {variant: "success"});
     }
 
     const handleEditShippingFeeType = () => {
-        dispatch(updateProducts({key: 'shippingFeeType', value: shippingFeeType}));
+        updateProducts(selectedProducts, 'shippingFeeType', () => shippingFeeType);
         enqueueSnackbar(t('updated'), {variant: "success"});
     }
 

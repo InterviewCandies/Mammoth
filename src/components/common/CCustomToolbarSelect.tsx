@@ -7,6 +7,8 @@ import ProductModel from "../../types/ProductModel";
 import {useAppDispatch} from "../../hooks";
 import {selectProducts} from "../../features/products";
 import {ThemeContext} from "styled-components";
+import {useSnackbar} from "notistack";
+import {useTranslation} from "react-i18next";
 
 const defaultToolbarSelectStyles = {
     iconButton: {
@@ -19,14 +21,17 @@ const defaultToolbarSelectStyles = {
 function  CCustomToolbarSelect({selectedRows, data} :  {selectedRows: any, data: ProductModel[]}) {
     const dispatch = useAppDispatch();
     const theme = useContext(ThemeContext);
+    const {t} = useTranslation();
+    const {enqueueSnackbar} = useSnackbar();
 
     const handleSelect = () => {
         const products = selectedRows.data.map((item: {dataIndex: number}) => data[item.dataIndex]);
-        dispatch(selectProducts(products.map((product: ProductModel) => product.id)))
+        dispatch(selectProducts(products.map((product: ProductModel) => product.id)));
+        enqueueSnackbar(t('selected'), {variant: 'success'});
     };
 
     return <div>
-            <Tooltip title={"Add to selection"}>
+            <Tooltip title={t('selectToEdit') as string}>
                 <IconButton onClick={handleSelect}>
                    <Add style={{color: theme.buttonText}}></Add>
                 </IconButton>

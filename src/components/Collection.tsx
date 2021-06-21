@@ -27,6 +27,8 @@ import {createCollection, fetchCollection} from "../features/collection";
 import {useModal} from "mui-modal-provider";
 import CInputDialog from "./common/CInputDialog";
 import {v4 as uuid} from "uuid";
+import CollectionModel from "../types/CollectionModel";
+import {useSnackbar} from "notistack";
 
 const Text = styled.h4`
    color: ${({theme}) => theme.text };
@@ -82,10 +84,14 @@ function Collection() {
     const [selectedCollection, setSelectedCollection] = useState<string>('');
     const collection = useAppSelector(state => state.collection.collection);
     const {showModal} = useModal();
+    const {enqueueSnackbar} = useSnackbar();
     const selectedProductIds = useAppSelector(state => state.products.selection);
 
     useEffect(() => {
-        dispatch(fetchCollection())
+        async function fetchData() {
+            await dispatch(fetchCollection())
+        }
+        fetchData();
     }, []);
 
     const handleSelectCollection = (value: string) => {
@@ -95,13 +101,12 @@ function Collection() {
 
     const handleAddCollection = () => {
         const modal = showModal(CInputDialog, {
-            label: 'Please enter a valid collection name',
+            label: t('addCollection'),
             onOK: (value: string) => {
-                dispatch(createCollection({id: uuid(), name: value, products: [...selectedProductIds]}));
-                setSelectedCollection(() => {
-                    console.log(value);
-                    return value}
-                );
+                const newColection: CollectionModel = { id: uuid(), name: value, products: [...selectedProductIds] };
+                dispatch(createCollection(newColection));
+                setSelectedCollection(newColection.id);
+                enqueueSnackbar(t('added'), {variant: 'success'});
                 modal.hide();
             },
             onCancel: () => {
@@ -132,7 +137,6 @@ function Collection() {
                 <Text>{t('selectedProducts')}</Text>
             </Grid>
             {
-
                selectedProducts.length ?
                    <Grid container spacing={2}>
                        <Grid item xs={12}>

@@ -9,8 +9,8 @@ import CButton from "../common/CButton";
 import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
-import {decreaseQuantity, increaseQuantity, updateProducts} from "../../features/products";
 import {useSnackbar} from "notistack";
+import useUpdateProducts from "../../hooks/useUpdateProducts";
 
 function QuantityEditor() {
     const [showAction, setShowAction] = useState<number>(1);
@@ -22,6 +22,7 @@ function QuantityEditor() {
     const {enqueueSnackbar} = useSnackbar();
     const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const dispatch = useAppDispatch();
+    const {updateProducts} = useUpdateProducts();
     const columns = [
         {
             name: "productName",
@@ -50,29 +51,29 @@ function QuantityEditor() {
     }
 
     const handleEditMinimumQuantity = () => {
-        dispatch(updateProducts({key: 'minimumQuantity', value: minimumQuantity}));
+        updateProducts(selectedProducts, 'minimumQuantity', () => minimumQuantity);
         enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleEditMaximumQuantity = () => {
-        dispatch(updateProducts({key: 'maximumQuantity', value: maximumQuantity}));
+        updateProducts(selectedProducts, 'maximumQuantity', () => maximumQuantity);
         enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleIncreaseQuantity = () => {
-        dispatch(increaseQuantity(quantity));
+        updateProducts(selectedProducts, 'quantity', value => Number(value) + quantity);
         setQuantity(0);
         enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleDecreaseQuantity = () => {
-        dispatch(decreaseQuantity(quantity));
+        updateProducts(selectedProducts, 'quantity', value => Math.max(0, Number(value) - quantity));
         setQuantity(0);
         enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleReplaceQuantity = () => {
-        dispatch(updateProducts({key: 'quantity', value: quantity}));
+        updateProducts(selectedProducts, 'quantity', () => quantity);
         enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 

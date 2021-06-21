@@ -47,6 +47,9 @@ const getMuiTheme = (theme : ThemeModel) =>
                 }
             },
             MUIDataTableHeadCell: {
+                root: {
+                    color: `${theme.text} !important`
+                },
               fixedHeader: {
                   backgroundColor: theme.table,
                   color: `${theme.text} !important`
@@ -84,10 +87,25 @@ const getMuiTheme = (theme : ThemeModel) =>
 
                 },
             },
+            MUIDataTableHeadRow: {
+                root: {
+                    color: theme.text
+                }
+            },
             MuiTableCell: {
               root: {
-                  borderBottom: "none"
-              }
+                  borderBottom: "none",
+                  color: theme.text
+              },
+                head: {
+                    borderBottom: "none",
+                    color: theme.text
+                }
+            },
+            MuiTableRow: {
+                root: {
+                    color: theme.text
+                }
             },
             MuiTablePagination: {
                 toolbar: {

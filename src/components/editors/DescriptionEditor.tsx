@@ -9,9 +9,9 @@ import {useTranslation} from "react-i18next";
 import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {useState} from "react";
-import {updateProducts} from "../../features/products";
 import CCheckbox from "../common/CCheckbox";
 import {useSnackbar} from "notistack";
+import useUpdateProducts from "../../hooks/useUpdateProducts";
 
 const Label = styled.h6`
     color: ${({theme}) => theme.buttonText};
@@ -40,6 +40,7 @@ function DescriptionEditor() {
     const {enqueueSnackbar} = useSnackbar();
     const [checkBoxes, setCheckboxes] = useState<boolean[]>([]);
     const dispatch = useAppDispatch();
+    const {updateProducts} = useUpdateProducts();
 
     const columns = [
         {
@@ -57,13 +58,13 @@ function DescriptionEditor() {
     ]
 
     const handleEditSummary = () => {
-        dispatch(updateProducts({key: "summary", value: summary}));
+        updateProducts(selectedProducts, 'summary', () => summary);
         setSummary('');
         enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleEditDetails = () => {
-        dispatch(updateProducts({key: "details", value: details}));
+        updateProducts(selectedProducts, 'details', () => details);
         setDetails('');
         enqueueSnackbar(t('updated'), {variant: 'success'});
     }
@@ -105,7 +106,7 @@ function DescriptionEditor() {
             </Grid>
             <Grid item xs={12}>
                 <Collapse in={checkBoxes[1]}>
-                    <Grid container xs={12}>
+                    <Grid container xs={12} spacing={2}>
                         <Grid item xs={12}>
                             <CTextarea rows={5} value={details} onChange={e => setDetails(e.target.value)}></CTextarea>
                         </Grid>

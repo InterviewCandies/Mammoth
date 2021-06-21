@@ -11,7 +11,6 @@ import CTable from "../common/CTable";
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import CMultipleSelect from "../common/CMultipleSelect";
 import RootStateModel from "../../types/RootStateModel";
-import {addTags, updateProducts} from "../../features/products";
 import ProductModel from "../../types/ProductModel";
 import {cloneWithoutFreeze} from "../../utils/cloneWithoutFreezeHelper";
 import {useModal} from "mui-modal-provider";
@@ -19,6 +18,8 @@ import CInputDialog from "../common/CInputDialog";
 import {v4 as uuid} from "uuid"
 import {createTag} from "../../features/tags";
 import {useSnackbar} from "notistack";
+import useUpdateProducts from "../../hooks/useUpdateProducts";
+import * as _ from "lodash";
 
 function joinData(tags: RootStateModel[], products: ProductModel[]) {
   return products.map(product => {
@@ -40,10 +41,10 @@ function TagsEditor() {
     const {t} = useTranslation();
     const tags = useAppSelector(state => state.tags.tags);
     let selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
-    selectedProducts = joinData(tags, cloneWithoutFreeze<ProductModel>(selectedProducts));
     const dispatch = useAppDispatch();
-    const { showModal } = useModal();
-    const { enqueueSnackbar } = useSnackbar();
+    const {updateProducts} = useUpdateProducts();
+    const {showModal} = useModal();
+    const {enqueueSnackbar} = useSnackbar();
 
     const columns = [
         {
@@ -57,12 +58,15 @@ function TagsEditor() {
     ]
 
     const handleAddTags = () => {
-        dispatch(addTags(nextTags.map(tag => tag.id)));
+        updateProducts(selectedProducts, 'tags', (value) => {
+            if (typeof value !== 'object') return [];
+            return _.union(value, nextTags.map(tag => tag.id));
+        });
         enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleReplaceTags = () => {
-        dispatch(updateProducts({key: 'tags', value: nextTags.map(tag => tag.id)}));
+        updateProducts(selectedProducts, 'tags', () => nextTags.map(tag => tag.id));
         enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
@@ -126,7 +130,7 @@ function TagsEditor() {
             </Grid>
         </Grid>
         <Grid item xs={12}>
-            <CTable title={t('selectedProducts')} columns={columns} data={selectedProducts}></CTable>
+            <CTable title={t('selectedProducts')} columns={columns} data={joinData(tags, cloneWithoutFreeze<ProductModel>(selectedProducts))}></CTable>
         </Grid>
     </Grid>
 }
