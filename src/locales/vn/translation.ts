@@ -5,8 +5,8 @@ export const TRANSLATION_VN = {
     english: "Tiếng anh",
     collection: "Bộ sưu tập",
     filters: "Bộ lọc",
-    exact: "Hoàn toàn",
-    include: "Một phần",
+    exact: "Tìm tất cả sản phẩn thỏa mãn tất cả tiêu chí",
+    include: "Tìm tất cả sản phẩn thỏa mãn một hoặc nhiều tiêu chí",
     chooseFrom: "Chọn từ",
     productName: "Tên sản phẩm",
     category: "Thể loại",
@@ -73,6 +73,7 @@ export const TRANSLATION_VN = {
     updated: "Đã cập nhật!",
     added: "Đã thêm!",
     result: "Kết quả",
+    addToCollection: "Thêm vào bộ sưu tập",
     failedByEmptyCategory: "Thất bại! Vui lòng chọn ít nhất một thể loại",
     failedByEmptySupplier: "Thất bại! Vui lòng chọn ít nhất một nhà cung cấp",
     failedByEmptyProducts: "Vui lòng chọn ít nhất một sản phẩm để chỉnh sửa"

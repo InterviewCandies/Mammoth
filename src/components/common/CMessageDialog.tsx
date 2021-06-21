@@ -5,7 +5,7 @@ import {ThemeContext} from "styled-components";
 import CLabel from "./CLabel";
 import CButton from "./CButton";
 import {useTranslation} from "react-i18next";
-import {Info} from "@material-ui/icons";
+import {Cancel, Info, Warning} from "@material-ui/icons";
 
 interface Props {
     theme: ThemeModel
@@ -16,7 +16,10 @@ const useStyles = makeStyles<Theme, Props>((theme) => ({
         backgroundColor: props => props.theme.body,
         color: props => props.theme.text,
         padding: "1.2rem",
-        textAlign: "center"
+        textAlign: "center",
+        "& .MuiSvgIcon-root": {
+            color: props => props.theme.primary,
+        }
     },
     paper: {
         "& .MuiDialog-paper" : {
@@ -41,8 +44,8 @@ const CMessageDialog: React.FC<ModalProps> = (props) => {
 
     return <Dialog {...props} className={classes.paper}>
             <Grid container spacing={2} className={classes.root}>
-                <Grid item xs={12} container alignItems={"center"} >
-                    <Info style={{marginRight:'0.5rem'}}/>
+                <Grid item xs={12}  container alignItems={"center"}>
+                    <Cancel style={{fontSize: '2.5rem', marginRight: '0.5rem'}}/>
                     <CLabel>{props.message}</CLabel>
                 </Grid>
                 <Grid item xs={12} style={{textAlign: 'end'}}>

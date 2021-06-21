@@ -15,8 +15,13 @@ const useStyles = makeStyles<Theme, Props>(() => ({
     root: {
         backgroundColor: props => props.theme.body,
         color: props => props.theme.text,
-        minWidth: "500px",
-        minHeight: '190px'
+        padding: "1.2rem",
+    },
+    paper: {
+        "& .MuiDialog-paper" : {
+            margin: 0,
+            overflow: 'hidden',
+        }
     }
 }))
 
@@ -36,11 +41,10 @@ const CInputDalog: React.FC<ModalProps> = (props) => {
     const [value, setValue] = useState<string>('');
     const {t} = useTranslation();
 
-    return <Dialog {...props}>
-        <DialogContent className={classes.root}>
+    return <Dialog {...props} className={classes.paper}>
             <form>
-                <Grid container spacing={3}>
-                    <Grid container item xs={12} spacing={2} style={{paddingRight: 0}}>
+                <Grid container spacing={3} className={classes.root}>
+                    <Grid container item xs={12} spacing={3} style={{paddingRight: 0}}>
                         <Grid item xs={12}><CLabel>{props.label}</CLabel></Grid>
                         <Grid item xs={12}><CInput style={{width: '100%'}} value={value} onChange={e => setValue(e.target.value)} /></Grid>
                     </Grid>
@@ -53,7 +57,6 @@ const CInputDalog: React.FC<ModalProps> = (props) => {
                     </Grid>
                 </Grid>
             </form>
-        </DialogContent>
     </Dialog>
 }
 

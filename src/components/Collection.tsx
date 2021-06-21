@@ -128,7 +128,7 @@ function Collection() {
             </Grid>
         </Grid>
         <Grid item xs={3}>
-            <Grid item xs={12} style={{marginBottom: muiTheme.spacing(3)}}>
+            <Grid item xs={12} style={{marginBottom: muiTheme.spacing(2)}}>
                 <Text>{t('selectedProducts')}</Text>
             </Grid>
             {
@@ -150,7 +150,7 @@ function Collection() {
                            </List>
                        </Grid>
                         <Grid item xs={12} className={classes.right}>
-                            <CButton onClick={handleAddCollection}>{t('add')}</CButton>
+                            <CButton onClick={handleAddCollection}>{t('addToCollection')}</CButton>
                         </Grid>
                </Grid> : null
             }

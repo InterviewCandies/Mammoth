@@ -44,6 +44,7 @@ function Main({theme, toggleTheme}: {theme: ThemeType, toggleTheme: () => void})
         <Switch>
             <Route path={"/select"} component={SelectMode}></Route>
             <Route path={"/edit"} component={EditMode}></Route>
+            <Route path={"/"} component={SelectMode}></Route>
             <Redirect to={"/404"}></Redirect>
         </Switch>
     </Layout>
