@@ -67,24 +67,20 @@ function DeliveryEditor() {
     const handleEditShippingInfo = () => {
         if (shippingInfo) {
             updateProducts(selectedProducts, 'shippingInfo', () => shippingInfo);
-            enqueueSnackbar(t('updated'), {variant: "success"});
         }
         else  enqueueSnackbar(t('updated'), {variant: "success"});
     }
 
     const handleEditShippingMethod = () => {
         updateProducts(selectedProducts, 'shippingMethod', () => shippingMethod);
-        enqueueSnackbar(t('updated'), {variant: "success"});
     }
 
     const handleEditShippingScope = () => {
         updateProducts(selectedProducts, 'shippingScope', () => shippingScope);
-        enqueueSnackbar(t('updated'), {variant: "success"});
     }
 
     const handleEditShippingFeeType = () => {
         updateProducts(selectedProducts, 'shippingFeeType', () => shippingFeeType);
-        enqueueSnackbar(t('updated'), {variant: "success"});
     }
 
     return <Grid container spacing={5}>

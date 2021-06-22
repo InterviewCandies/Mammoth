@@ -18,9 +18,9 @@ interface Props {
 const useStyles = makeStyles<Theme, Props>((theme: Theme) =>
     createStyles({
         backdrop: {
-            zIndex: theme.zIndex.drawer + 1,
+            zIndex: 2000,
             color: "#fff",
-            opacity: "0.8"
+            opacity: "0.8",
         },
         paper: {
             backgroundColor: props => props.theme.paper,

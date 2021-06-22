@@ -30,7 +30,6 @@ function DisplayEditor() {
 
     const handleEditDisplay = () => {
         updateProducts(selectedProducts, "display", () =>  displayItems ? 'T' : 'F')
-        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     return <Grid container spacing={5}>

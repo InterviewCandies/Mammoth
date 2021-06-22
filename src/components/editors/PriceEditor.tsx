@@ -37,7 +37,6 @@ function PriceEditor() {
             updateProducts(selectedProducts, 'price', (value) => Number(value) + Math.floor(Number(value) *  nextPrice / 100))
         else updateProducts(selectedProducts, 'price', (value) => Number(value) + nextPrice)
         setNextPrice(0);
-        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleDecreasePrice = () => {
@@ -45,13 +44,11 @@ function PriceEditor() {
             updateProducts(selectedProducts, 'price', (value) =>  Math.max(0, Number(value) - Math.floor(Number(value) * nextPrice / 100)))
         else  updateProducts(selectedProducts, 'price', (value) =>  Math.max(0, Number(value) - nextPrice))
         setNextPrice(0);
-        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleReplacePrice = () => {
         updateProducts(selectedProducts, 'price', () =>  nextPrice)
         setNextPrice(0);
-        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     return <Grid container spacing={5}>

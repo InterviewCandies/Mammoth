@@ -21,7 +21,7 @@ function Page404() {
     return <div className={classes.root}>
         <Typography variant={"h1"} style={{fontWeight: 600}}>404</Typography>
         <Typography variant={"h2"}>Page not found</Typography>
-        <Button onClick={() => history.push("/select")}  variant={"contained"} style={{marginTop: '1.5rem', textTransform: "none"}}>Back to main page</Button>
+        <Button onClick={() => history.push("/")}  variant={"contained"} style={{marginTop: '1.5rem', textTransform: "none"}}>Back to main page</Button>
     </div>;
 }
 

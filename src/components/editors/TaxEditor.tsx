@@ -36,12 +36,10 @@ function TaxEditor() {
 
     const handleEditTaxType = () => {
         updateProducts(selectedProducts, 'taxType', () => taxType);
-        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleEditTaxAmount = () => {
         updateProducts(selectedProducts, 'taxAmount', () => taxAmount);
-        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     return <Grid container spacing={5}>

@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import {lightTheme} from "../../theme";
 import {ThemeType} from "../../types/ThemeModel";
+import {Brightness1, Brightness2, Brightness5, WbSunny} from "@material-ui/icons";
+import {Icon} from "@material-ui/core";
 
 interface Props {
     lightTheme : boolean
@@ -22,19 +24,21 @@ const ToggleContainer = styled.button<Props>`
   width: 5rem;
   height: 2.5rem;
 
-  img {
+  span {
     height: auto;
     max-width: 1.6rem;
     transition: all 0.3s linear;
     
     // sun icon
     &:first-child {
-      transform: ${({ lightTheme }) => lightTheme ? 'translateY(0)' : 'translateY(100px)'};
+      transform: ${({ lightTheme }) => lightTheme ? 'translateY(0)' : 'translateY(50px)'};
+      color: ${({theme}) => theme.primary}
     }
     
     // moon icon
     &:nth-child(2) {
-      transform: ${({ lightTheme }) => lightTheme ? 'translateY(-100px)' : 'translateY(0)'};
+      transform: ${({ lightTheme }) => lightTheme ? 'translateY(-50px)' : 'translateY(0)'};
+      color: ${({theme}) => theme.primary}
     }
   }
 `;
@@ -42,8 +46,8 @@ const ToggleContainer = styled.button<Props>`
 function ToggleTheme({theme, toggleTheme} : {theme: ThemeType, toggleTheme: () => void}) {
     const isLight = theme === 'light'
     return   <ToggleContainer lightTheme={isLight} onClick={toggleTheme}>
-        <img src="https://image.flaticon.com/icons/svg/1164/1164954.svg" width="25" height="25" alt="Sun free icon" title="Sun free icon"/>
-        <img src="https://image.flaticon.com/icons/svg/2033/2033921.svg" width="25" height="25" alt="Moon free icon" title="Moon free icon"/>
+        <Icon><WbSunny/></Icon>
+        <Icon><Brightness2/></Icon>
     </ToggleContainer>
 }
 

@@ -52,29 +52,24 @@ function QuantityEditor() {
 
     const handleEditMinimumQuantity = () => {
         updateProducts(selectedProducts, 'minimumQuantity', () => minimumQuantity);
-        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleEditMaximumQuantity = () => {
         updateProducts(selectedProducts, 'maximumQuantity', () => maximumQuantity);
-        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleIncreaseQuantity = () => {
         updateProducts(selectedProducts, 'quantity', value => Number(value) + quantity);
         setQuantity(0);
-        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleDecreaseQuantity = () => {
         updateProducts(selectedProducts, 'quantity', value => Math.max(0, Number(value) - quantity));
         setQuantity(0);
-        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleReplaceQuantity = () => {
         updateProducts(selectedProducts, 'quantity', () => quantity);
-        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     return <Grid container spacing={5}>

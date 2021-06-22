@@ -5,6 +5,7 @@ import {useContext} from "react";
 import {ThemeContext} from "styled-components";
 import ProductModel from "../../types/ProductModel";
 import CCustomToolbarSelect from "./CCustomToolbarSelect";
+import {useTranslation} from "react-i18next";
 
 const getMuiTheme = (theme : ThemeModel) =>
     createMuiTheme({
@@ -44,7 +45,7 @@ const getMuiTheme = (theme : ThemeModel) =>
                     backgroundColor: theme.table,
                     color: theme.text,
                     border: "none",
-                }
+                },
             },
             MUIDataTableHeadCell: {
                 root: {
@@ -100,7 +101,7 @@ const getMuiTheme = (theme : ThemeModel) =>
                 head: {
                     borderBottom: "none",
                     color: theme.text
-                }
+                },
             },
             MuiTableRow: {
                 root: {
@@ -114,6 +115,9 @@ const getMuiTheme = (theme : ThemeModel) =>
             },
             MUIDataTableViewCol: {
                 label: {
+                    color: theme.text
+                },
+                title: {
                     color: theme.text
                 }
             },
@@ -141,13 +145,43 @@ const getMuiTheme = (theme : ThemeModel) =>
 
 export default function CTable({columns, data, title, selectable} : {selectable?: boolean, title: string, columns: MUIDataTableColumnDef[], data:  ProductModel[]}) {
     const theme = useContext((ThemeContext));
+    const {t} = useTranslation();
+
     const options: MUIDataTableOptions = {
         filterType:  'checkbox',
         selectableRows: selectable ? 'multiple' : 'none',
         elevation: 2,
-        customToolbarSelect: (selectedRows) => <CCustomToolbarSelect selectedRows={selectedRows} data={data}/>
+        customToolbarSelect: (selectedRows) => <CCustomToolbarSelect selectedRows={selectedRows} data={data}/>,
+        textLabels: {
+            body: {
+                noMatch: t('noMatch'),
+                toolTip: t('toolTip'),
+            },
+            pagination: {
+                rowsPerPage: t('rowsPerPage'),
+                displayRows: t('displayRows'),
+            },
+            toolbar: {
+                search: t('search'),
+                downloadCsv: t('downloadCsv'),
+                print: t('print'),
+                viewColumns: t('viewColumns'),
+                filterTable: t('filterTable'),
+            },
+            filter: {
+                all: t('all'),
+                title: t('title'),
+                reset: t('reset'),
+            },
+            viewColumns: {
+                title:  t('titleColumns'),
+                titleAria: t('titleAria'),
+            },
+            selectedRows: {
+                text: t('text'),
+            },
+        }
     };
-
     return <MuiThemeProvider theme={getMuiTheme(theme)}>
         <MUIDataTable
             title={title ? title : ""}

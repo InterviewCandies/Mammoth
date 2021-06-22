@@ -44,12 +44,10 @@ function OptionsEditor() {
 
     const handleEditProductCondition = () => {
         updateProducts(selectedProducts, 'productCondition', () => productCondition)
-        enqueueSnackbar(t('updated'), {variant: "success"});
     }
 
     const handleEditMaterial = () => {
         updateProducts(selectedProducts, 'material', () => material)
-        enqueueSnackbar(t('updated'), {variant: "success"});
         setMaterial('');
     }
 

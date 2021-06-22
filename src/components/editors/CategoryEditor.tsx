@@ -63,13 +63,11 @@ function CategoryEditor() {
                 modal.hide();
             },
             onCancel: () => { modal.hide() },
-
         });
     }
 
     const handleEditCategory = () => {
         updateProducts(selectedProducts, 'category', () => { return nextCategory})
-        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     return  <Grid container spacing={5} >

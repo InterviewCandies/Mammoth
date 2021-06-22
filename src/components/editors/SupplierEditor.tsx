@@ -49,7 +49,6 @@ function SupplierEditor() {
     const handleEditSupplier = () => {
         if (nextSupplier) {
             updateProducts(selectedProducts, 'supplier', () => nextSupplier);
-            enqueueSnackbar(t('update'), {variant: 'success'});
         }
         else enqueueSnackbar(t('failedByEmptySupplier'), {variant: 'error'});
     }

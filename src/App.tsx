@@ -43,9 +43,8 @@ const useStyles = makeStyles<Theme, Props>(() => ({
 function Main({theme, toggleTheme}: {theme: ThemeType, toggleTheme: () => void}) {
     return  <Layout theme={theme} toggleTheme={toggleTheme}>
         <Switch>
-            <Route path={"/select"} component={SelectMode}></Route>
             <Route path={"/edit"} component={EditMode}></Route>
-            <Route path={"/"} component={SelectMode}></Route>
+            <Route path={"/"} exact={true} component={SelectMode}></Route>
             <Redirect to={"/404"}></Redirect>
         </Switch>
     </Layout>
@@ -59,21 +58,21 @@ function App() {
     return (
         <ThemeProvider theme={mode}>
             <SnackbarProvider maxSnack={3} classes={{variantSuccess: classes.success, variantError: classes.error}}>
-               <ErrorBoundary FallbackComponent={ErrorPage}>
-                   <ModalProvider>
-                        <LoadingProvider>
-                            <>
-                                <GlobalStyles/>
-                                <Router>
-                                    <Switch>
-                                        <Route path={"/404"} component={Page404}></Route>
-                                        <Route render={(props) => <Main theme={theme} toggleTheme={toggleTheme} {...props} />}/>
-                                    </Switch>
-                                </Router>
-                            </>
-                        </LoadingProvider>
-                </ModalProvider>
-               </ErrorBoundary>
+                <LoadingProvider>
+                    <ErrorBoundary FallbackComponent={ErrorPage}>
+                       <ModalProvider>
+                                <>
+                                    <GlobalStyles/>
+                                    <Router>
+                                        <Switch>
+                                            <Route path={"/404"} component={Page404}></Route>
+                                            <Route render={(props) => <Main theme={theme} toggleTheme={toggleTheme} {...props} />}/>
+                                        </Switch>
+                                    </Router>
+                                </>
+                    </ModalProvider>
+                   </ErrorBoundary>
+                </LoadingProvider>
             </SnackbarProvider>
 
         </ThemeProvider>

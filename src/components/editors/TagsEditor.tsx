@@ -1,9 +1,9 @@
-import {Collapse, Grid, MenuItem, Typography} from "@material-ui/core";
+import {Chip, Collapse, FormControlLabel, Grid, MenuItem, TextField, Typography} from "@material-ui/core";
 import CSelect from "../common/CSelect";
 import CButton from "../common/CButton";
 import styled from "styled-components";
 import CCheckbox from "../common/CCheckbox";
-import {useState} from "react";
+import React, {useState} from "react";
 import CLabel from "../common/CLabel";
 import CHeading from "../common/CHeading";
 import {useTranslation} from "react-i18next";
@@ -41,6 +41,7 @@ function TagsEditor() {
     const {t} = useTranslation();
     const tags = useAppSelector(state => state.tags.tags);
     let selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
+    const displayData = joinData(tags, cloneWithoutFreeze<ProductModel>(selectedProducts));
     const dispatch = useAppDispatch();
     const {updateProducts} = useUpdateProducts();
     const {showModal} = useModal();
@@ -54,6 +55,13 @@ function TagsEditor() {
         {
             name: "tags",
             label: t('tags'),
+            options: {
+                customBodyRenderLite: (dataIndex: number) => {
+                    let val = displayData[dataIndex].tags;
+                    return <div style={{display: 'flex', gap: '0.5rem'}}>{val.map(item => <Chip label={item}></Chip>)}</div>
+                }
+            }
+
         },
     ]
 
@@ -62,12 +70,10 @@ function TagsEditor() {
             if (typeof value !== 'object') return [];
             return _.union(value, nextTags.map(tag => tag.id));
         });
-        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleReplaceTags = () => {
         updateProducts(selectedProducts, 'tags', () => nextTags.map(tag => tag.id));
-        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleAddTag = () => {
@@ -131,7 +137,7 @@ function TagsEditor() {
             </Grid>
         </Grid>
         <Grid item xs={12}>
-            <CTable title={t('selectedProducts')} columns={columns} data={joinData(tags, cloneWithoutFreeze<ProductModel>(selectedProducts))}></CTable>
+            <CTable title={t('selectedProducts')} columns={columns} data={displayData}></CTable>
         </Grid>
     </Grid>
 }

@@ -8,12 +8,12 @@ import {
     MenuItem,
     Switch,
     Select,
-    Tooltip
+    Tooltip, Chip
 } from "@material-ui/core";
 import CHeading from "./common/CHeading";
 import CButton from "./common/CButton";
 import * as _ from "lodash"
-import {useContext, useEffect, useReducer, useState} from "react";
+import React, {useContext, useEffect, useReducer, useState} from "react";
 import styled, {ThemeContext} from "styled-components";
 import CSwitcher from "./common/CSwitcher";
 import {Filter, FilterList, InvertColors, Lens, Opacity, Search, SearchOutlined, Subject} from "@material-ui/icons";
@@ -40,6 +40,7 @@ import ProductModel from "../types/ProductModel";
 import {useAppDispatch, useAppSelector} from "../hooks";
 import {fetchProducts} from "../features/products";
 import RootStateModel from "../types/RootStateModel";
+import {useSnackbar} from "notistack";
 
 const useStyles = makeStyles((theme)=>({
     root: {
@@ -100,6 +101,7 @@ function FilterTool() {
     const filter = useAppSelector(state => state.filter.filter);
     const [filteredProducts, setFilteredProducts] = useState<ProductModel[]>(products);
     const forceUpdate = useReducer(() => ({}), {})[1] as () => void;
+    const {enqueueSnackbar} = useSnackbar();
     const columns = [
         {
             name: "productName",
@@ -155,10 +157,13 @@ function FilterTool() {
             options: {
                 filter: false,
                 sort: true,
+                customBodyRenderLite: (dataIndex: number) => {
+                    let val = filteredProducts[dataIndex].uploadedDate;
+                    return new Date(val).toLocaleString();
+                }
             }
         },
     ];
-
 
     const dispatch = useAppDispatch();
 
@@ -169,14 +174,21 @@ function FilterTool() {
         fetchData();
     }, [])
 
-
     const handleFilters = () => {
-        const activeFilters: Record<string, unknown> = {};
-        for(let [key, value] of Object.entries(filter)) {
-            if (isChecked[key]) activeFilters[key] = value;
-        }
-        const filteredProducts = products.filter(item => applyFilters(item, activeFilters, filterType));
-        setFilteredProducts(filteredProducts);
+        turnOnLoading(true)
+        setTimeout(() => {
+            const activeFilters: Record<string, unknown> = {};
+            for(let [key, value] of Object.entries(filter)) {
+                if (isChecked[key]) activeFilters[key] = value;
+            }
+            if (Object.keys(activeFilters).length == 0)
+                enqueueSnackbar(t('failedByEmptyFilters'), {variant: "error"});
+            else {
+                const filteredProducts = products.filter(item => applyFilters(item, activeFilters, filterType));
+                setFilteredProducts(filteredProducts);
+            }
+            turnOnLoading(false)
+        }, 1200)
     }
 
     return <div className={classes.root}>
@@ -189,20 +201,20 @@ function FilterTool() {
                </CBox>
                 <ButtonGroup size={"small"}>
                     <Tooltip title={t("include") as string}>
-                        <CButton active={filterType === 0} onClick={() =>  setFilterType(0)} style={{padding:'0.5rem 1rem'}}><Opacity/></CButton>
+                        <CButton active={filterType === 1} onClick={() =>  setFilterType(1)} style={{padding:'0.5rem 1rem'}}><Opacity/></CButton>
                     </Tooltip>
                     <Tooltip title={t('exact') as string}>
-                        <CButton active={filterType === 1} onClick={() => setFilterType(1)}  style={{padding:'0.5rem 1rem'}}><Lens/></CButton>
+                        <CButton active={filterType === 0} onClick={() => setFilterType(0)}  style={{padding:'0.5rem 1rem'}}><Lens/></CButton>
                     </Tooltip>
                 </ButtonGroup>
         </Grid>
         <NameFilter/>
         <CategoryFilter/>
-        <BrandFilter/>
-        <SupplierFilter/>
-        <TagFilter/>
         <PriceFilter/>
         <QuantityFilter/>
+        <TagFilter/>
+        <BrandFilter/>
+        <SupplierFilter/>
         <DiscountFilter/>
         <ImageFilter/>
         <DateFilter/>

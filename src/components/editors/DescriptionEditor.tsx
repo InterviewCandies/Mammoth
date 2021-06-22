@@ -60,13 +60,11 @@ function DescriptionEditor() {
     const handleEditSummary = () => {
         updateProducts(selectedProducts, 'summary', () => summary);
         setSummary('');
-        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleEditDetails = () => {
         updateProducts(selectedProducts, 'details', () => details);
         setDetails('');
-        enqueueSnackbar(t('updated'), {variant: 'success'});
     }
 
     const handleCheckbox = (index: number) => {

@@ -30,13 +30,14 @@ const CSwitch = withStyles((theme: Theme) =>
                 },
             },
             '&$focusVisible $thumb': {
-                color: '#8b9dc3',
+                color: '#8b9dc3 !important',
                 border: '6px solid #fff',
             },
         },
         thumb: {
             width: 24,
             height: 24,
+            color: '#fff !important',
         },
         track: {
             borderRadius: 26 / 2,

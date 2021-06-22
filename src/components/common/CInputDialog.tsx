@@ -1,11 +1,12 @@
 import {Dialog, DialogContent, DialogProps, DialogTitle, Grid, makeStyles, Theme} from "@material-ui/core";
 import ThemeModel from "../../types/ThemeModel";
-import {useContext, useState} from "react";
+import React, {useContext, useState} from "react";
 import {ThemeContext} from "styled-components";
 import CLabel from "./CLabel";
 import CInput from "./CInput";
 import CButton from "./CButton";
 import {useTranslation} from "react-i18next";
+import {LoadingContext} from "../../provider/LoadingProvider";
 
 interface Props {
     theme: ThemeModel
@@ -40,6 +41,16 @@ const CInputDalog: React.FC<ModalProps> = (props) => {
     const classes = useStyles({theme});
     const [value, setValue] = useState<string>('');
     const {t} = useTranslation();
+    const {loading,turnOnLoading} = useContext(LoadingContext);
+
+    const handleClickOk = (e:  React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+        turnOnLoading(true);
+        setTimeout(() => {
+            props.onOK(value);
+            turnOnLoading(false);
+        }, 1200);
+    }
 
     return <Dialog {...props} className={classes.paper}>
             <form>
@@ -50,7 +61,7 @@ const CInputDalog: React.FC<ModalProps> = (props) => {
                     </Grid>
 
                     <Grid container item xs={12} justify={"flex-end"}>
-                        <CButton style={{marginRight:'0.75rem'}} onClick={e  => { e.preventDefault(); props.onOK(value); }}>
+                        <CButton style={{marginRight:'0.75rem'}} onClick={e => handleClickOk(e)}>
                             {t('ok')}
                         </CButton>
                         <CButton onClick={e  => { e.preventDefault(); props.onCancel(); }}>{t('cancel')}</CButton>

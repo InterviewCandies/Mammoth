@@ -7,7 +7,7 @@ interface FilterOptions {
 
 const initialState: FilterOptions = {
     filter: {},
-    checkbox: {}
+    checkbox: {productName: true, category: true, price: true, tags: true, discount: true}
 }
 
 const filterSlice = createSlice({
