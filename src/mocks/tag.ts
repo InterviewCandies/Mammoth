@@ -1,7 +1,13 @@
 import RootStateModel from "../types/RootStateModel";
 
-const tag: Record<string, RootStateModel> = {
-
+let tag: Record<string, RootStateModel> = {};
+const storage = localStorage.getItem('persist:root');
+if (storage) {
+    const str = JSON.parse(storage);
+    const tags = JSON.parse(str['tags'])['tags'];
+   tags.forEach((item: RootStateModel) => tag[item.id] = item)
+}
+else tag = {
     "60d08502f0798bfe64a6a8ef":   {
             "id": "60d08502f0798bfe64a6a8ef",
             "name": "man wear"

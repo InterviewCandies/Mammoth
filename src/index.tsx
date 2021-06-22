@@ -4,10 +4,20 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import "./i18n"
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
+import {store} from './store';
+import { Provider } from 'react-redux';
+
+let persistor = persistStore(store);
 
 ReactDOM.render(
   <Suspense fallback={null}>
-    <App />
+      <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+              <App />
+          </PersistGate>
+      </Provider>
   </Suspense>,
   document.getElementById('root')
 );

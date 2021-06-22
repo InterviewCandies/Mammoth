@@ -23,7 +23,7 @@ import {useAppDispatch, useAppSelector} from "../hooks";
 import {deselectProduct, replaceSelectedProducts, selectProducts} from "../features/products";
 import CLabel from "./common/CLabel";
 import product from "../mocks/product";
-import {createCollection, fetchCollection} from "../features/collection";
+import {createCollection, fetchCollection, updateCurrentCollection} from "../features/collection";
 import {useModal} from "mui-modal-provider";
 import CInputDialog from "./common/CInputDialog";
 import {v4 as uuid} from "uuid";
@@ -81,7 +81,7 @@ function Collection() {
     const selectedProducts = useAppSelector(state => state.products.products.filter(product => state.products.selection.includes(product.id)));
     const dispatch = useAppDispatch();
     const {t} = useTranslation();
-    const [selectedCollection, setSelectedCollection] = useState<string>('');
+    const selectedCollection = useAppSelector(state => state.collection.currentCollection);
     const collection = useAppSelector(state => state.collection.collection);
     const {showModal} = useModal();
     const {enqueueSnackbar} = useSnackbar();
@@ -94,9 +94,9 @@ function Collection() {
         fetchData();
     }, []);
 
-    const handleSelectCollection = (value: string) => {
-        setSelectedCollection(value);
-        dispatch(replaceSelectedProducts(collection.find(item => item.id == value)?.products || []));
+    const handleSelectCollection = (id: string) => {
+        dispatch(updateCurrentCollection(id));
+        dispatch(replaceSelectedProducts(collection.find(item => item.id == id)?.products || []));
     }
 
     const handleAddCollection = () => {
@@ -105,7 +105,7 @@ function Collection() {
             onOK: (value: string) => {
                 const newColection: CollectionModel = { id: uuid(), name: value, products: [...selectedProductIds] };
                 dispatch(createCollection(newColection));
-                setSelectedCollection(newColection.id);
+                dispatch(updateCurrentCollection(newColection.id));
                 enqueueSnackbar(t('added'), {variant: 'success'});
                 modal.hide();
             },

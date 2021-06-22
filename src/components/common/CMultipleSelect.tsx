@@ -170,7 +170,8 @@ export default function CMultipleSelect({allowAdd, setValue, options, onAdd} : S
 
     useEffect(() => {
         setValue(value)
-    }, [value])
+    }, [value]);
+
 
     return (
             <div style={{width: "100%"}}>

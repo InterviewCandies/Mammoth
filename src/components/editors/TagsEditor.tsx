@@ -74,7 +74,8 @@ function TagsEditor() {
         const modal = showModal(CInputDialog, {
             label: t('addTag'),
             onOK: (value: string) => {
-                dispatch(createTag({id: uuid(), name: value}));
+                const newTag = {id: uuid(), name: value};
+                dispatch(createTag(newTag));
                 modal.hide();
                 enqueueSnackbar(t('added'), { variant: 'success'});
             },

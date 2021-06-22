@@ -1,6 +1,14 @@
 import CollectionModel from "../types/CollectionModel";
+import RootStateModel from "../types/RootStateModel";
 
-let collections: Record<string, CollectionModel> = {
+let collection: Record<string, CollectionModel> = {};
+const storage = localStorage.getItem('persist:root');
+if (storage) {
+    const str = JSON.parse(storage);
+    const collections = JSON.parse(str['collection'])['collection'];
+   collections.forEach((item: CollectionModel) => collection[item.id] = item)
+}
+else collection =  {
     '0': {
         id: '0',
         name: 'collection1',
@@ -8,4 +16,4 @@ let collections: Record<string, CollectionModel> = {
     }
 }
 
-export default collections;
+export default collection;

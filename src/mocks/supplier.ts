@@ -1,6 +1,13 @@
 import RootStateModel from "../types/RootStateModel";
 
-const supplier: Record<string, RootStateModel> = {
+let supplier: Record<string, RootStateModel> = {};
+const storage = localStorage.getItem('persist:root');
+if (storage) {
+    const str = JSON.parse(storage);
+    const suppliers = JSON.parse(str['suppliers'])['suppliers'];
+    suppliers.forEach((item: RootStateModel) => supplier[item.id] = item)
+}
+else supplier = {
     "60d01cff51041d7e3c27ff78": {
         "id":  "60d01cff51041d7e3c27ff78",
         "name": "Zuvy"

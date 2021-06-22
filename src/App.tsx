@@ -18,6 +18,7 @@ import Page404 from "./pages/Page404";
 import {ErrorBoundary} from "react-error-boundary";
 import ErrorPage from "./pages/ErrorPage";
 
+
 interface Props {
     theme: ThemeModel
 }
@@ -60,7 +61,6 @@ function App() {
             <SnackbarProvider maxSnack={3} classes={{variantSuccess: classes.success, variantError: classes.error}}>
                <ErrorBoundary FallbackComponent={ErrorPage}>
                    <ModalProvider>
-                    <Provider store={store}>
                         <LoadingProvider>
                             <>
                                 <GlobalStyles/>
@@ -72,7 +72,6 @@ function App() {
                                 </Router>
                             </>
                         </LoadingProvider>
-                    </Provider>
                 </ModalProvider>
                </ErrorBoundary>
             </SnackbarProvider>

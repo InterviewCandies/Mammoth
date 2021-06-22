@@ -1,6 +1,14 @@
 import ProductModel from "../types/ProductModel";
+import RootStateModel from "../types/RootStateModel";
 
-const products: Record<string, ProductModel> = {
+let products: Record<string, ProductModel> = {};
+const storage = localStorage.getItem('persist:root');
+if (storage) {
+    const str = JSON.parse(storage);
+    const data = JSON.parse(str['products'])['products'];
+    data.forEach((item: ProductModel) => products[item.id] = item)
+}
+else products =   {
     "60d01cff1b985f214b6d8c99": {
         "id": "60d01cff1b985f214b6d8c99",
         "image": "enim.png",

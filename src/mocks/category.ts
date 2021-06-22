@@ -1,6 +1,14 @@
 import RootStateModel from "../types/RootStateModel";
 
-let category: Record<string, RootStateModel> = {
+
+let category: Record<string, RootStateModel> = {};
+const storage = localStorage.getItem('persist:root');
+if (storage) {
+    const str = JSON.parse(storage);
+    const categories = JSON.parse(str['categories'])['categories'];
+    categories.forEach((item: RootStateModel) => category[item.id] = item)
+}
+else category =  {
     "60d01cff2c45179e56f46b85": {
         "id": "60d01cff2c45179e56f46b85",
         "name": "Clothing"
