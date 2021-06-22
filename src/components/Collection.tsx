@@ -40,6 +40,14 @@ type Props = {
 }
 
 const useStyles = makeStyles<Theme, Props>((theme)=> ({
+    root : {
+        position: 'fixed',
+        width:'30%',
+      [theme.breakpoints.down('md')]: {
+          position: 'relative',
+          width:'100%',
+      }
+    },
     collection: {
         "& > *" : {
             marginBottom: theme.spacing(3)
@@ -115,8 +123,8 @@ function Collection() {
         })
     }
 
-    return <Grid container direction={"column"} spacing={4} style={{position: 'fixed'}}>
-        <Grid item xs={3}>
+    return <Grid container direction={"column"} spacing={4} className={classes.root}>
+        <Grid item xs={12}>
             <CBox>
                 <Icon>
                     <PermMedia style={{color:theme.primary}}/>
@@ -124,7 +132,7 @@ function Collection() {
                 <CHeading>{t('collection')}</CHeading>
             </CBox>
         </Grid>
-        <Grid item xs={3} className={classes.collection}>
+        <Grid item xs={12} className={classes.collection}>
             <Grid item xs={12}><Text>{t('chooseFrom')}</Text></Grid>
             <Grid item xs={12}>
                 <CSelect onChange={handleSelectCollection} value={selectedCollection} style={{width: '100%'}}>
@@ -132,7 +140,7 @@ function Collection() {
                 </CSelect>
             </Grid>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12}>
             <Grid item xs={12} style={{marginBottom: muiTheme.spacing(2)}}>
                 <Text>{t('selectedProducts')}</Text>
             </Grid>

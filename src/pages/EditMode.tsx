@@ -1,5 +1,5 @@
 import React from "react"
-import {Button, ButtonGroup, Container, Grid, makeStyles, Select} from "@material-ui/core";
+import {Button, ButtonGroup, Container, Grid, makeStyles, Select, Theme} from "@material-ui/core";
 import Header from "../components/common/Header";
 import Layout from "../components/common/Layout";
 import EditMenu from "../components/common/EditMenu";
@@ -15,20 +15,26 @@ import DisplayEditor from "../components/editors/DisplayEditor";
 import DeliveryEditor from "../components/editors/DeliveryEditor";
 import OptionsEditor from "../components/editors/OptionsEditor";
 import {Route} from "react-router-dom";
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
     root : {
         marginTop: "2rem"
+    },
+    table : {
+        paddingLeft: "4rem",
+        [theme.breakpoints.down('md')]: {
+            padding: "1rem 0"
+        }
     }
 }))
 function EditMode () {
     const classes = useStyles();
 
     return <div className={classes.root}>
-            <Grid container>
-                <Grid item md={3} xs={12}>
+            <Grid container spacing={5}>
+                <Grid item md={2} lg={3} xs={12}>
                     <EditMenu></EditMenu>
                 </Grid>
-                <Grid item md={9} style={{paddingLeft: "4rem"}} xs={12}>
+                <Grid item md={10} lg={9} className={classes.table} xs={12}>
                     <Route path={'/edit/category'} component={CategoryEditor}></Route>
                     <Route path={'/edit/tags'} component={TagsEditor}></Route>
                     <Route path={'/edit/description'} component={DescriptionEditor}></Route>

@@ -22,6 +22,12 @@ type Props = {
     theme: ThemeModel
 }
 const useStyles = makeStyles<Theme, Props>(theme => ({
+    root: {
+        position: 'fixed',
+        [theme.breakpoints.down('md')]: {
+              position: 'relative'
+        }
+    },
     logo: {
         width: "5rem",
         height: "5rem"
@@ -64,9 +70,9 @@ function Header({theme, toggleTheme} : {theme: ThemeType, toggleTheme: ()=> void
         }
     }
 
-    return <Grid container justify={"space-between"}>
+    return <Grid container alignItems={"center"} justify={"space-between"} spacing={2}>
         <Grid item>
-            <ButtonGroup style={{position: "fixed"}}>
+            <ButtonGroup className={classes.root}>
                 <CButton active={path.includes('select')} onClick={()=> history.push('/select')}>
                     {t('select')}
                 </CButton>
