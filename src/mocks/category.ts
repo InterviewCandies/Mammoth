@@ -11,7 +11,7 @@ if (storage) {
 else category =  {
     "60d01cff2c45179e56f46b85": {
         "id": "60d01cff2c45179e56f46b85",
-        "name": "Clothing"
+        "name": "Electronics"
     },
     "60d01cffa5f45c49134ea451": {
         "id": "60d01cffa5f45c49134ea451",
@@ -19,7 +19,7 @@ else category =  {
     },
     "60d01cffbda67c018ea7faed": {
         "id": "60d01cffbda67c018ea7faed",
-        "name": "Electronics"
+        "name": "Clothing"
     },
     "60d01cffdd40cb8a2858011d": {
         "id": "60d01cffdd40cb8a2858011d",

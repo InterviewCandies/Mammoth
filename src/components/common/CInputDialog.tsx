@@ -43,7 +43,7 @@ const CInputDalog: React.FC<ModalProps> = (props) => {
     const {t} = useTranslation();
     const {loading,turnOnLoading} = useContext(LoadingContext);
 
-    const handleClickOk = (e:  React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleClickOk = (e:  React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         turnOnLoading(true);
         setTimeout(() => {
@@ -53,15 +53,15 @@ const CInputDalog: React.FC<ModalProps> = (props) => {
     }
 
     return <Dialog {...props} className={classes.paper}>
-            <form>
+            <form onSubmit={(e) => handleClickOk(e)}>
                 <Grid container spacing={3} className={classes.root}>
                     <Grid container item xs={12} spacing={3} style={{paddingRight: 0}}>
                         <Grid item xs={12}><CLabel>{props.label}</CLabel></Grid>
-                        <Grid item xs={12}><CInput style={{width: '100%'}} value={value} onChange={e => setValue(e.target.value)} /></Grid>
+                        <Grid item xs={12}><CInput required style={{width: '100%'}} value={value} onChange={e => setValue(e.target.value)} /></Grid>
                     </Grid>
 
                     <Grid container item xs={12} justify={"flex-end"}>
-                        <CButton style={{marginRight:'0.75rem'}} onClick={e => handleClickOk(e)}>
+                        <CButton style={{marginRight:'0.75rem'}} type={'submit'}>
                             {t('ok')}
                         </CButton>
                         <CButton onClick={e  => { e.preventDefault(); props.onCancel(); }}>{t('cancel')}</CButton>

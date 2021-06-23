@@ -17,7 +17,7 @@ import OptionsEditor from "../components/editors/OptionsEditor";
 import {Route} from "react-router-dom";
 const useStyles = makeStyles((theme: Theme) => ({
     root : {
-        marginTop: "2rem"
+        marginTop: "4rem"
     },
     table : {
         paddingLeft: "4rem",

@@ -38,7 +38,7 @@ const ToggleContainer = styled.button<Props>`
     // moon icon
     &:nth-child(2) {
       transform: ${({ lightTheme }) => lightTheme ? 'translateY(-50px)' : 'translateY(0)'};
-      color: ${({theme}) => theme.primary}
+      color: ${({theme}) => theme.text}
     }
   }
 `;

@@ -40,16 +40,8 @@ function CategoryFilter() {
     return  categories.length ?
         <>
             <CAccordition title={'category'}>
-                <CMultipleSelect setValue={setCurrentCategories} options={categories} allowAdd onAdd={openDialog}></CMultipleSelect>
+                <CMultipleSelect setValue={setCurrentCategories} options={categories}></CMultipleSelect>
             </CAccordition>
-            <CDialog>
-                <h1>Hello</h1>
-                <CInput value={name} onChange={(e) => {
-                    e.stopPropagation();
-                    setName(e.target.value)
-                }}></CInput>
-                <Button onClick={() => onAddCategory(name)}>Close</Button>
-            </CDialog>
         </>: null
 }
 

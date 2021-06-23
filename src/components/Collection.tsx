@@ -63,7 +63,7 @@ const useStyles = makeStyles<Theme, Props>((theme)=> ({
         "&:focus": {
             backgroundColor: props => props.theme.button,
         },
-        maxHeight:'220px',
+        maxHeight:'300px',
         overflowY: "auto",
         "& > *" : {
             boxShadow: props => props.theme.boxShadowInside,
@@ -105,6 +105,11 @@ function Collection() {
     const handleSelectCollection = (id: string) => {
         dispatch(updateCurrentCollection(id));
         dispatch(replaceSelectedProducts(collection.find(item => item.id == id)?.products || []));
+    }
+
+    const handleDeleteSelectedProduct = (id: string) => {
+        dispatch(deselectProduct(id));
+        enqueueSnackbar(t('deleted'), { variant: 'success'});
     }
 
     const handleAddCollection = () => {
@@ -154,7 +159,7 @@ function Collection() {
                                        <ListItemText>{product.productName}</ListItemText>
                                        <ListItemSecondaryAction>
                                            <IconButton edge="end" aria-label="delete" className={classes.icon}
-                                                       onClick={() => dispatch(deselectProduct(product.id))}>
+                                                       onClick={() => handleDeleteSelectedProduct(product.id)}>
                                                <Cancel/>
                                            </IconButton>
                                        </ListItemSecondaryAction>

@@ -107,7 +107,7 @@ function FilterTool() {
             name: "productName",
             label: t("productName"),
             options: {
-                filter: true,
+                filter: false,
                 sort: true,
             }
         },
@@ -159,7 +159,7 @@ function FilterTool() {
                 sort: true,
                 customBodyRenderLite: (dataIndex: number) => {
                     let val = filteredProducts[dataIndex].uploadedDate;
-                    return new Date(val).toLocaleString();
+                    return new Date(val).toDateString();
                 }
             }
         },
@@ -220,10 +220,7 @@ function FilterTool() {
         <DateFilter/>
         <OptionFilter/>
         <Grid container spacing={2}>
-            <Grid item xs={12}>
-                <CButton style={{marginRight: "1rem", padding: "1rem 3rem"}} onClick={()=> handleFilters()}>{t('applyFilters')}</CButton>
-                <CButton style={{padding: "1rem 3rem"}} onClick={forceUpdate}>{t('resetFilters')}</CButton>
-            </Grid>
+            <CButton style={{marginRight: "1rem", padding: "1rem 3rem"}} onClick={()=> handleFilters()}>{t('applyFilters')}</CButton>
         </Grid>
         <Grid item xs={12}>
             <CTable columns={columns} data={filteredProducts} title={t('result')} selectable={true}></CTable>
