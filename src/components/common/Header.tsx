@@ -73,10 +73,10 @@ function Header({theme, toggleTheme} : {theme: ThemeType, toggleTheme: ()=> void
     return <Grid container alignItems={"center"} justify={"space-between"} spacing={2}>
         <Grid item>
             <ButtonGroup className={classes.root}>
-                <CButton active={path.includes('edit')} onClick={handleClickEdit}>
+                <CButton active={path.includes('edit') == false} onClick={()=> history.push('/')}>
                     {t('select')}
                 </CButton>
-                <CButton active={path.includes('edit') == false} onClick={()=> history.push('/')}>
+                <CButton active={path.includes('edit')} onClick={handleClickEdit}>
                     {t('edit')}
                 </CButton>
             </ButtonGroup>

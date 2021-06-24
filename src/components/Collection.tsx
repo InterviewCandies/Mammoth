@@ -59,6 +59,7 @@ const useStyles = makeStyles<Theme, Props>((theme)=> ({
         color: props => props.theme.inputText,
         textTransform: "capitalize",
         marginTop: 0,
+        padding: 0,
         fontWeight: 600,
         "&:focus": {
             backgroundColor: props => props.theme.button,
@@ -76,6 +77,7 @@ const useStyles = makeStyles<Theme, Props>((theme)=> ({
         fontSize: "0.75rem"
     },
     right: {
+        marginTop: theme.spacing(2),
         display: "flex",
         justifyContent:"flex-end",
         marginBottom: 0
@@ -145,32 +147,29 @@ function Collection() {
                 </CSelect>
             </Grid>
         </Grid>
-        <Grid item xs={12}>
-            <Grid item xs={12} style={{marginBottom: muiTheme.spacing(2)}}>
+        <Grid container item xs={12} spacing={2} style={{paddingRight: 0}}>
+            <Grid item xs={12}>
                 <Text>{t('selectedProducts')}</Text>
             </Grid>
             {
-               selectedProducts.length ?
-                   <Grid container spacing={2}>
-                       <Grid item xs={12}>
-                           <List className={classes.items}>
-                               {selectedProducts.map(product =>
-                                   <ListItem key={product.id}>
-                                       <ListItemText>{product.productName}</ListItemText>
-                                       <ListItemSecondaryAction>
-                                           <IconButton edge="end" aria-label="delete" className={classes.icon}
-                                                       onClick={() => handleDeleteSelectedProduct(product.id)}>
-                                               <Cancel/>
-                                           </IconButton>
-                                       </ListItemSecondaryAction>
-                                   </ListItem>)}
-                           </List>
-                       </Grid>
-                        <Grid item xs={12} className={classes.right}>
-                            <CButton onClick={handleAddCollection}>{t('addToCollection')}</CButton>
-                        </Grid>
-               </Grid> : null
-            }
+                selectedProducts.length ?
+            <Grid item xs={12} style={{paddingLeft: 0}}>
+                <List className={classes.items}>
+                    {selectedProducts.map(product =>
+                        <ListItem key={product.id}>
+                            <ListItemText>{product.productName}</ListItemText>
+                            <ListItemSecondaryAction>
+                                <IconButton edge="end" aria-label="delete" className={classes.icon}
+                                            onClick={() => handleDeleteSelectedProduct(product.id)}>
+                                    <Cancel/>
+                                </IconButton>
+                            </ListItemSecondaryAction>
+                        </ListItem>)}
+                </List>
+                <Grid item xs={12} className={classes.right}>
+                    <CButton onClick={handleAddCollection}>{t('addToCollection')}</CButton>
+                </Grid>
+            </Grid> : null }
         </Grid>
     </Grid>
 }

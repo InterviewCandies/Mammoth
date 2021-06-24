@@ -14,7 +14,7 @@ function CAccordition({title, children} : {title: string, children: ReactElement
 
     return  <Grid container spacing={2}>
         <Grid container item xs={12} justify={"space-between"}>
-            <h4 style={{color: theme.text, margin: 0}}>{t(title)}</h4>
+            <h4 style={{color: isShow ? theme.text : theme.inputText, margin: 0}}>{t(title)}</h4>
             <CCheckbox checked={isShow} onChange={() => dispatch(setCheckbox({key: title, value: !isShow}))}></CCheckbox>
         </Grid>
         <Grid item xs={12}>

@@ -51,10 +51,13 @@ const getMuiTheme = (theme : ThemeModel) =>
                 root: {
                     color: `${theme.text} !important`
                 },
-              fixedHeader: {
+                data: {
+                    color: theme.text
+                },
+                fixedHeader: {
                   backgroundColor: theme.table,
                   color: `${theme.text} !important`
-              },
+                },
                 sortActive: {
                     color:  theme.text
                 },

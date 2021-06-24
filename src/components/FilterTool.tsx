@@ -201,10 +201,10 @@ function FilterTool() {
                </CBox>
                 <ButtonGroup size={"small"}>
                     <Tooltip title={t("include") as string}>
-                        <CButton active={filterType === 1} onClick={() =>  setFilterType(1)} style={{padding:'0.5rem 1rem'}}><Opacity/></CButton>
+                        <CButton active={filterType === 0} onClick={() =>  setFilterType(0)} style={{padding:'0.5rem 1rem'}}><Opacity/></CButton>
                     </Tooltip>
                     <Tooltip title={t('exact') as string}>
-                        <CButton active={filterType === 0} onClick={() => setFilterType(0)}  style={{padding:'0.5rem 1rem'}}><Lens/></CButton>
+                        <CButton active={filterType === 1} onClick={() => setFilterType(1)}  style={{padding:'0.5rem 1rem'}}><Lens/></CButton>
                     </Tooltip>
                 </ButtonGroup>
         </Grid>

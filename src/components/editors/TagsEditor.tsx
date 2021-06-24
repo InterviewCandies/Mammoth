@@ -58,7 +58,7 @@ function TagsEditor() {
             options: {
                 customBodyRenderLite: (dataIndex: number) => {
                     let val = displayData[dataIndex].tags;
-                    return <div style={{display: 'flex', gap: '0.5rem'}}>{val.map(item => <Chip label={item}></Chip>)}</div>
+                    return <div style={{display: 'flex', gap: '0.25rem'}}>{val.map(item => <Chip label={item}></Chip>)}</div>
                 }
             }
 
