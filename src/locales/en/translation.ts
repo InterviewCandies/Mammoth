@@ -77,7 +77,7 @@ export const TRANSLATION_EN = {
     addToCollection: "Add to collection",
     failedByEmptyCategory: "Failed! Please choose at least one category",
     failedByEmptySupplier: "Failed! Please choose at least one supplier",
-    failedByEmptyProducts: "Please choose at least one products to edit",
+    failedByEmptyProducts: "Please choose at least one product to edit",
     failedByEmptyFilters: "Failed! No filters founded",
     noMatch: "Sorry, no matching records found",
     toolTip: "Sort",
